@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CSWDO Pasig — Portal Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root { --navy: #0d2c54; --blue: #1a4b8c; --gold: #ffd700; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Inter, system-ui, sans-serif; background: #f0f4f8; color: #1a1a2e; min-height: 100vh; }
+    header { background: linear-gradient(135deg, var(--navy), var(--blue)); color: #fff; padding: 1.5rem 2rem; display: flex; align-items: center; gap: 1rem; }
+    header img { height: 48px; width: auto; }
+    header h1 { font-size: 1.25rem; font-weight: 700; }
+    header p { font-size: 0.85rem; opacity: 0.85; }
+    main { max-width: 960px; margin: 2.5rem auto; padding: 0 1.25rem; }
+    h2 { font-size: 1.1rem; color: var(--navy); margin-bottom: 1rem; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem; }
+    .card { background: #fff; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 12px rgba(13,44,84,.08); border: 1px solid #e2e8f0; transition: transform .15s, box-shadow .15s; }
+    .card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(13,44,84,.12); }
+    .card h3 { font-size: 1rem; color: var(--navy); margin-bottom: .5rem; }
+    .card p { font-size: 0.85rem; color: #64748b; margin-bottom: 1rem; line-height: 1.45; }
+    .card a { display: inline-block; background: var(--navy); color: #fff; text-decoration: none; padding: .5rem 1rem; border-radius: 6px; font-size: 0.85rem; font-weight: 600; }
+    .card a:hover { background: var(--blue); }
+    .role { display: inline-block; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; padding: .2rem .5rem; border-radius: 4px; margin-bottom: .75rem; }
+    .role-client { background: #dbeafe; color: #1e40af; }
+    .role-employee { background: #d1fae5; color: #065f46; }
+    .role-admin { background: #fef3c7; color: #92400e; }
+    footer { text-align: center; padding: 2rem; font-size: 0.8rem; color: #94a3b8; }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="assets/logo.webp" alt="Pasig seal" onerror="this.style.display='none'" />
+    <div>
+      <h1>City Social Welfare &amp; Development Office</h1>
+      <p>Pasig City — Unified Management Information System</p>
+    </div>
+  </header>
+  <main>
+    <h2>Select a portal</h2>
+    <div class="grid">
+      <div class="card">
+        <span class="role role-client">Client</span>
+        <h3>Public / Client Portal</h3>
+        <p>Homepage, registration, service applications, appointments, notifications, and requirements verification.</p>
+        <a href="client/homepage.html">Open Client Portal →</a>
+      </div>
+      <div class="card">
+        <span class="role role-employee">Employee</span>
+        <h3>Employee Portal</h3>
+        <p>Appointment desk, queue management, and employee notifications.</p>
+        <a href="employee/appointment.html">Open Employee Portal →</a>
+      </div>
+      <div class="card">
+        <span class="role role-admin">Admin</span>
+        <h3>Admin Review &amp; Approval</h3>
+        <p>Case review queue, approve / return decisions, and admin notifications.</p>
+        <a href="admin/index.html">Open Admin Portal →</a>
+      </div>
+    </div>
+
+    <h2 style="margin-top:2.5rem">Quick links</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>Client — Login</h3>
+        <a href="client/login.html">Login →</a>
+      </div>
+      <div class="card">
+        <h3>Client — Register</h3>
+        <a href="client/register.html">Register →</a>
+      </div>
+      <div class="card">
+        <h3>Client — Appointment</h3>
+        <a href="client/appointment.html">Appointments →</a>
+      </div>
+      <div class="card">
+        <h3>Employee — Queue</h3>
+        <a href="employee/queue.html">Queue Management →</a>
+      </div>
+      <div class="card">
+        <h3>Requirements Verification</h3>
+        <a href="client/requirements-verification.html">Verify Requirements →</a>
+      </div>
+      <div class="card">
+        <h3>Documentation</h3>
+        <a href="docs/CSWDO_UI_Guide.html">UI Guide →</a>
+      </div>
+    </div>
+  </main>
+  <footer>
+    CSWDO Pasig Unified Project · Integrated from MIS, Appointment, Admin, Queue, Notifications &amp; Requirements modules
+  </footer>
+</body>
+</html>

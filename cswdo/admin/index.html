@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>CSWDO - Admin Review &amp; Approval</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/admin.css" />
+  </head>
+  <body>
+    <div class="govStrip">
+      <div class="container">
+        <span
+          >REPUBLIC OF THE PHILIPPINES | CITY GOVERNMENT OF
+          PASIG</span
+        >
+        <span>Mon-Thur 8:00 AM - 5:00 PM</span>
+      </div>
+    </div>
+
+   <header id="pageHeader">
+      <div class="container">
+        <div class="brandBlock">
+          <img
+            class="brandLogo"
+            src="../assets/logo.webp"
+            alt="Pasig City seal"
+          />
+          <img
+            class="brandWordmark"
+            src="../assets/pasig.webp"
+            alt="Pasig"
+          />
+        </div>
+        <div class="headerRight">
+          <span class="rolePill">Administrator</span>
+          <button
+            type="button"
+            class="bellBtn"
+            id="bellBtn"
+            aria-label="Reports waiting for review"
+          >
+            <svg
+              class="bellIcon"
+              viewBox="0 0 24 24"
+              width="18"
+              height="18"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
+              <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
+            </svg>
+            Alerts
+            <span class="bellCount" id="bellCount">0</span>
+          </button>
+          <button type="button" class="btn btnPrimary" id="btnSignOut">
+            Sign out
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <section class="band">
+      <div class="container">
+        <div class="pageIntro">
+          <span class="eyebrow"
+            >Review &amp; Decision Management</span
+          >
+          <h1>Review and decision</h1>
+          <p class="helperText">
+            Read the staff report, then approve the application or
+            return it for correction with remarks.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <main class="container pageWrap">
+      <div
+        id="alertBanner"
+        class="alertBanner"
+        role="status"
+        hidden
+      ></div>
+
+      <section
+        class="counterRow"
+        id="counterRow"
+        aria-label="Summary"
+      ></section>
+
+      <div class="reviewLayout">
+        <section class="panel" aria-labelledby="queueTitle">
+          <div class="panelHead">
+            <h3 id="queueTitle">Client applications</h3>
+            <div>
+              <label class="fieldLabel" for="searchInput"
+                >Search</label
+              >
+              <input
+                class="input"
+                id="searchInput"
+                type="search"
+                placeholder="Name or control number"
+                autocomplete="off"
+              />
+            </div>
+            <div>
+              <label class="fieldLabel" for="statusFilter"
+                >Status</label
+              >
+              <select class="input" id="statusFilter">
+                <option value="pending" selected>Needs review</option>
+                <option value="approved">Approved</option>
+                <option value="returned">
+                  Returned for correction
+                </option>
+                <option value="all">All statuses</option>
+              </select>
+            </div>
+          </div>
+          <ul class="queueList" id="queueList"></ul>
+        </section>
+
+        <section
+          class="panel"
+          id="detailPanel"
+          aria-live="polite"
+        ></section>
+      </div>
+    </main>
+
+    <footer class="siteFooter">
+      <div class="container">
+        <div class="brandBlock">
+          <img
+            class="brandLogo"
+            src="../assets/logo.webp"
+            alt="Pasig City seal"
+          />
+          <div>
+            <div class="footName">Pasig City CSWDO</div>
+            <div class="footSub">
+              REPUBLIC OF THE PHILIPPINES | CITY GOVERNMENT OF PASIG
+            </div>
+          </div>
+        </div>
+        <div class="footHours">Mon-Thur 8:00 AM - 5:00 PM</div>
+      </div>
+    </footer>
+
+    <div id="modalOverlay">
+      <div
+        class="modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modalTitle"
+      >
+        <h3 id="modalTitle"></h3>
+        <p id="modalBody"></p>
+        <div id="modalExtra"></div>
+        <div class="btnGroup">
+          <button
+            type="button"
+            class="btn btnSecondary"
+            id="modalCancel"
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            class="btn btnPrimary"
+            id="modalConfirm"
+          >
+            Confirm
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="toastStack" aria-live="polite"></div>
+
+    <script src="../js/admin.js"></script>
+  </body>
+</html>

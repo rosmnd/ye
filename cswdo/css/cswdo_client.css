@@ -1,0 +1,1265 @@
+/* ==========================================================================
+   CSWDO APPOINTMENT & SCHEDULING MODULE — MODULE STYLESHEET
+   Design tokens and core components are copied from CSWDO_UI_Guide.html
+   (single source of truth). Module-specific styles are added below them.
+   Header follows the official Pasig City template (gold accent + seal + blue).
+   Naming convention: camelCase classes (btnPrimary, badgeSuccess, cellSelected).
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   DESIGN TOKENS (from CSWDO_UI_Guide.html — do not invent new values)
+   -------------------------------------------------------------------------- */
+:root {
+  /* Brand colors */
+  --navy:        #0d2c54;
+  --blue:        #1976d2;
+  --blue-hover:  #1565c0;
+  --blue-light:  #2196f3;
+  --blue-pale:   #e3f0fd;
+  --blue-faint:  #f2f8ff;
+  --white:       #ffffff;
+
+  /* Pasig template accent (header masthead only) */
+  --pasig-yellow: #f5b301;
+
+  /* Neutrals */
+  --gray-900: #1b2430;
+  --gray-700: #4a5568;
+  --gray-500: #8a94a6;
+  --gray-300: #d7dee6;
+  --gray-200: #e7ecf2;
+  --gray-100: #f5f7fa;
+
+  /* Semantic status colors: base / background / border */
+  --success:     #1e7e42;
+  --success-bg:  #e6f6ec;
+  --success-bd:  #a9dfbf;
+
+  --warning:     #c2740b;
+  --warning-bg:  #fdf1e2;
+  --warning-bd:  #f3cf9a;
+
+  --danger:      #c0392b;
+  --danger-bg:   #fdecec;
+  --danger-bd:   #f3b6b0;
+
+  --info:        #1565c0;
+  --info-bg:     #e3f0fd;
+  --info-bd:     #a8cdf5;
+
+  --neutral:     #5a6472;
+  --neutral-bg:  #eef1f4;
+  --neutral-bd:  #d4dae1;
+
+  /* Typography */
+  --font:      'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  --text-xl:   clamp(1.75rem, 1.4rem + 1.3vw, 2.5rem);
+  --text-lg:   clamp(1.375rem, 1.2rem + 0.7vw, 1.75rem);
+  --text-md:   clamp(1.125rem, 1.05rem + 0.3vw, 1.25rem);
+  --text-base: 1rem;
+  --text-sm:   0.875rem;
+  --text-xs:   0.75rem;
+
+  --leading-tight:  1.25;
+  --leading-normal: 1.6;
+
+  /* Spacing scale (8px base) */
+  --space-1: .25rem;
+  --space-2: .5rem;
+  --space-3: .75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+
+  /* Radius */
+  --radius-sm:   .25rem;
+  --radius-md:   .5rem;
+  --radius-lg:   .875rem;
+  --radius-pill: 999px;
+
+  /* Elevation */
+  --shadow-sm: 0 1px 2px rgba(13, 44, 84, .08);
+  --shadow-md: 0 4px 16px rgba(13, 44, 84, .12);
+  --shadow-lg: 0 12px 32px rgba(13, 44, 84, .18);
+
+  /* Motion */
+  --duration-fast: 120ms;
+  --duration-med:  200ms;
+  --ease: cubic-bezier(.4, 0, .2, 1);
+
+  --focus-ring: 0 0 0 3px rgba(25, 118, 210, .35);
+  --container-max: 76rem;
+}
+
+/* --------------------------------------------------------------------------
+   RESET & BASE (from CSWDO_UI_Guide.html)
+   -------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-padding-top: calc(7.5rem + env(safe-area-inset-top, 0px));
+}
+
+body {
+  margin: 0;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  font-family: var(--font);
+  line-height: var(--leading-normal);
+  color: var(--gray-900);
+  background: var(--gray-100);
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  max-width: 100%;
+}
+
+.container {
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--space-5);
+}
+
+/* --------------------------------------------------------------------------
+   HEADER & FOOTER — Pasig City template style
+   Clean white brand bar (Yellow Seal → Pasig typography) + blue nav bar.
+   No accent strip: excess yellow above the header was removed per spec.
+   -------------------------------------------------------------------------- */
+.pageHeader {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.headerBody {
+  background: var(--white);
+  border-bottom: 1px solid var(--gray-200);
+  padding-block: var(--space-3);
+}
+
+.headerInner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.headerBrand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.headerLogo {
+  height: 56px;
+  width: auto;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.headerTitleWrap { min-width: 0; }
+
+.headerTitle {
+  margin: 0;
+  font-size: var(--text-md);
+  font-weight: 700;
+  color: var(--navy);
+  letter-spacing: .01em;
+  line-height: var(--leading-tight);
+}
+
+.headerSubtitle {
+  display: block;
+  font-size: var(--text-xs);
+  color: var(--gray-700);
+}
+
+.headerClock {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--navy);
+  background: var(--blue-faint);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-pill);
+  padding: var(--space-1) var(--space-3);
+  white-space: nowrap;
+}
+.headerNav {
+  background: var(--blue);
+}
+
+.headerNavInner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.navLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  min-height: 44px;                     /* touch target */
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--white);
+  text-decoration: none;
+  border-bottom: 3px solid transparent;
+  transition: background var(--duration-fast) var(--ease),
+              border-color var(--duration-fast) var(--ease);
+}
+
+.navLink:hover:not(.navLinkDisabled),
+.navLink:focus-visible { background: var(--blue-hover); }
+
+.navLinkActive {
+  border-bottom-color: var(--pasig-yellow);
+  background: var(--blue-hover);
+}
+
+.navLinkDisabled {
+  color: var(--blue-pale);
+  cursor: not-allowed;
+  opacity: .85;
+}
+
+.footer {
+  background: var(--white);
+  border-top: 1px solid var(--gray-200);
+  padding-block: var(--space-6);
+  font-size: var(--text-xs);
+  color: var(--gray-500);
+  text-align: center;
+}
+
+.monoInline {
+  font-family: var(--font-mono);
+  color: var(--gray-700);
+}
+
+/* --------------------------------------------------------------------------
+   BUTTONS (from CSWDO_UI_Guide.html — camelCase variants)
+   Includes interactive feedback: hover, pressed, loading (spinner + label).
+   -------------------------------------------------------------------------- */
+.btnGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.btnGroupEnd {
+  justify-content: flex-end;
+}
+
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: .65rem 1.25rem;
+  min-height: 44px;                     /* touch target */
+  font-family: var(--font);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease),
+              box-shadow var(--duration-fast) var(--ease),
+              transform var(--duration-fast) var(--ease),
+              opacity var(--duration-fast) var(--ease);
+}
+
+.btn:active:not(:disabled):not(.isLoading) {
+  transform: translateY(1px) scale(.99);
+}
+
+.btn:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+.btn:disabled      { opacity: .5; cursor: not-allowed; }
+
+.btnPrimary   { color: var(--white); background: var(--blue); }
+.btnPrimary:hover:not(:disabled) { background: var(--blue-hover); }
+
+.btnConfirm   { color: var(--white); background: var(--success); }
+.btnConfirm:hover:not(:disabled) { background: #166534; }
+
+.btnDanger    { color: var(--white); background: var(--danger); }
+.btnDanger:hover:not(:disabled) { background: #a5271c; }
+
+.btnSecondary { color: var(--navy); background: var(--white); border-color: var(--gray-300); }
+.btnSecondary:hover:not(:disabled) { background: var(--gray-100); border-color: var(--gray-500); }
+
+.btnGhost     { color: var(--blue); background: transparent; }
+.btnGhost:hover:not(:disabled) { background: var(--blue-faint); }
+
+.btnSm { padding: .35rem .75rem; font-size: var(--text-xs); min-height: 32px; }
+
+/* Loading state: spinner + dimmed label, button stays non-interactive */
+.btn.isLoading {
+  opacity: .75;
+  cursor: progress;
+  pointer-events: none;
+}
+
+.btn.isLoading::before {
+  content: "";
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: btnSpin .7s linear infinite;
+}
+
+@keyframes btnSpin {
+  to { transform: rotate(360deg); }
+}
+
+/* --------------------------------------------------------------------------
+   STATUS BADGES (from CSWDO_UI_Guide.html)
+   -------------------------------------------------------------------------- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  padding: .3rem .7rem;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  border: 1px solid;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+}
+
+.badge::before {
+  content: "";
+  width: .4rem;
+  height: .4rem;
+  background: currentColor;
+  border-radius: 50%;
+}
+
+.badgeSuccess { color: var(--success); background: var(--success-bg); border-color: var(--success-bd); }
+.badgeWarning { color: var(--warning); background: var(--warning-bg); border-color: var(--warning-bd); }
+.badgeDanger  { color: var(--danger);  background: var(--danger-bg);  border-color: var(--danger-bd); }
+.badgeInfo    { color: var(--info);     background: var(--info-bg);    border-color: var(--info-bd); }
+.badgeNeutral { color: var(--neutral);  background: var(--neutral-bg); border-color: var(--neutral-bd); }
+
+.badgePlain::before { display: none; }
+.badgeSm { padding: .1rem .45rem; font-size: .65rem; }
+
+/* --------------------------------------------------------------------------
+   NOTICES (from CSWDO_UI_Guide.html)
+   -------------------------------------------------------------------------- */
+.notice {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  font-size: var(--text-sm);
+  border: 1px solid;
+  border-radius: var(--radius-md);
+}
+
+.notice b { display: block; margin-bottom: .15rem; }
+
+.noticeInfo    { color: var(--info);    background: var(--info-bg);    border-color: var(--info-bd); }
+.noticeSuccess { color: var(--success); background: var(--success-bg); border-color: var(--success-bd); }
+.noticeWarning { color: var(--warning); background: var(--warning-bg); border-color: var(--warning-bd); }
+.noticeDanger  { color: var(--danger);  background: var(--danger-bg);  border-color: var(--danger-bd); }
+
+/* --------------------------------------------------------------------------
+   FORM CONTROLS (from CSWDO_UI_Guide.html)
+   -------------------------------------------------------------------------- */
+.field {
+  margin-bottom: var(--space-4);
+}
+
+.fieldLabel {
+  display: block;
+  margin-bottom: var(--space-2);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--gray-900);
+}
+
+.input {
+  width: 100%;
+  padding: .65rem .9rem;
+  min-height: 44px;
+  font-family: var(--font);
+  font-size: var(--text-base);
+  color: var(--gray-900);
+  background: var(--white);
+  border: 1px solid var(--gray-300);
+  border-radius: var(--radius-md);
+  transition: border-color var(--duration-fast) var(--ease),
+              box-shadow var(--duration-fast) var(--ease);
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--blue);
+  box-shadow: var(--focus-ring);
+}
+
+.choice {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  cursor: pointer;
+}
+
+.choice input {
+  width: 1.15rem;
+  height: 1.15rem;
+  accent-color: var(--blue);
+  cursor: pointer;
+}
+
+/* --------------------------------------------------------------------------
+   FEEDBACK AREA (inline alerts under forms/actions)
+   -------------------------------------------------------------------------- */
+.feedbackArea {
+  margin-top: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--text-sm);
+  border: 1px solid;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+}
+
+.feedbackArea[hidden] { display: none; }
+
+.feedbackArea.isSuccess {
+  color: var(--success);
+  background: var(--success-bg);
+  border-color: var(--success-bd);
+}
+
+.feedbackArea.isError {
+  color: var(--danger);
+  background: var(--danger-bg);
+  border-color: var(--danger-bd);
+}
+
+.feedbackArea.isInfo {
+  color: var(--info);
+  background: var(--info-bg);
+  border-color: var(--info-bd);
+}
+
+/* --------------------------------------------------------------------------
+   CARD (from CSWDO_UI_Guide.html card look)
+   -------------------------------------------------------------------------- */
+.card {
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-5);
+}
+
+/* --------------------------------------------------------------------------
+   MODAL / DIALOGS (from CSWDO_UI_Guide.html)
+   -------------------------------------------------------------------------- */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  background: rgba(13, 44, 84, .45);
+}
+
+.modalOverlay.isOpen { display: flex; }
+
+.modalCard {
+  width: 100%;
+  max-width: 26rem;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: var(--space-5);
+  background: var(--white);
+  border-top: .3rem solid var(--blue);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  animation: modalSlideIn var(--duration-med) var(--ease);
+}
+
+.modalCard h3 {
+  margin: 0 0 var(--space-3);
+  font-size: var(--text-md);
+  color: var(--navy);
+}
+
+.modalCard p {
+  margin: 0 0 var(--space-4);
+  font-size: var(--text-sm);
+  color: var(--gray-700);
+}
+
+.modalCard .badge { margin-bottom: var(--space-3); }
+
+/* Wide variant for content-rich dialogs (initial policy/availability):
+   the dialog grows horizontally so the content fits without an inner
+   vertical scrollbar. */
+.modalCardWide {
+  max-width: 46rem;
+  max-height: none;
+  overflow-y: visible;
+}
+.modalCardWide .policySessions { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.modalCardWide .policyList {
+  columns: 2;
+  column-gap: var(--space-6);
+}
+
+@keyframes modalSlideIn {
+  from { transform: translateY(12px) scale(.98); opacity: 0; }
+  to   { transform: translateY(0) scale(1);     opacity: 1; }
+}
+
+/* --------------------------------------------------------------------------
+   TOAST (from CSWDO_UI_Guide.html)
+   -------------------------------------------------------------------------- */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
+  z-index: 200;
+  max-width: 90vw;
+  padding: .75rem 1.25rem;
+  overflow-x: auto;
+  white-space: nowrap;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--white);
+  background: var(--navy);
+  border-radius: var(--radius-md);
+  border-left: 4px solid var(--pasig-yellow);
+  box-shadow: var(--shadow-lg);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, 1.5rem);
+  transition: all var(--duration-med) var(--ease);
+}
+
+.toast.isVisible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+/* ==========================================================================
+   MODULE-SPECIFIC STYLES (Appointment & Scheduling)
+   ========================================================================== */
+
+/* ---- Page sections ---- */
+.pageMain {
+  padding-block: var(--space-6) var(--space-7);
+}
+
+.sectionIntro { margin-bottom: var(--space-6); }
+
+.h2Demo {
+  margin: 0 0 var(--space-1);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--navy);
+}
+
+.sectionIntroText {
+  margin: 0 0 var(--space-4);
+  max-width: 65ch;
+  font-size: var(--text-base);
+  color: var(--gray-900);
+}
+
+.sectionBlock { margin-bottom: var(--space-6); }
+
+.cardHeaderRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.cardTitle {
+  margin: 0;
+  font-size: var(--text-md);
+  font-weight: 600;
+  color: var(--navy);
+}
+
+.fieldSublabel {
+  margin: 0;
+  font-size: var(--text-xs);
+  color: var(--gray-500);
+}
+
+.fieldSublabelInline {
+  font-size: var(--text-xs);
+  font-weight: 400;
+  color: var(--gray-500);
+}
+
+.hintText {
+  margin: var(--space-3) 0 0;
+  font-size: var(--text-xs);
+  color: var(--gray-500);
+}
+
+.emptyStateText {
+  margin-top: var(--space-3);
+  font-size: var(--text-sm);
+  color: var(--gray-700);
+  background: var(--white);
+  border: 1px dashed var(--gray-300);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+}
+
+.monoCode {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--navy);
+  background: var(--blue-pale);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+}
+
+.monoTime {
+  font-family: var(--font-mono);
+  font-weight: 500;
+}
+
+/* ---- Application summary (applications table) ---- */
+.applicationSummary {
+  display: grid;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+  padding: var(--space-4);
+  background: var(--gray-100);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+}
+
+/* ---- Two-column scheduling layout ---- */
+.schedulingLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: var(--space-5);
+  align-items: start;
+}
+
+/* ---- Session cards (availability + reserve) ---- */
+.sessionGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}
+
+.sessionCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-4);
+  background: var(--white);
+  border: 1px solid var(--gray-300);
+  border-radius: var(--radius-md);
+  transition: border-color var(--duration-fast) var(--ease),
+              box-shadow var(--duration-fast) var(--ease),
+              transform var(--duration-fast) var(--ease);
+}
+
+.sessionCard:active:not(.isFull):not(.isLocked):not(.isNotAvailable) {
+  transform: scale(.99);
+}
+
+.sessionCardHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.sessionName {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: var(--gray-700);
+}
+
+.sessionTime {
+  font-family: var(--font-mono);
+  font-size: var(--text-md);
+  font-weight: 800;
+  color: var(--navy);
+}
+
+.sessionMeta {
+  font-size: var(--text-xs);
+  color: var(--gray-700);
+}
+
+/* Capacity bar — fills use existing status colors only */
+.capacityBar {
+  height: .5rem;
+  margin-block: var(--space-2);
+  background: var(--gray-200);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+
+.capacityFill {
+  height: 100%;
+  width: 0;
+  background: var(--blue);
+  border-radius: var(--radius-pill);
+  transition: width var(--duration-med) var(--ease),
+              background var(--duration-med) var(--ease);
+}
+
+.capacityFill.isAlmostFull { background: var(--warning); }
+.capacityFill.isFull       { background: var(--danger); }
+
+/* Session card states */
+.sessionCard.isAlmostFull { border-color: var(--warning-bd); }
+.sessionCard.isFull,
+.sessionCard.isLocked,
+.sessionCard.isNotAvailable {
+  background: var(--gray-100);
+  border-color: var(--gray-200);
+}
+.sessionCard.isFull .sessionTime,
+.sessionCard.isLocked .sessionTime,
+.sessionCard.isNotAvailable .sessionTime { color: var(--gray-500); }
+
+.sessionCard .btn { margin-top: var(--space-3); }
+
+/* ---- Calendar ---- */
+.calendarContainer {
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.calendarToolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  background: var(--navy);
+  color: var(--white);
+}
+
+.calendarNavBtn { color: var(--white); }
+.calendarNavBtn:hover:not(:disabled) { background: rgba(255, 255, 255, .12); }
+.calendarNavBtn:disabled { opacity: .4; }
+
+.calendarMonthYear {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+
+.calendarGrid,
+.calendarDays {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.calendarDayHeader {
+  padding: var(--space-2) var(--space-1);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  color: var(--gray-700);
+  background: var(--gray-100);
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.calendarDayHeader.isWeekend { color: var(--gray-500); }
+
+.calendarCell {
+  min-height: 4.6rem;
+  padding: var(--space-1);
+  border-right: 1px solid var(--gray-200);
+  border-bottom: 1px solid var(--gray-200);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  font-size: var(--text-xs);
+  line-height: 1.3;
+  background: var(--white);
+  border-top: none;
+  border-left: none;
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease);
+}
+
+.calendarCell:nth-child(7n) { border-right: none; }
+
+button.calendarCell { font-family: inherit; text-align: left; }
+button.calendarCell:focus-visible { outline: none; box-shadow: var(--focus-ring); z-index: 2; }
+
+/* Click feedback for selectable dates */
+.calendarCell:not(.cellEmpty):not(.cellPast):not(.cellWeekend):not(.cellHoliday):not(.cellFull):not(.cellLocked):hover {
+  background: var(--blue-faint);
+}
+
+.calendarCell:not(.cellEmpty):not(.cellPast):not(.cellWeekend):not(.cellHoliday):not(.cellFull):not(.cellLocked):active {
+  background: var(--blue-pale);
+  transform: scale(.98);
+}
+
+.calendarDateNum {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.cellToday .calendarDateNum {
+  background: var(--navy);
+  color: var(--white);
+}
+
+.cellSelected {
+  background: var(--blue-pale) !important;
+  box-shadow: inset 0 0 0 2px var(--blue);
+}
+
+.calendarCellLabel {
+  font-size: .65rem;
+  padding: 1px 4px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+/* Cell state colors — existing status tokens only */
+.cellOpen { background: var(--white); }
+
+.cellAlmostFull { background: var(--warning-bg); }
+.cellAlmostFull .calendarCellLabel { color: var(--warning); font-weight: 600; }
+
+.cellFull {
+  background: var(--gray-100);
+  cursor: not-allowed;
+}
+.cellFull .calendarCellLabel { color: var(--danger); font-weight: 600; }
+
+.cellLocked {
+  background: var(--gray-100);
+  cursor: not-allowed;
+}
+.cellLocked .calendarCellLabel { color: var(--neutral); font-weight: 600; }
+
+.cellWeekend {
+  background: var(--gray-100);
+  cursor: not-allowed;
+}
+.cellWeekend .calendarCellLabel { color: var(--gray-500); }
+
+.cellHoliday {
+  background: var(--warning-bg);
+  cursor: not-allowed;
+}
+.cellHoliday .calendarCellLabel { color: var(--warning); font-weight: 600; }
+
+.cellPast {
+  background: var(--gray-100);
+  color: var(--gray-500);
+  cursor: not-allowed;
+  opacity: .65;
+}
+
+.cellEmpty {
+  background: var(--gray-100);
+  border-bottom: 1px solid var(--gray-200);
+  border-right: 1px solid var(--gray-200);
+  cursor: default;
+}
+
+/* Calendar legend */
+.calendarLegend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+  font-size: var(--text-xs);
+  color: var(--gray-700);
+}
+
+.legendItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.legendSwatch {
+  width: .8rem;
+  height: .8rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--gray-300);
+}
+
+.legendSwatchOpen     { background: var(--white); border-color: var(--blue-light); }
+.legendSwatchAlmost   { background: var(--warning-bg); border-color: var(--warning-bd); }
+.legendSwatchFull     { background: var(--gray-100); }
+.legendSwatchLocked   { background: var(--neutral-bg); border-color: var(--neutral-bd); }
+.legendSwatchHoliday  { background: var(--warning-bg); border-color: var(--warning-bd); }
+.legendSwatchWeekend  { background: var(--gray-100); border-color: var(--gray-300); }
+
+/* ---- Selected date callout ---- */
+.selectedDateCallout {
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-4);
+  background: var(--blue-faint);
+  border: 1px solid var(--info-bd);
+  border-radius: var(--radius-md);
+}
+
+.selectedDateCalloutLabel {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--navy);
+}
+
+.selectedDateCalloutDate {
+  font-size: var(--text-md);
+  font-weight: 700;
+  color: var(--navy);
+}
+
+.selectedDateCalloutMeta {
+  font-size: var(--text-xs);
+  color: var(--gray-700);
+}
+
+/* ---- Appointment details / check-in panel ---- */
+.appointmentDetails {
+  display: grid;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+  padding: var(--space-4);
+  background: var(--gray-100);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+}
+
+.detailRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.detailLabel {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: .03em;
+  text-transform: uppercase;
+  color: var(--gray-500);
+}
+
+.detailValue {
+  font-weight: 600;
+  color: var(--gray-900);
+}
+
+.confirmDetails {
+  display: grid;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  background: var(--gray-100);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-md);
+}
+
+/* ---- Demo tools (front-end demo only) ---- */
+.demoTools {
+  margin-top: var(--space-4);
+  padding-top: var(--space-3);
+  border-top: 1px dashed var(--gray-300);
+}
+
+/* ---- Initial policy dialog internals ---- */
+.policySessions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.policySessionCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: var(--space-3);
+  background: var(--blue-faint);
+  border: 1px solid var(--info-bd);
+  border-radius: var(--radius-md);
+  text-align: center;
+}
+
+.policySessionName {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: .05em;
+  color: var(--gray-700);
+}
+
+.policySessionTime {
+  font-family: var(--font-mono);
+  font-size: var(--text-md);
+  font-weight: 800;
+  color: var(--navy);
+}
+
+.policySessionSlots {
+  font-size: var(--text-xs);
+  color: var(--gray-700);
+}
+
+.policyList {
+  margin: 0 0 var(--space-4);
+  padding-left: 1.25rem;
+  font-size: var(--text-sm);
+  color: var(--gray-700);
+}
+
+.policySmall {
+  font-size: var(--text-xs);
+  color: var(--gray-500);
+}
+
+.policyAvailability {
+  margin-bottom: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  background: var(--gray-100);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-md);
+}
+
+.policyAvailabilityTitle {
+  margin-bottom: var(--space-2);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--navy);
+}
+
+.policyAvailabilityRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: var(--space-2) 0;
+  border-top: 1px dashed var(--gray-300);
+  font-size: var(--text-sm);
+}
+
+.policyAvailabilityRow:first-of-type { border-top: none; }
+
+/* --------------------------------------------------------------------------
+   RESPONSIVE (guide breakpoints + header adjustments)
+   -------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+  .schedulingLayout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .headerLogo { height: 44px; }
+  .headerTitle { font-size: var(--text-base); }
+  .headerClock { display: none; }
+  .headerNavInner { gap: 0; }
+  .navLink { padding-inline: var(--space-3); font-size: var(--text-xs); }
+}
+
+@media (max-width: 640px) {
+  .container { padding-inline: var(--space-4); }
+  .sessionGrid,
+  .policySessions { grid-template-columns: 1fr; }
+  .modalCardWide { max-width: none; }
+  .modalCardWide .policyList { columns: 1; }
+  .calendarCell { min-height: 3.6rem; padding: 2px; }
+  .calendarCellLabel { font-size: .58rem; }
+  .btnGroup { flex-direction: column; }
+  .btnGroup .btn { width: 100%; }
+  .headerBody { padding-block: var(--space-2); }
+}
+
+/* The guide's smallest breakpoint */
+@media (max-width: 480px) {
+  .container { padding-inline: var(--space-4); }
+  .calendarCell { min-height: 3rem; }
+}
+
+/* ==========================================================================
+   APPENDIX — Online Appointment & Scheduling (authenticated client flow)
+   Added for the API-backed version of the module. Same tokens as above.
+   ========================================================================== */
+
+/* Header user box */
+.headerUser { display: flex; align-items: center; gap: var(--space-4); }
+.headerUserMeta { display: flex; flex-direction: column; align-items: flex-end; line-height: 1.25; }
+.headerUserName { font-weight: 600; color: var(--color-navy); font-size: var(--text-sm); }
+.headerUserControl { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-ink-soft); }
+
+/* Login gate */
+.loginGate { display: flex; justify-content: center; padding: var(--space-8) 0; }
+.loginCard { width: min(420px, 100%); }
+.loginDemoHint { margin-top: var(--space-4); font-size: var(--text-xs); color: var(--color-ink-soft); }
+.loginDemoHint .monoCode { background: var(--color-surface); padding: 2px 6px; border-radius: var(--radius-sm); }
+
+/* Info grid */
+.infoGrid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--space-3); margin: var(--space-4) 0;
+}
+.infoItem { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--space-3); display: flex; flex-direction: column; gap: 4px; }
+.infoLabel { font-size: var(--text-xs); font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-ink-soft); }
+.infoValue { font-size: var(--text-sm); font-weight: 600; color: var(--color-navy); }
+
+/* Calendar head/legend */
+.calendarHead { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); margin: var(--space-4) 0 var(--space-2); }
+.calendarTitle { margin: 0; font-size: var(--text-md); color: var(--color-navy); }
+.legendRow { display: flex; flex-wrap: wrap; gap: var(--space-3); margin: var(--space-3) 0 0; }
+.legendItem { display: inline-flex; align-items: center; gap: 6px; font-size: var(--text-xs); color: var(--color-ink-soft); }
+.legendChip { width: 14px; height: 14px; border-radius: 4px; display: inline-block; border: 1px solid var(--color-border); }
+.chipOpen { background: var(--color-success-soft); }
+.chipAlmost { background: var(--color-warning-soft); }
+.chipFull { background: var(--color-danger-soft); }
+.chipClosed { background: var(--color-surface); }
+.chipLocked { background: repeating-linear-gradient(45deg, var(--color-surface), var(--color-surface) 4px, var(--color-border) 4px, var(--color-border) 6px); }
+.chipHoliday { background: var(--color-border); }
+
+/* Session panel */
+.sessionPanel { margin-top: var(--space-4); border-top: 2px solid var(--color-border); padding-top: var(--space-4); }
+.panelTitle { margin: 0 0 var(--space-3); font-size: var(--text-md); color: var(--color-navy); }
+.sessionCards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--space-4); }
+
+/* Check-in card */
+.checkinStatusWrap { margin-bottom: var(--space-3); }
+.appointmentDetails { display: grid; gap: var(--space-2); margin-bottom: var(--space-4); }
+.checkinActions { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+
+/* Confirm summary rows */
+.confirmSummary { display: grid; gap: var(--space-2); margin: var(--space-3) 0; }
+.confirmSummary .detailRow { display: flex; justify-content: space-between; gap: var(--space-4); border-bottom: 1px dashed var(--color-border); padding-bottom: 6px; }
+.confirmSummary .detailLabel { font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-ink-soft); font-weight: 600; }
+.confirmSummary .detailValue { font-size: var(--text-sm); font-weight: 600; color: var(--color-navy); text-align: right; }
+.modalNote { font-size: var(--text-sm); color: var(--color-ink-soft); margin: var(--space-2) 0 0; }
+.modalActions { display: flex; justify-content: flex-end; gap: var(--space-3); margin-top: var(--space-4); }
+.lateFlowBox { background: var(--color-warning-soft); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--space-3); margin-top: var(--space-3); font-size: var(--text-sm); }
+
+/* Buttons inside modals while loading */
+.btn.isLoading { position: relative; color: transparent !important; pointer-events: none; }
+.btn.isLoading::after { content: ""; position: absolute; inset: 0; margin: auto; width: 18px; height: 18px; border-radius: 50%; border: 2px solid rgba(255, 255, 255, 0.45); border-top-color: #fff; animation: btnSpin 0.7s linear infinite; }
+@keyframes btnSpin { to { transform: rotate(360deg); } }
+
+.btnBlock { width: 100%; }
+
+/* Mobile wrap fix: notices are flex; long inline text must be allowed to wrap. */
+.notice { flex-wrap: wrap; }
+.notice > * { max-width: 100%; }
+.notice strong { overflow-wrap: anywhere; }
+
+/* Info values can hold long control numbers/timestamps — let them wrap. */
+.infoValue { overflow-wrap: anywhere; }
+
+/* Calendar cell labels ("29/30 AM · 30/30 PM") shrink on narrow screens. */
+@media (max-width: 480px) {
+  .calendarCellLabel { font-size: 0.52rem; padding: 0 1px; }
+}
+
+/* `hidden` must always win over component display rules (login gate,
+   header user box, session panel, modals are toggled via the attribute). */
+[hidden] { display: none !important; }
+
+/* Header brand/user layout: push the user box to the right on wide screens. */
+.headerBody { flex-wrap: wrap; }
+.headerUser { margin-left: auto; }
+
+/* ==========================================================================
+   BACKEND-INTEGRATED SESSION (Phase 3)
+   ========================================================================== */
+
+/* Right side of the white brand bar: the user identity card and the live
+   clock are SEPARATE blocks with their own spacing — never one crowded box. */
+.headerMeta { display: flex; align-items: center; gap: var(--space-4); margin-left: auto; }
+.headerUser {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+  line-height: 1.35;
+  padding: var(--space-1) var(--space-3);
+  background: var(--blue-faint);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-md);
+}
+.headerSessionName { font-weight: 700; font-size: 13px; color: #123a6d; }
+.headerSessionNote { font-size: 11.5px; color: #5a6b7f; }
+
+/* Demo-mode banner: shown only when the PHP backend is unreachable. */
+.apiModeBanner {
+  background: #fff7e0;
+  border-bottom: 1px solid var(--pasig-yellow, #f5b301);
+  color: #5c4400;
+  font-size: 13.5px;
+  line-height: 1.5;
+  padding: 10px var(--space-4, 16px);
+}
+.apiModeBanner strong { color: #7a5a00; }
+
+@media (max-width: 720px) {
+  .headerMeta { align-items: flex-start; margin-left: 0; width: 100%; }
+  .headerUser { align-items: flex-start; text-align: left; }
+}

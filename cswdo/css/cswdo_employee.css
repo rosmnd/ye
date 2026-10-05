@@ -1,0 +1,185 @@
+/* ==========================================================================
+   CSWDO Pasig — EMPLOYEE PORTAL STYLESHEET
+   Design tokens mirror CSWDO_UI_Guide.html (single source of truth) and the
+   tailwind.config block in cswdo_employee_appointment_module.html. Layout and
+   utility classes come from Tailwind; everything below is employee-specific
+   chrome, state badges, and animation. Naming convention: kebab-case here,
+   Tailwind utilities in the markup.
+   ========================================================================== */
+
+:root {
+  /* Brand */
+  --navy:        #0d2c54;
+  --pasig-blue:  #1976d2;
+  --pasig-hover: #1565c0;
+  --pasig-light: #2196f3;
+  --pasig-pale:  #e3f0fd;
+  --pasig-faint: #f2f8ff;
+
+  /* Neutrals */
+  --gray-100: #f5f7fa;
+  --gray-200: #e7ecf2;
+  --gray-300: #d7dee6;
+  --gray-500: #8a94a6;
+  --gray-700: #4a5568;
+  --gray-900: #1b2430;
+
+  /* Semantic status colors (base / background / border) */
+  --success:     #1e7e42;  --success-bg:  #e6f6ec;  --success-bd:  #a9dfbf;
+  --warning:     #c2740b;  --warning-bg:  #fdf1e2;  --warning-bd:  #f3cf9a;
+  --danger:      #c0392b;  --danger-bg:   #fdecec;  --danger-bd:   #f3b6b0;
+  --info:        #1565c0;  --info-bg:     #e3f0fd;  --info-bd:     #a8cdf5;
+  --neutral:     #5a6472;  --neutral-bg:  #eef1f4;  --neutral-bd:  #d4dae1;
+
+  /* Typography */
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  /* Shape */
+  --radius-sm: .25rem;
+  --radius-md: .5rem;
+  --radius-lg: .75rem;
+  --shadow-card: 0 1px 2px rgba(27, 36, 48, .06), 0 1px 3px rgba(27, 36, 48, .08);
+}
+
+/* ---- Base typography ---- */
+    body { font-family: 'Inter', sans-serif; }
+    .mono-num { font-family: 'JetBrains Mono', monospace; }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #f1f5f9; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 999px; }
+    .fade-in { animation: fadeIn .25s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+/* ---- Stat cards: metric hierarchy (label → value → hint) ---- */
+.stat-card {
+  background: #fff;
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 1rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.stat-label {
+  font-size: .6875rem;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--gray-500);
+}
+.stat-value {
+  margin-top: .25rem;
+  font-family: var(--font-mono);
+  font-size: 1.875rem;
+  line-height: 1.1;
+  font-weight: 700;
+  color: var(--gray-900);
+}
+.stat-hint { margin-top: .25rem; font-size: .75rem; color: var(--gray-500); }
+.stat-icon {
+  flex-shrink: 0;
+  width: 3rem;
+  height: 3rem;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.stat-icon svg { width: 1.5rem; height: 1.5rem; }
+.stat-icon.is-info     { background: var(--info-bg);     color: var(--info); }
+.stat-icon.is-success  { background: var(--success-bg);  color: var(--success); }
+.stat-icon.is-warning  { background: var(--warning-bg);  color: var(--warning); }
+.stat-icon.is-accent   { background: #eef2ff;            color: #4338ca; }
+
+/* ---- Data table ---- */
+.data-table { width: 100%; border-collapse: collapse; font-size: .875rem; text-align: left; }
+.data-table thead th {
+  padding: .625rem 1rem;
+  background: var(--gray-100);
+  border-bottom: 1px solid var(--gray-200);
+  font-size: .6875rem;
+  font-weight: 600;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--gray-700);
+}
+.data-table tbody td {
+  padding: .75rem 1rem;
+  vertical-align: top;
+  border-bottom: 1px solid var(--gray-200);
+}
+.data-table tbody tr:last-child td { border-bottom: 0; }
+.data-table tbody tr { transition: background .12s ease; }
+.data-table tbody tr:hover { background: var(--gray-100); }
+
+/* ---- Status / ticket badges (token colors, no emoji) ---- */
+.badge-state {
+  display: inline-flex;
+  align-items: center;
+  gap: .375rem;
+  padding: .125rem .5rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  font-size: .6875rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge-scheduled   { background: var(--info-bg);    color: var(--info);    border-color: var(--info-bd); }
+.badge-checked-in  { background: var(--success-bg); color: var(--success); border-color: var(--success-bd); }
+.badge-late        { background: var(--warning-bg); color: var(--warning); border-color: var(--warning-bd); }
+.badge-cancelled   { background: var(--danger-bg);  color: var(--danger);  border-color: var(--danger-bd); }
+.badge-rescheduled { background: #e0f2fe;           color: #0369a1;        border-color: #bae6fd; }
+.badge-waiting     { background: var(--success-bg); color: var(--success); border-color: var(--success-bd); }
+.badge-called      { background: var(--info-bg);    color: var(--info);    border-color: var(--info-bd); }
+.badge-serving     { background: #eef2ff;            color: #4338ca;        border-color: #c7d2fe; }
+.badge-completed   { background: var(--neutral-bg); color: var(--neutral); border-color: var(--neutral-bd); }
+.badge-no-show     { background: var(--danger-bg);  color: var(--danger);  border-color: var(--danger-bd); }
+
+.badge-ticket {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: .75rem;
+  font-weight: 700;
+  padding: .1875rem .5rem;
+  border-radius: var(--radius-sm);
+  background: var(--success-bg);
+  color: var(--success);
+  border: 1px solid var(--success-bd);
+}
+.badge-end-of-line {
+  display: inline-flex;
+  align-items: center;
+  font-size: .625rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  padding: .125rem .375rem;
+  border-radius: var(--radius-sm);
+  background: var(--warning-bg);
+  color: var(--warning);
+  border: 1px solid var(--warning-bd);
+}
+
+/* ---- Panels ---- */
+.panel {
+  background: #fff;
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 1.5rem;
+}
+.section-title { font-size: 1.125rem; font-weight: 700; color: var(--gray-900); }
+.section-subtitle { font-size: .8125rem; color: var(--gray-700); margin-top: .25rem; }
+
+/* ---- Capacity bars ---- */
+.capacity-bar { height: .5rem; border-radius: 999px; background: var(--gray-200); overflow: hidden; }
+.capacity-fill { height: 100%; border-radius: 999px; transition: width .3s ease; }
+.capacity-fill.is-am      { background: var(--pasig-blue); }
+.capacity-fill.is-pm      { background: #4f46e5; }
+.capacity-fill.is-full    { background: var(--danger); }
+.capacity-fill.is-almost  { background: var(--warning); }
+.capacity-fill.is-locked  { background: var(--gray-500); }
