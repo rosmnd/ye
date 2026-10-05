@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CSWDO MIS - Queue Management Module</title>
+  <style>
+    :root {
+      --pasig-navy: #002b7f;
+      --pasig-blue: #0052cc;
+      --pasig-light-blue: #e8f1ff;
+      --pasig-accent: #00a3ff;
+      --white: #ffffff;
+      --gray-bg: #f4f7fb;
+      --text-dark: #1a253c;
+      --text-muted: #5a6b8c;
+      --border-color: #cbd8ef;
+      --success: #0d8a4e;
+      --warning: #d97706;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background-color: var(--gray-bg);
+      color: var(--text-dark);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Official Pasig Blue & White Header */
+    header {
+      background: linear-gradient(135deg, var(--pasig-navy), var(--pasig-blue));
+      color: var(--white);
+      padding: 16px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 4px solid var(--pasig-accent);
+      box-shadow: 0 3px 10px rgba(0, 43, 127, 0.18);
+    }
+
+    .brand-container {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .pasig-logo {
+      width: 58px;
+      height: 58px;
+      background: var(--white);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      color: var(--pasig-navy);
+      font-size: 11px;
+      text-align: center;
+      border: 2px solid var(--pasig-accent);
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+
+    .pasig-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .header-titles h1 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+
+    .header-titles p {
+      font-size: 0.85rem;
+      opacity: 0.92;
+      margin-top: 2px;
+    }
+
+    .clock-box {
+      text-align: right;
+      background: rgba(255, 255, 255, 0.12);
+      padding: 8px 16px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+    }
+
+    .clock-box .time {
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+
+    .clock-box .date {
+      font-size: 0.8rem;
+      opacity: 0.9;
+    }
+
+    /* Navigation Tabs */
+    .nav-tabs {
+      background: var(--white);
+      display: flex;
+      gap: 6px;
+      padding: 10px 28px 0;
+      border-bottom: 2px solid var(--border-color);
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      background: var(--pasig-light-blue);
+      color: var(--pasig-navy);
+      border: 1px solid var(--border-color);
+      border-bottom: none;
+      padding: 10px 18px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      border-radius: 8px 8px 0 0;
+      cursor: pointer;
+      transition: all 0.18s ease;
+    }
+
+    .tab-btn.active {
+      background: var(--pasig-blue);
+      color: var(--white);
+      border-color: var(--pasig-blue);
+    }
+
+    .badge-count {
+      background: #ff3b30;
+      color: var(--white);
+      padding: 2px 7px;
+      border-radius: 99px;
+      font-size: 0.75rem;
+      margin-left: 6px;
+    }
+
+    /* Live Capacity & User Counter Bar */
+    .capacity-bar {
+      background: var(--white);
+      padding: 12px 28px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 14px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .stat-pill {
+      background: var(--pasig-light-blue);
+      border-left: 4px solid var(--pasig-blue);
+      padding: 10px 14px;
+      border-radius: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .stat-pill span {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--pasig-navy);
+    }
+
+    .stat-pill strong {
+      font-size: 1.15rem;
+      color: var(--pasig-blue);
+    }
+
+    /* Main Content Container */
+    main {
+      padding: 24px 28px;
+      flex: 1;
+      max-width: 1440px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .screen-section {
+      display: none;
+    }
+
+    .screen-section.active {
+      display: block;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+    }
+
+    @media (max-width: 960px) {
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background: var(--white);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 2px 6px rgba(0, 43, 127, 0.05);
+      margin-bottom: 20px;
+    }
+
+    .card h2 {
+      color: var(--pasig-navy);
+      font-size: 1.15rem;
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--pasig-light-blue);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--pasig-navy);
+      margin-bottom: 6px;
+    }
+
+    input[type="text"], select {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 0.95rem;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+
+    .btn {
+      padding: 10px 16px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+
+    .btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    .btn-primary {
+      background: var(--pasig-blue);
+      color: var(--white);
+    }
+
+    .btn-navy {
+      background: var(--pasig-navy);
+      color: var(--white);
+    }
+
+    .btn-outline {
+      background: var(--white);
+      color: var(--pasig-blue);
+      border: 1px solid var(--pasig-blue);
+    }
+
+    .btn-success {
+      background: var(--success);
+      color: var(--white);
+    }
+
+    /* Public Monitor Specific Styles */
+    .now-serving-banner {
+      background: linear-gradient(135deg, var(--pasig-navy), var(--pasig-blue));
+      color: var(--white);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      margin-bottom: 22px;
+    }
+
+    .now-serving-banner h3 {
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-size: 0.95rem;
+      opacity: 0.9;
+    }
+
+    .serving-code {
+      font-size: 3.1rem;
+      font-weight: 800;
+      margin: 8px 0 4px;
+      letter-spacing: 1px;
+    }
+
+    .serving-control {
+      font-size: 1.15rem;
+      background: rgba(255, 255, 255, 0.16);
+      display: inline-block;
+      padding: 4px 14px;
+      border-radius: 99px;
+      margin-bottom: 8px;
+    }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+
+    th, td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border-color);
+      text-align: left;
+    }
+
+    th {
+      background: var(--pasig-light-blue);
+      color: var(--pasig-navy);
+      font-weight: 700;
+    }
+
+    .status-tag {
+      display: inline-block;
+      padding: 3px 9px;
+      border-radius: 99px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      background: var(--pasig-light-blue);
+      color: var(--pasig-blue);
+    }
+
+    /* Staff Toast Notification */
+    #toast-container {
+      position: fixed;
+      bottom: 22px;
+      right: 22px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-width: 420px;
+    }
+
+    .toast {
+      background: var(--pasig-navy);
+      color: var(--white);
+      padding: 14px 18px;
+      border-radius: 8px;
+      border-left: 5px solid var(--pasig-accent);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.22);
+      font-size: 0.88rem;
+      line-height: 1.4;
+    }
+
+    /* Flowchart Boxes */
+    .flow-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+
+    .flow-box {
+      background: var(--pasig-light-blue);
+      border: 1px solid var(--pasig-blue);
+      border-top: 5px solid var(--pasig-navy);
+      border-radius: 8px;
+      padding: 14px;
+    }
+
+    .flow-box h4 {
+      color: var(--pasig-navy);
+      margin-bottom: 6px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Official Blue & White Header with Pasig Logo and Caruncho Ave Address -->
+  <header>
+    <div class="brand-container">
+      <div class="pasig-logo">
+        <img src="../../MODULE1/assets/PASIG_CITY_SEAL.png" alt="Pasig City Official Logo" />
+      </div>
+      <div class="header-titles">
+        <h1>CSWDO MIS — Queue Management System</h1>
+        <p>Caruncho Avenue, Barangay San Nicolas, Pasig City 1600 Metro Manila</p>
+      </div>
+    </div>
+    <div class="clock-box">
+      <div class="time" id="live-time">--:--:--</div>
+      <div class="date" id="live-date">Loading date...</div>
+    </div>
+  </header>
+
+  <!-- Live Capacity & User Counter Bar -->
+  <section class="capacity-bar">
+    <div class="stat-pill">
+      <span>AM Online Slots</span>
+      <strong id="counter-am">0 / 30</strong>
+    </div>
+    <div class="stat-pill">
+      <span>PM Online Slots</span>
+      <strong id="counter-pm">0 / 30</strong>
+    </div>
+    <div class="stat-pill">
+      <span>Total Walk-In Users Today</span>
+      <strong id="counter-walkin">0</strong>
+    </div>
+    <div class="stat-pill">
+      <span>Total Active Users in Queue</span>
+      <strong id="counter-active">0</strong>
+    </div>
+  </section>
+
+  <!-- Screen Navigation Tabs -->
+  <nav class="nav-tabs">
+    <button class="tab-btn active" onclick="switchTab('screen1', this)">Screen 1: Employee Validation Desk</button>
+    <button class="tab-btn" onclick="switchTab('screen2', this)">Screen 2: Live Public Queue Monitor</button>
+    <button class="tab-btn" onclick="switchTab('screen3', this)">Screen 3: Interviewer Controller</button>
+    <button class="tab-btn" onclick="switchTab('screen4', this)">
+      Screen 4: Admin & Staff Alerts <span class="badge-count" id="notif-badge">0</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('screen5', this)">Deliverables: Flowchart & Expenses</button>
+  </nav>
+
+  <main>
+    <!-- SCREEN 1: EMPLOYEE VALIDATION & CHECK-IN DESK -->
+    <section id="screen1" class="screen-section active">
+      <div class="grid-2">
+        <div class="card">
+          <h2>Control Number / Queue ID Lookup</h2>
+          <div class="form-group">
+            <label for="lookup-input">Enter Client Control Number or OL/WI Queue ID</label>
+            <div style="display:flex; gap:8px;">
+              <input type="text" id="lookup-input" placeholder="e.g., CN-2026-0001 or OL-2026-1004-001" />
+              <button class="btn btn-primary" onclick="lookupClient()">Search</button>
+            </div>
+          </div>
+
+          <div id="client-details-box" style="background:var(--pasig-light-blue); padding:14px; border-radius:8px; margin-top:12px;">
+            <p style="color:var(--text-muted); font-size:0.9rem;">Select or search a Control Number to view personal info and validate physical hard copies against uploaded attachments.</p>
+          </div>
+
+          <div class="btn-row">
+            <button class="btn btn-primary" id="btn-validate-interview" onclick="validateForInterview()" disabled>
+              Validate & Set to 'For Interview' (Generate OL/WI ID)
+            </button>
+            <button class="btn btn-success" id="btn-validate-approve" onclick="validateDirectApprove()" disabled>
+              Validate & Approve Directly
+            </button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Walk-In Verification & Registered Applications</h2>
+          <div style="background:var(--gray-bg); padding:12px; border-radius:8px; margin-bottom:16px;">
+            <h4 style="color:var(--pasig-navy); margin-bottom:8px;">Register New Walk-In Client</h4>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
+              <input type="text" id="wi-name" placeholder="Client Full Name" />
+              <select id="wi-assistance">
+                <option value="Medical Assistance">Medical Assistance</option>
+                <option value="Financial Assistance">Financial Assistance</option>
+                <option value="Burial Assistance">Burial Assistance</option>
+                <option value="Balik Probinsiya">Balik Probinsiya</option>
+              </select>
+            </div>
+            <button class="btn btn-navy" style="margin-top:8px; width:100%;" onclick="registerWalkIn()">
+              + Add Walk-In Client & Generate Control Number
+            </button>
+          </div>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Control No.</th>
+                <th>Client Name</th>
+                <th>Type / Slot</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="applications-table-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCREEN 2: LIVE PUBLIC QUEUE MONITOR (WAITING AREA TV VIEW) -->
+    <section id="screen2" class="screen-section">
+      <div class="now-serving-banner">
+        <h3>Now Serving at CSWDO Interview Desk</h3>
+        <div class="serving-code" id="tv-serving-code">WAITING FOR NEXT CALL</div>
+        <div class="serving-control" id="tv-serving-control">Control No: ---</div>
+        <p id="tv-serving-window">Window 1 — Social Welfare Officer</p>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <h2>Online Queue (OL-2026-Current Date) <small>Ordered by Control No.</small></h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Queue ID</th>
+                <th>Control Number</th>
+                <th>Session</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="tv-online-body"></tbody>
+          </table>
+        </div>
+
+        <div class="card">
+          <h2>Walk-In Queue (WI-2026-Current Date) <small>Dynamic Daily Count</small></h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Queue ID</th>
+                <th>Control Number</th>
+                <th>Client Type</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="tv-walkin-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCREEN 3: INTERVIEWER (SOCIAL WELFARE OFFICER) QUEUE CONTROLLER -->
+    <section id="screen3" class="screen-section">
+      <div class="grid-2">
+        <div class="card">
+          <h2>Interviewer Queue Control Panel</h2>
+          <div class="form-group">
+            <label>Assigned Interviewer (Maps to CSWDO Intake Sheet)</label>
+            <input type="text" id="interviewer-name" value="SWO II - L. Bautista" />
+          </div>
+
+          <div id="active-ticket-panel" style="background:var(--pasig-light-blue); padding:16px; border-radius:8px; margin-bottom:14px;">
+            <p><strong>Active Ticket:</strong> <span id="ctrl-ticket-id">None Selected</span></p>
+            <p><strong>Control Number:</strong> <span id="ctrl-control-no">---</span></p>
+            <p><strong>Client Name & Assistance:</strong> <span id="ctrl-client-info">---</span></p>
+            <p><strong>Queue Status:</strong> <span id="ctrl-status">---</span></p>
+            <hr style="margin:10px 0; border:none; border-top:1px solid var(--border-color);" />
+            <p><strong>Intake Sheet Date:</strong> <span id="ctrl-date">---</span></p>
+            <p><strong>Time Interview Started:</strong> <span id="ctrl-time-interview">---</span></p>
+            <p><strong>Time Released:</strong> <span id="ctrl-time-released">---</span></p>
+          </div>
+
+          <div class="btn-row">
+            <button class="btn btn-navy" onclick="callNextClient()">1. Call Next Client</button>
+            <button class="btn btn-primary" id="btn-start-interview" onclick="startInterview()" disabled>
+              2. Start Interview (Log Time)
+            </button>
+            <button class="btn btn-outline" id="btn-submit-admin" onclick="submitForAdminApproval()" disabled>
+              3. Submit for Admin Approval
+            </button>
+            <button class="btn btn-success" id="btn-release-client" onclick="releaseClient()" disabled>
+              4. Generate Signable Report & Release Client
+            </button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>All Active Queue Tickets Today</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Queue ID</th>
+                <th>Control No.</th>
+                <th>Status</th>
+                <th>Time In / Out</th>
+                <th>Select</th>
+              </tr>
+            </thead>
+            <tbody id="interviewer-queue-table"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCREEN 4: ADMIN & STAFF ALERT / NOTIFICATION / MESSAGE WIDGET -->
+    <section id="screen4" class="screen-section">
+      <div class="grid-2">
+        <div class="card">
+          <h2>Admin Evaluation & One-Click Approval</h2>
+          <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:12px;">
+            Displays clients whose Intake Sheet / Social Case Study evaluation is ready for Admin scanning and one-click approval.
+          </p>
+          <table>
+            <thead>
+              <tr>
+                <th>Queue ID</th>
+                <th>Control No.</th>
+                <th>Assistance</th>
+                <th>Status</th>
+                <th>Admin Action</th>
+              </tr>
+            </thead>
+            <tbody id="admin-approval-table"></tbody>
+          </table>
+        </div>
+
+        <div class="card">
+          <h2>System Alert, Notification & Message Log</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>From → To</th>
+                <th>Queue ID / Control No.</th>
+                <th>Message</th>
+              </tr>
+            </thead>
+            <tbody id="notifications-table-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCREEN 5: FLOWCHART & DEPLOYMENT EXPENSES REPORT TABLE -->
+    <section id="screen5" class="screen-section">
+      <div class="card">
+        <h2>6-Step System Flowchart (Queue Management Workflow)</h2>
+        <div class="flow-steps">
+          <div class="flow-box">
+            <h4>Step 1: Client Arrival & Control No. Input</h4>
+            <p>Online & Walk-In clients present their Control Number and physical requirements. Staff inputs Control Number and system tracks total user counts.</p>
+          </div>
+          <div class="flow-box">
+            <h4>Step 2: Validation & OL/WI ID Generation</h4>
+            <p>Staff validates attachments against physical hard copies and sets status to "for Interview", generating <strong>OL-2026-MMDD-Seq</strong> or <strong>WI-2026-MMDD-Seq</strong> ordered by Control Number.</p>
+          </div>
+          <div class="flow-box">
+            <h4>Step 3: Live Queueing & Calling to Interview</h4>
+            <p>Public TV displays OL/WI IDs with Control Numbers. Clicking "Call Next" & "Start Interview" logs <strong>Date</strong>, <strong>Interviewer</strong>, and <strong>Time Interview</strong> for the Intake Sheet.</p>
+          </div>
+          <div class="flow-box">
+            <h4>Step 4: Post-Interview & Admin Trigger</h4>
+            <p>After the interview assessment, the module updates the Admin status view and sends an Alert, Notification, and Message to the Admin for evaluation.</p>
+          </div>
+          <div class="flow-box">
+            <h4>Step 5: Admin Approval & Staff Toast</h4>
+            <p>Admin reviews the record and clicks <strong>Approve</strong>. The system immediately dispatches a real-time notification back to the staff and sets status to Approved.</p>
+          </div>
+          <div class="flow-box">
+            <h4>Step 6: Report Release & Survey Hand-off</h4>
+            <p>Staff generates the signable report and clicks "Release Client", logging <strong>Time Released</strong> and passing the Control Number to the Customer Satisfaction Survey.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Deployment Expenses Report Table</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Expense Item</th>
+              <th>Role in Queue Management Deployment</th>
+              <th>Estimated Cost (PHP)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Shared Cloud Web & Database Server</strong></td>
+              <td>Hosts the CSWDO MIS database, queue controller, and real-time notification service</td>
+              <td>₱1,500.00 / month</td>
+            </tr>
+            <tr>
+              <td><strong>43" Smart LED TV Monitor</strong></td>
+              <td>Public Waiting Area display showing OL-2026-... and WI-2026-... live queue</td>
+              <td>₱14,500.00 (One-time)</td>
+            </tr>
+            <tr>
+              <td><strong>Thermal Queue Ticket Printer</strong></td>
+              <td>Prints WI-"2026-current date" and Control Number slips for Walk-In clients</td>
+              <td>₱2,800.00 (One-time)</td>
+            </tr>
+            <tr>
+              <td><strong>Wall Mount Bracket & HDMI Cabling</strong></td>
+              <td>Physical installation of the queue monitor at the CSWDO waiting lobby</td>
+              <td>₱850.00 (One-time)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast-container"></div>
+
+  <script>
+    // Initial Seed Data matching cswdo_queue_schema.sql
+    const applications = [
+      {
+        control_number: 'CN-2026-0001',
+        client_name: 'Maria Clara Santos',
+        client_type: 'Online',
+        assistance_type: 'Medical Assistance',
+        schedule_slot: 'AM',
+        attachments: 'Pasig Pass QR, Medical Abstract, Barangay Indigency, Valid ID',
+        application_status: 'Pending Validation'
+      },
+      {
+        control_number: 'CN-2026-0002',
+        client_name: 'Juan Dela Cruz',
+        client_type: 'Online',
+        assistance_type: 'Financial Assistance',
+        schedule_slot: 'AM',
+        attachments: 'Pasig Pass QR, Barangay Certificate of Indigency, Valid ID',
+        application_status: 'Pending Validation'
+      },
+      {
+        control_number: 'CN-2026-0003',
+        client_name: 'Roberto Reyes',
+        client_type: 'Online',
+        assistance_type: 'Burial Assistance',
+        schedule_slot: 'PM',
+        attachments: 'Pasig Pass QR, Death Certificate, Funeral Contract, Valid ID',
+        application_status: 'Pending Validation'
+      },
+      {
+        control_number: 'CN-2026-0004',
+        client_name: 'Elena Magtanggol',
+        client_type: 'Walk-In',
+        assistance_type: 'Balik Probinsiya',
+        schedule_slot: 'Walk-In',
+        attachments: 'Pasig Pass QR, Social Case Referral, Valid ID',
+        application_status: 'Pending Validation'
+      }
+    ];
+
+    const queueLogs = [];
+    const notifications = [];
+    let selectedClient = null;
+    let activeQueueRecord = null;
+
+    // Helper: Format 2026 Date Stamp (YYYY-MMDD)
+    function get2026DateStamp() {
+      const now = new Date();
+      const month = String(now.getMonth() + 1).padStart(2, '0');
+      const day = String(now.getDate()).padStart(2, '0');
+      return `2026-${month}${day}`;
+    }
+
+    function getFormattedDate() {
+      const now = new Date();
+      const month = String(now.getMonth() + 1).padStart(2, '0');
+      const day = String(now.getDate()).padStart(2, '0');
+      return `2026-${month}-${day}`;
+    }
+
+    function getCurrentTimeStr() {
+      return new Date().toTimeString().split(' ')[0];
+    }
+
+    // Live Clock
+    function updateClock() {
+      const now = new Date();
+      document.getElementById('live-time').textContent = now.toLocaleTimeString();
+      document.getElementById('live-date').textContent = now.toDateString();
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Switch Navigation Tabs
+    function switchTab(screenId, btn) {
+      document.querySelectorAll('.screen-section').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById(screenId).classList.add('active');
+      btn.classList.add('active');
+    }
+
+    // Toast Notification Generator
+    function showToast(title, body) {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.innerHTML = `<strong>${title}</strong><br/>${body}`;
+      container.appendChild(toast);
+      setTimeout(() => toast.remove(), 6500);
+    }
+
+    // Lookup by Control Number OR OL-/WI- Queue ID
+    function lookupClient(queryOverride) {
+      const q = (queryOverride || document.getElementById('lookup-input').value).trim().toUpperCase();
+      if (!q) return;
+
+      let app = applications.find(a => a.control_number.toUpperCase() === q);
+      if (!app) {
+        const qLog = queueLogs.find(l => l.queue_code.toUpperCase() === q);
+        if (qLog) {
+          app = applications.find(a => a.control_number === qLog.control_number);
+        }
+      }
+
+      const box = document.getElementById('client-details-box');
+      if (!app) {
+        selectedClient = null;
+        box.innerHTML = `<p style="color:#c0392b; font-weight:600;">No record found for "${q}".</p>`;
+        document.getElementById('btn-validate-interview').disabled = true;
+        document.getElementById('btn-validate-approve').disabled = true;
+        return;
+      }
+
+      selectedClient = app;
+      const existingTicket = queueLogs.find(l => l.control_number === app.control_number);
+
+      box.innerHTML = `
+        <p><strong>Control Number:</strong> ${app.control_number}</p>
+        <p><strong>Queue ID:</strong> ${existingTicket ? existingTicket.queue_code : 'Not yet generated'}</p>
+        <p><strong>Client Name:</strong> ${app.client_name} (${app.client_type} - ${app.schedule_slot})</p>
+        <p><strong>Assistance Type:</strong> ${app.assistance_type}</p>
+        <p><strong>Uploaded Attachments:</strong> ${app.attachments}</p>
+        <p><strong>Current Status:</strong> <span class="status-tag">${app.application_status}</span></p>
+      `;
+
+      const canValidate = app.application_status === 'Pending Validation';
+      document.getElementById('btn-validate-interview').disabled = !canValidate;
+      document.getElementById('btn-validate-approve').disabled = !canValidate;
+    }
+
+    // Generate OL-2026-MMDD-Seq or WI-2026-MMDD-Seq and Queue Client
+    function validateForInterview() {
+      if (!selectedClient) return;
+
+      const isOnline = selectedClient.client_type === 'Online';
+      const prefix = isOnline ? 'OL' : 'WI';
+      const slot = selectedClient.schedule_slot;
+
+      // Enforce 30 AM and 30 PM capacity for Online slots
+      if (isOnline) {
+        const slotCount = queueLogs.filter(q => q.client_type === 'Online' && q.schedule_slot === slot).length;
+        if (slotCount >= 30) {
+          alert(`Daily capacity reached: ${slot} Online session is capped at 30 slots.`);
+          return;
+        }
+      }
+
+      const sameTypeToday = queueLogs.filter(q =>
+        isOnline ? (q.client_type === 'Online' && q.schedule_slot === slot) : (q.client_type === 'Walk-In')
+      );
+      const seqNum = sameTypeToday.length + 1;
+      const paddedSeq = String(seqNum).padStart(3, '0');
+      const queueCode = `${prefix}-${get2026DateStamp()}-${paddedSeq}`;
+
+      selectedClient.application_status = 'for Interview';
+
+      queueLogs.push({
+        queue_code: queueCode,
+        control_number: selectedClient.control_number,
+        client_name: selectedClient.client_name,
+        assistance_type: selectedClient.assistance_type,
+        client_type: selectedClient.client_type,
+        schedule_slot: selectedClient.schedule_slot,
+        queue_number: seqNum,
+        queue_status: 'Waiting',
+        assigned_window: 'Window 1',
+        interviewer_name: null,
+        queue_date: getFormattedDate(),
+        time_interview: null,
+        time_released: null
+      });
+
+      // Order simultaneous Online arrivals by Control Number
+      queueLogs.sort((a, b) => a.control_number.localeCompare(b.control_number));
+
+      showToast('Queue Ticket Generated', `${queueCode} paired with Control No. ${selectedClient.control_number} is now Waiting for Interview.`);
+      lookupClient(selectedClient.control_number);
+      renderAll();
+    }
+
+    function validateDirectApprove() {
+      if (!selectedClient) return;
+      selectedClient.application_status = 'Approved';
+      showToast('Directly Approved', `Control No. ${selectedClient.control_number} marked Approved without interview.`);
+      lookupClient(selectedClient.control_number);
+      renderAll();
+    }
+
+    function registerWalkIn() {
+      const nameInput = document.getElementById('wi-name');
+      const assistanceSelect = document.getElementById('wi-assistance');
+      const name = nameInput.value.trim();
+      if (!name) {
+        alert('Please enter the Walk-In client name.');
+        return;
+      }
+
+      const nextNum = String(applications.length + 1).padStart(4, '0');
+      const newControl = `CN-2026-${nextNum}`;
+
+      applications.push({
+        control_number: newControl,
+        client_name: name,
+        client_type: 'Walk-In',
+        assistance_type: assistanceSelect.value,
+        schedule_slot: 'Walk-In',
+        attachments: 'Physical Hard Copies Verified On-Site',
+        application_status: 'Pending Validation'
+      });
+
+      nameInput.value = '';
+      document.getElementById('lookup-input').value = newControl;
+      lookupClient(newControl);
+      renderAll();
+    }
+
+    // Interviewer Controls (Screen 3)
+    function selectQueueTicket(queueCode) {
+      activeQueueRecord = queueLogs.find(q => q.queue_code === queueCode) || null;
+      renderInterviewerPanel();
+    }
+
+    function callNextClient() {
+      const nextWaiting = queueLogs
+        .filter(q => q.queue_status === 'Waiting')
+        .sort((a, b) => a.control_number.localeCompare(b.control_number))[0];
+
+      if (!nextWaiting) {
+        alert('No clients currently waiting in queue.');
+        return;
+      }
+
+      nextWaiting.queue_status = 'Called';
+      activeQueueRecord = nextWaiting;
+      showToast('Calling Next Client', `Now calling ${nextWaiting.queue_code} (${nextWaiting.control_number}) to Window 1.`);
+      renderAll();
+    }
+
+    function startInterview() {
+      if (!activeQueueRecord) return;
+      activeQueueRecord.queue_status = 'In Interview';
+      activeQueueRecord.interviewer_name = document.getElementById('interviewer-name').value;
+      activeQueueRecord.time_interview = getCurrentTimeStr();
+      showToast('Intake Sheet Timestamp Logged', `Started interview for ${activeQueueRecord.queue_code} at ${activeQueueRecord.time_interview}.`);
+      renderAll();
+    }
+
+    function submitForAdminApproval() {
+      if (!activeQueueRecord) return;
+      activeQueueRecord.queue_status = 'For Admin Evaluation';
+      const app = applications.find(a => a.control_number === activeQueueRecord.control_number);
+      if (app) app.application_status = 'For Admin Approval';
+
+      notifications.unshift({
+        alert_type: 'Alert',
+        sender_role: 'Interviewer',
+        recipient_role: 'Admin',
+        queue_code: activeQueueRecord.queue_code,
+        control_number: activeQueueRecord.control_number,
+        message: `Record for ${activeQueueRecord.queue_code} (${activeQueueRecord.control_number}) is ready to be scanned and evaluated. Click Approve.`
+      });
+
+      showToast('Sent to Admin Side', `Alert & Notification dispatched to Admin for ${activeQueueRecord.queue_code}.`);
+      renderAll();
+    }
+
+    function adminApproveRecord(queueCode) {
+      const qRec = queueLogs.find(q => q.queue_code === queueCode);
+      if (!qRec) return;
+
+      qRec.queue_status = 'Approved - Ready for Release';
+      const app = applications.find(a => a.control_number === qRec.control_number);
+      if (app) app.application_status = 'Approved';
+
+      const msg = `Notification: Queue ID ${qRec.queue_code} (Control No. ${qRec.control_number}) has been APPROVED by Admin. Ready to generate report for signature.`;
+      notifications.unshift({
+        alert_type: 'Notification',
+        sender_role: 'Admin',
+        recipient_role: 'Interviewer',
+        queue_code: qRec.queue_code,
+        control_number: qRec.control_number,
+        message: msg
+      });
+
+      showToast('Admin Approved Record!', msg);
+      renderAll();
+    }
+
+    function releaseClient() {
+      if (!activeQueueRecord) return;
+      activeQueueRecord.queue_status = 'Released';
+      activeQueueRecord.time_released = getCurrentTimeStr();
+
+      const app = applications.find(a => a.control_number === activeQueueRecord.control_number);
+      if (app) app.application_status = 'Released';
+
+      showToast(
+        'Report Signed & Client Released',
+        `Time Released logged (${activeQueueRecord.time_released}). Control No. ${activeQueueRecord.control_number} passed to Customer Satisfaction Survey.`
+      );
+      renderAll();
+    }
+
+    function renderInterviewerPanel() {
+      const rec = activeQueueRecord;
+      document.getElementById('ctrl-ticket-id').textContent = rec ? rec.queue_code : 'None Selected';
+      document.getElementById('ctrl-control-no').textContent = rec ? rec.control_number : '---';
+      document.getElementById('ctrl-client-info').textContent = rec ? `${rec.client_name} (${rec.assistance_type})` : '---';
+      document.getElementById('ctrl-status').textContent = rec ? rec.queue_status : '---';
+      document.getElementById('ctrl-date').textContent = rec ? rec.queue_date : '---';
+      document.getElementById('ctrl-time-interview').textContent = rec && rec.time_interview ? rec.time_interview : 'Not started';
+      document.getElementById('ctrl-time-released').textContent = rec && rec.time_released ? rec.time_released : 'Not released';
+
+      document.getElementById('btn-start-interview').disabled = !rec || (rec.queue_status !== 'Called' && rec.queue_status !== 'Waiting');
+      document.getElementById('btn-submit-admin').disabled = !rec || rec.queue_status !== 'In Interview';
+      document.getElementById('btn-release-client').disabled = !rec || rec.queue_status !== 'Approved - Ready for Release';
+    }
+
+    function renderAll() {
+      // Update Counters
+      const amCount = queueLogs.filter(q => q.client_type === 'Online' && q.schedule_slot === 'AM').length;
+      const pmCount = queueLogs.filter(q => q.client_type === 'Online' && q.schedule_slot === 'PM').length;
+      const walkInTotal = applications.filter(a => a.client_type === 'Walk-In').length;
+      const activeTotal = queueLogs.filter(q => q.queue_status !== 'Released' && q.queue_status !== 'No Show').length;
+
+      document.getElementById('counter-am').textContent = `${amCount} / 30`;
+      document.getElementById('counter-pm').textContent = `${pmCount} / 30`;
+      document.getElementById('counter-walkin').textContent = walkInTotal;
+      document.getElementById('counter-active').textContent = activeTotal;
+      document.getElementById('notif-badge').textContent = notifications.length;
+
+      // Screen 1 Table
+      const appBody = document.getElementById('applications-table-body');
+      appBody.innerHTML = applications.map(a => `
+        <tr>
+          <td><strong>${a.control_number}</strong></td>
+          <td>${a.client_name}</td>
+          <td>${a.client_type} (${a.schedule_slot})</td>
+          <td><span class="status-tag">${a.application_status}</span></td>
+          <td><button class="btn btn-outline" style="padding:4px 10px;" onclick="document.getElementById('lookup-input').value='${a.control_number}'; lookupClient('${a.control_number}')">Select</button></td>
+        </tr>
+      `).join('');
+
+      // Screen 2 Live TV Monitor
+      const serving = queueLogs.find(q => q.queue_status === 'Called' || q.queue_status === 'In Interview');
+      document.getElementById('tv-serving-code').textContent = serving ? serving.queue_code : 'WAITING FOR NEXT CALL';
+      document.getElementById('tv-serving-control').textContent = serving ? `Control Number: ${serving.control_number}` : 'Control No: ---';
+      document.getElementById('tv-serving-window').textContent = serving ? `${serving.assigned_window} — ${serving.interviewer_name || 'Social Welfare Officer'}` : 'Waiting Lobby Monitor';
+
+      const onlineWaiting = queueLogs.filter(q => q.client_type === 'Online' && q.queue_status !== 'Released');
+      document.getElementById('tv-online-body').innerHTML = onlineWaiting.length ? onlineWaiting.map(q => `
+        <tr>
+          <td><strong>${q.queue_code}</strong></td>
+          <td>${q.control_number}</td>
+          <td>${q.schedule_slot}</td>
+          <td><span class="status-tag">${q.queue_status}</span></td>
+        </tr>
+      `).join('') : '<tr><td colspan="4">No active Online queue tickets.</td></tr>';
+
+      const walkInWaiting = queueLogs.filter(q => q.client_type === 'Walk-In' && q.queue_status !== 'Released');
+      document.getElementById('tv-walkin-body').innerHTML = walkInWaiting.length ? walkInWaiting.map(q => `
+        <tr>
+          <td><strong>${q.queue_code}</strong></td>
+          <td>${q.control_number}</td>
+          <td>Walk-In</td>
+          <td><span class="status-tag">${q.queue_status}</span></td>
+        </tr>
+      `).join('') : '<tr><td colspan="4">No active Walk-In queue tickets.</td></tr>';
+
+      // Screen 3 Table
+      document.getElementById('interviewer-queue-table').innerHTML = queueLogs.length ? queueLogs.map(q => `
+        <tr>
+          <td><strong>${q.queue_code}</strong></td>
+          <td>${q.control_number}</td>
+          <td><span class="status-tag">${q.queue_status}</span></td>
+          <td>${q.time_interview || '--'} / ${q.time_released || '--'}</td>
+          <td><button class="btn btn-outline" style="padding:4px 10px;" onclick="selectQueueTicket('${q.queue_code}')">Manage</button></td>
+        </tr>
+      `).join('') : '<tr><td colspan="5">No clients in queue yet. Validate a client on Screen 1.</td></tr>';
+
+      // Screen 4 Admin Table & Notifications
+      const adminList = queueLogs.filter(q => q.queue_status === 'For Admin Evaluation' || q.queue_status === 'Approved - Ready for Release');
+      document.getElementById('admin-approval-table').innerHTML = adminList.length ? adminList.map(q => `
+        <tr>
+          <td><strong>${q.queue_code}</strong></td>
+          <td>${q.control_number}</td>
+          <td>${q.assistance_type}</td>
+          <td><span class="status-tag">${q.queue_status}</span></td>
+          <td>
+            ${q.queue_status === 'For Admin Evaluation'
+              ? `<button class="btn btn-success" style="padding:5px 12px;" onclick="adminApproveRecord('${q.queue_code}')">Approve</button>`
+              : 'Approved ✓'}
+          </td>
+        </tr>
+      `).join('') : '<tr><td colspan="5">No records awaiting Admin evaluation.</td></tr>';
+
+      document.getElementById('notifications-table-body').innerHTML = notifications.length ? notifications.map(n => `
+        <tr>
+          <td><strong>${n.alert_type}</strong></td>
+          <td>${n.sender_role} → ${n.recipient_role}</td>
+          <td>${n.queue_code}<br/><small>${n.control_number}</small></td>
+          <td>${n.message}</td>
+        </tr>
+      `).join('') : '<tr><td colspan="4">No system alerts or notifications yet.</td></tr>';
+
+      renderInterviewerPanel();
+    }
+
+    renderAll();
+  </script>
+</body>
+</html>

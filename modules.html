@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0d2c54">
+    <title>CSWDO Pasig City | All Modules</title>
+    <style>
+        :root {
+            color-scheme: light;
+            font-family: Inter, "Segoe UI", Arial, sans-serif;
+            color: #1b2430;
+            background: #f3f6fa;
+            font-synthesis: none;
+            text-rendering: optimizeLegibility;
+            --navy: #0d2c54;
+            --blue: #1976d2;
+            --muted: #617084;
+            --border: #dce4ee;
+        }
+
+        * { box-sizing: border-box; }
+        body { margin: 0; min-width: 320px; }
+        a { color: inherit; }
+
+        .topbar {
+            padding: .65rem max(1.25rem, calc((100% - 1160px) / 2));
+            color: #fff;
+            background: var(--navy);
+            font-size: .78rem;
+            letter-spacing: .035em;
+        }
+
+        .masthead {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 1.1rem max(1.25rem, calc((100% - 1160px) / 2));
+            background: #fff;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand { display: flex; align-items: center; gap: .9rem; }
+        .brandMark {
+            display: grid;
+            width: 48px;
+            height: 48px;
+            place-items: center;
+            border-radius: 14px;
+            object-fit: contain;
+        }
+        .brand strong { display: block; color: var(--navy); font-size: 1rem; }
+        .brand span { display: block; margin-top: .2rem; color: var(--muted); font-size: .78rem; }
+
+        .homeLink {
+            padding: .65rem .9rem;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            color: var(--navy);
+            font-size: .85rem;
+            font-weight: 700;
+            text-decoration: none;
+        }
+        .homeLink:hover { border-color: var(--blue); color: var(--blue); }
+
+        main { width: min(1160px, calc(100% - 2.5rem)); margin: 0 auto; }
+        .intro { padding: 3.2rem 0 1.6rem; }
+        .eyebrow {
+            color: var(--blue);
+            font-size: .72rem;
+            font-weight: 800;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+        }
+        h1 {
+            max-width: 720px;
+            margin: .65rem 0 .8rem;
+            color: var(--navy);
+            font-size: clamp(2rem, 5vw, 3.1rem);
+            line-height: 1.1;
+        }
+        .intro p { max-width: 720px; margin: 0; color: var(--muted); line-height: 1.7; }
+
+        .notice {
+            margin: 0 0 2rem;
+            padding: .95rem 1rem;
+            border: 1px solid #c8dcf4;
+            border-radius: 10px;
+            color: #23486f;
+            background: #eaf4ff;
+            font-size: .88rem;
+            line-height: 1.55;
+        }
+
+        .sectionHeading {
+            display: flex;
+            align-items: end;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 2.2rem 0 1rem;
+        }
+        h2 { margin: 0; color: var(--navy); font-size: 1.25rem; }
+        .sectionHeading p { margin: 0; color: var(--muted); font-size: .82rem; }
+
+        .moduleGrid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1rem;
+            padding-bottom: 1rem;
+        }
+        .moduleCard {
+            display: flex;
+            min-height: 190px;
+            flex-direction: column;
+            padding: 1.2rem;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            background: #fff;
+            box-shadow: 0 4px 16px rgba(13, 44, 84, .045);
+            text-decoration: none;
+            transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+        }
+        .moduleCard:hover {
+            transform: translateY(-3px);
+            border-color: #9fc4ed;
+            box-shadow: 0 10px 24px rgba(13, 44, 84, .1);
+        }
+        .cardMeta { display: flex; align-items: center; justify-content: space-between; gap: .5rem; }
+        .moduleNumber { color: var(--blue); font-size: .72rem; font-weight: 800; letter-spacing: .08em; }
+        .badge {
+            padding: .25rem .55rem;
+            border-radius: 99px;
+            color: #38526e;
+            background: #eef3f8;
+            font-size: .67rem;
+            font-weight: 700;
+        }
+        .badgeStaff { color: #79520b; background: #fff4d7; }
+        .moduleCard h3 { margin: .9rem 0 .45rem; color: var(--navy); font-size: 1.05rem; }
+        .moduleCard p { margin: 0; color: var(--muted); font-size: .83rem; line-height: 1.55; }
+        .openLink { margin-top: auto; padding-top: 1rem; color: var(--blue); font-size: .82rem; font-weight: 800; }
+
+        footer {
+            margin-top: 2.5rem;
+            padding: 1.2rem max(1.25rem, calc((100% - 1160px) / 2));
+            border-top: 1px solid var(--border);
+            color: var(--muted);
+            background: #fff;
+            font-size: .78rem;
+        }
+
+        @media (max-width: 860px) {
+            .moduleGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        }
+        @media (max-width: 560px) {
+            .masthead { align-items: flex-start; }
+            .brand span { max-width: 190px; line-height: 1.4; }
+            .homeLink { white-space: nowrap; }
+            main { width: min(100% - 2rem, 1160px); }
+            .intro { padding-top: 2.3rem; }
+            .sectionHeading { align-items: flex-start; flex-direction: column; }
+            .moduleGrid { grid-template-columns: 1fr; }
+            .moduleCard { min-height: 165px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="topbar">REPUBLIC OF THE PHILIPPINES | CITY GOVERNMENT OF PASIG</div>
+    <header class="masthead">
+        <div class="brand">
+            <img class="brandMark" src="MODULE1/assets/PASIG_CITY_SEAL.png" alt="Pasig City seal">
+            <div>
+                <strong>Pasig City CSWDO</strong>
+                <span>City Social Welfare and Development Office</span>
+            </div>
+        </div>
+        <a class="homeLink" href="MODULE1/html/homepage.html">Public Homepage</a>
+    </header>
+
+    <main>
+        <section class="intro">
+            <span class="eyebrow">CSWDO Management Information System</span>
+            <h1>All modules, one place.</h1>
+            <p>Choose a service or work area below. Each module remains in its own folder and opens with its existing pages, scripts, and supporting files.</p>
+        </section>
+
+        <aside class="notice">
+            <strong>Running the modules:</strong> Static pages can be opened directly. Appointment, queue, and admin features that use PHP APIs need a local PHP server and their configured database; opening those pages as <code>file://</code> will not connect to the backend.
+        </aside>
+
+        <section aria-labelledby="clientModules">
+            <div class="sectionHeading">
+                <h2 id="clientModules">Client services</h2>
+                <p>Public-facing services and application tools</p>
+            </div>
+            <div class="moduleGrid">
+                <a class="moduleCard" href="MODULE1/html/homepage.html">
+                    <div class="cardMeta"><span class="moduleNumber">MODULE 1</span><span class="badge">Public</span></div>
+                    <h3>Assistance Services</h3>
+                    <p>Explore medical, financial, burial, and Balik Probinsya assistance, register, or sign in.</p>
+                    <span class="openLink">Open public website →</span>
+                </a>
+                <a class="moduleCard" href="MODULE2/combine_online_walk.html">
+                    <div class="cardMeta"><span class="moduleNumber">MODULE 2</span><span class="badge">Application</span></div>
+                    <h3>Online &amp; Walk-in Applications</h3>
+                    <p>Start an online application or record an in-person applicant.</p>
+                    <span class="openLink">Open application module →</span>
+                </a>
+                <a class="moduleCard" href="MODULE3/CSWDO%20%20Appointment%20%26%20Scheduling/cswdo_client_appointment_module.html">
+                    <div class="cardMeta"><span class="moduleNumber">MODULE 3</span><span class="badge">Client</span></div>
+                    <h3>Appointment &amp; Scheduling</h3>
+                    <p>View appointment availability, book a visit, and manage a client appointment.</p>
+                    <span class="openLink">Open appointment module →</span>
+                </a>
+                <a class="moduleCard" href="MODULE6/Client_Notif_Page.html">
+                    <div class="cardMeta"><span class="moduleNumber">MODULE 6</span><span class="badge">Client</span></div>
+                    <h3>Client Notifications</h3>
+                    <p>View the client-facing notifications interface.</p>
+                    <span class="openLink">Open client notifications →</span>
+                </a>
+            </div>
+        </section>
+
+        <section aria-labelledby="staffModules">
+            <div class="sectionHeading">
+                <h2 id="staffModules">Staff &amp; administration</h2>
+                <p>Operational tools for authorized CSWDO staff</p>
+            </div>
+            <div class="moduleGrid">
+                <a class="moduleCard" href="MODULE3/CSWDO%20%20Appointment%20%26%20Scheduling/cswdo_employee_appointment_module.html">
+                    <div class="cardMeta"><span class="moduleNumber">MODULE 3</span><span class="badge badgeStaff">Staff</span></div>
+                    <h3>Appointment Staff Portal</h3>
+                    <p>Manage appointment schedules, check-ins, capacities, and client queues.</p>
+                    <span class="openLink">Open staff portal →</span>
+                </a>
+                <a class="moduleCard" href="MODULE3/CSWDO%20Queue%20Management/cswdo-queue-module.html">
+                    <div class="cardMeta"><span class="moduleNumber">MODULE 3</span><span class="badge badgeStaff">Staff</span></div>
+                    <h3>Queue Management</h3>
+                    <p>Open the queue-management interface for handling CSWDO service queues.</p>
+                    <span class="openLink">Open queue module →</span>
+                </a>
+                <a class="moduleCard" href="MODULE4/requirements-verification.html">
+                    <div class="cardMeta"><span class="moduleNumber">MODULE 4</span><span class="badge badgeStaff">Staff</span></div>
+                    <h3>Requirements Verification</h3>
+                    <p>Review submitted documents and verify application requirements.</p>
+                    <span class="openLink">Open verification module →</span>
+                </a>
+                <a class="moduleCard" href="MODULE5/admin.html">
+                    <div class="cardMeta"><span class="moduleNumber">MODULE 5</span><span class="badge badgeStaff">Administrator</span></div>
+                    <h3>Admin Review &amp; Approval</h3>
+                    <p>Review applications and process administrative approval tasks.</p>
+                    <span class="openLink">Open admin module →</span>
+                </a>
+                <a class="moduleCard" href="MODULE6/Employee_Notif_Page.html">
+                    <div class="cardMeta"><span class="moduleNumber">MODULE 6</span><span class="badge badgeStaff">Staff</span></div>
+                    <h3>Employee Notifications</h3>
+                    <p>View the employee-facing notifications interface.</p>
+                    <span class="openLink">Open employee notifications →</span>
+                </a>
+                <a class="moduleCard" href="MODULE6/Admin_Notif_Page.html">
+                    <div class="cardMeta"><span class="moduleNumber">MODULE 6</span><span class="badge badgeStaff">Administrator</span></div>
+                    <h3>Admin Notifications</h3>
+                    <p>View the administrator-facing notifications interface.</p>
+                    <span class="openLink">Open admin notifications →</span>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer>Pasig City Social Welfare and Development Office · Module Hub</footer>
+</body>
+</html>

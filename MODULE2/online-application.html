@@ -1,0 +1,1145 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Online Application | CSWDO Pasig City</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --navy: #0d2c54;
+        --blue: #1976d2;
+        --blueLight: #2196f3;
+        --bluePale: #e3f0fd;
+        --gray100: #f5f7fa;
+        --white: #fff;
+        --success: #1e7e42;
+        --danger: #c0392b;
+        --text: #1a2332;
+        --muted: #5a6a7a;
+        --border: #d8e0ea;
+        --radius: 12px;
+        --shadow: 0 4px 20px rgba(13, 44, 84, 0.08);
+      }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body {
+        font-family: "Inter", system-ui, sans-serif;
+        background: var(--gray100);
+        color: var(--text);
+        line-height: 1.5;
+        min-height: 100vh;
+      }
+      button { font-family: inherit; }
+      :focus-visible { outline: 3px solid rgba(25, 118, 210, 0.45); outline-offset: 2px; }
+
+      /* ===== TOP BAR / HEADER ===== */
+      .topBar {
+        background: var(--navy); color: #fff; font-size: 0.8125rem;
+        padding: 0.5rem 1.5rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;
+      }
+      .topBar a { color: #fff; text-decoration: none; font-weight: 500; }
+      .topBar a:hover { text-decoration: underline; }
+      .siteHeader {
+        background: #fff; border-bottom: 1px solid var(--border); padding: 0.75rem 1.5rem;
+        display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+      }
+      .brand { display: flex; align-items: center; gap: 0.75rem; }
+      .brand img.seal { width: 52px; height: 52px; object-fit: contain; }
+      .brandText h1 { font-size: 1.125rem; font-weight: 800; color: var(--navy); }
+      .brandText p { font-size: 0.75rem; color: var(--blue); font-weight: 500; }
+      .navLinks { display: flex; gap: 0.25rem; flex-wrap: wrap; }
+      .navLinks a {
+        padding: 0.5rem 0.875rem; border-radius: 8px; font-size: 0.875rem; font-weight: 500;
+        color: var(--navy); text-decoration: none;
+      }
+      .navLinks a:hover { background: var(--bluePale); }
+      .navLinks a.active { background: var(--blue); color: #fff; }
+
+      /* ===== LAYOUT ===== */
+      .mainWrap { max-width: 920px; margin: 0 auto; padding: 1.75rem 1.25rem 3rem; }
+      .pageTitle { margin-bottom: 1.5rem; }
+      .pageTitle h2 { font-size: clamp(1.375rem, 3vw, 1.75rem); font-weight: 800; color: var(--navy); }
+      .pageTitle p { color: var(--muted); font-size: 0.9375rem; margin-top: 0.25rem; }
+
+      .progressBar { display: flex; gap: 0.5rem; margin-bottom: 1.75rem; overflow-x: auto; padding-bottom: 0.25rem; }
+      .progressStep { flex: 1; min-width: 90px; text-align: center; }
+      .progressStep .dot {
+        width: 28px; height: 28px; border-radius: 50%; background: var(--border); color: var(--muted);
+        font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; justify-content: center;
+        margin: 0 auto 0.35rem;
+      }
+      .progressStep.active .dot { background: var(--blue); color: #fff; }
+      .progressStep.done .dot { background: var(--success); color: #fff; }
+      .progressStep span { font-size: 0.7rem; font-weight: 500; color: var(--muted); }
+      .progressStep.active span { color: var(--blue); font-weight: 600; }
+
+      .card { background: #fff; border-radius: var(--radius); box-shadow: var(--shadow); border: 1px solid var(--border); overflow: hidden; }
+      .cardHeader { background: linear-gradient(135deg, var(--navy), #163a6b); color: #fff; padding: 1.25rem 1.5rem; }
+      .cardHeader h3 { font-size: 1.125rem; font-weight: 700; }
+      .cardHeader p { font-size: 0.8125rem; opacity: 0.85; margin-top: 0.2rem; }
+      .cardBody { padding: 1.5rem; }
+
+      /* ===== FORMS ===== */
+      .formGrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem 1.25rem; }
+      .formGroup { display: flex; flex-direction: column; gap: 0.35rem; }
+      .formGroup.full { grid-column: 1 / -1; }
+      label { font-size: 0.8125rem; font-weight: 600; color: var(--navy); }
+      label .req { color: var(--danger); }
+      input[type="text"], input[type="tel"], input[type="email"], input[type="password"],
+      input[type="number"], input[type="date"], select, textarea {
+        width: 100%; padding: 0.65rem 0.85rem; border: 1.5px solid var(--border); border-radius: 8px;
+        font-family: inherit; font-size: 0.9375rem; color: var(--text); background: #fff;
+        transition: border-color 0.15s, box-shadow 0.15s;
+      }
+      input:focus, select:focus, textarea:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.15); }
+      input.invalid, select.invalid, textarea.invalid { border-color: var(--danger); box-shadow: 0 0 0 3px rgba(192, 57, 43, 0.12); }
+      input:disabled { background: var(--gray100); cursor: not-allowed; }
+      textarea { resize: vertical; min-height: 80px; }
+      .helper { font-size: 0.75rem; color: var(--muted); }
+      .autoField { background: var(--gray100) !important; color: var(--muted) !important; cursor: not-allowed; pointer-events: none; }
+
+      .checkGrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.5rem; }
+      .checkItem {
+        display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.75rem; border: 1.5px solid var(--border);
+        border-radius: 8px; cursor: pointer; font-size: 0.875rem; font-weight: 500; transition: all 0.15s;
+      }
+      .checkItem:hover { border-color: var(--blueLight); background: var(--bluePale); }
+      .checkItem input { width: 16px; height: 16px; accent-color: var(--blue); flex-shrink: 0; }
+
+      .assistGrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.85rem; }
+      .assistCard {
+        border: 2px solid var(--border); border-radius: 10px; padding: 1rem; cursor: pointer; text-align: center;
+        transition: all 0.15s; background: #fff; color: inherit; width: 100%;
+      }
+      .assistCard:hover { border-color: var(--blueLight); background: var(--bluePale); }
+      .assistCard.selected { border-color: var(--blue); background: var(--bluePale); box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.2); }
+      .assistCard .icon { font-size: 1.75rem; margin-bottom: 0.4rem; }
+      .assistCard h4 { font-size: 0.9rem; font-weight: 700; color: var(--navy); }
+      .assistCard p { font-size: 0.75rem; color: var(--muted); margin-top: 0.2rem; }
+
+      .familyTable { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+      .familyTable th { background: var(--bluePale); color: var(--navy); font-weight: 600; padding: 0.6rem 0.5rem; text-align: left; border-bottom: 2px solid var(--border); white-space: nowrap; }
+      .familyTable td { padding: 0.4rem 0.35rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+      .familyTable input, .familyTable select { padding: 0.4rem 0.5rem; font-size: 0.8125rem; border-radius: 6px; }
+      .btnRemove { background: none; border: none; color: var(--danger); cursor: pointer; font-size: 1.1rem; padding: 0.25rem 0.5rem; border-radius: 6px; }
+      .btnRemove:hover { background: #fdecea; }
+
+      .reqItem {
+        display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; flex-wrap: wrap;
+        padding: 0.85rem 1rem; background: #fff; border: 1.5px solid var(--border); border-radius: 10px; margin-bottom: 0.6rem;
+      }
+      .reqItem.ok { border-color: #a5d6a7; background: #f6fbf7; }
+      .reqItem.missing { border-color: #f1b0a8; background: #fff8f7; }
+      .reqActions { display: flex; gap: 0.4rem; }
+      .badge { font-size: 0.68rem; font-weight: 700; padding: 0.1rem 0.5rem; border-radius: 999px; vertical-align: middle; margin-left: 0.35rem; }
+      .badge.required { background: #fdecea; color: var(--danger); }
+      .badge.optional { background: var(--gray100); color: var(--muted); }
+
+      /* ===== BUTTONS ===== */
+      .btnRow { display: flex; gap: 0.75rem; justify-content: space-between; margin-top: 1.75rem; flex-wrap: wrap; }
+      .btn {
+        display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem; padding: 0.7rem 1.4rem;
+        border-radius: 8px; font-size: 0.9375rem; font-weight: 600; cursor: pointer; border: none; transition: all 0.15s;
+      }
+      .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+      .btn.sm { padding: 0.4rem 0.85rem; font-size: 0.8125rem; }
+      .btnPrimary { background: var(--blue); color: #fff; }
+      .btnPrimary:hover:not(:disabled) { background: #1565c0; }
+      .btnSecondary { background: #fff; color: var(--navy); border: 1.5px solid var(--border); }
+      .btnSecondary:hover:not(:disabled) { background: var(--gray100); }
+      .btnSuccess { background: var(--success); color: #fff; }
+      .btnSuccess:hover:not(:disabled) { background: #176b38; }
+      .btnGhost { background: transparent; color: var(--blue); }
+      .btnGhost:hover { text-decoration: underline; }
+      .linkBtn { background: none; border: none; color: var(--blue); font-weight: 600; font-size: 0.8rem; cursor: pointer; padding: 0 0 0 0.5rem; }
+      .linkBtn:hover { text-decoration: underline; }
+
+      /* ===== SUCCESS / SUMMARY ===== */
+      .successBox { text-align: center; padding: 2rem 1.5rem; }
+      .successIcon { width: 72px; height: 72px; background: #e8f5e9; color: var(--success); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; margin: 0 auto 1.25rem; }
+      .controlNumber { font-family: "JetBrains Mono", monospace; font-size: 1.5rem; font-weight: 700; color: var(--navy); background: var(--bluePale); padding: 0.6rem 1.25rem; border-radius: 8px; display: inline-block; margin: 0.75rem 0; letter-spacing: 0.03em; }
+      .statusBadge { display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.35rem 0.85rem; border-radius: 999px; font-size: 0.8125rem; font-weight: 600; background: #fff3e0; color: #e65100; border: 1px solid #ffcc80; }
+      .statusBadge.ok { background: #e8f5e9; color: var(--success); border-color: #a5d6a7; }
+      .summaryRow { display: flex; justify-content: space-between; gap: 1rem; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
+      .summaryRow > span:first-child { color: var(--muted); font-weight: 500; flex-shrink: 0; }
+      .summaryRow > span:last-child { font-weight: 600; color: var(--navy); text-align: right; }
+      .consentBox { margin-top: 1.25rem; padding: 0.9rem 1rem; background: var(--bluePale); border-radius: 10px; }
+      .consentBox label { display: flex; gap: 0.6rem; align-items: flex-start; font-weight: 500; font-size: 0.8125rem; cursor: pointer; line-height: 1.45; }
+      .consentBox input { margin-top: 0.2rem; width: 16px; height: 16px; accent-color: var(--blue); flex-shrink: 0; }
+
+      /* ===== ACCOUNT / SCHEDULE ===== */
+      .tabs { display: flex; gap: 0.25rem; background: var(--gray100); padding: 0.25rem; border-radius: 10px; margin-bottom: 1.25rem; }
+      .tabs button { flex: 1; padding: 0.55rem; border: none; background: transparent; border-radius: 8px; font-weight: 600; font-size: 0.875rem; color: var(--muted); cursor: pointer; }
+      .tabs button.on { background: #fff; color: var(--navy); box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1); }
+      .userChip { display: flex; justify-content: space-between; align-items: center; gap: 0.75rem; flex-wrap: wrap; background: var(--bluePale); padding: 0.6rem 0.9rem; border-radius: 8px; font-size: 0.85rem; margin-bottom: 1rem; }
+      .pwWrap { position: relative; }
+      .pwWrap input { padding-right: 4.5rem; }
+      .pwToggle { position: absolute; right: 0.4rem; top: 50%; transform: translateY(-50%); border: none; background: transparent; color: var(--blue); font: 600 0.75rem "Inter", sans-serif; padding: 0.35rem 0.6rem; border-radius: 6px; cursor: pointer; }
+      .pwToggle:hover { background: var(--bluePale); }
+      .slotGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.5rem; margin-top: 0.5rem; }
+      .slot { padding: 0.6rem; border: 1.5px solid var(--border); border-radius: 8px; background: #fff; font-weight: 600; font-size: 0.8125rem; color: var(--navy); cursor: pointer; }
+      .slot:hover:not(:disabled) { border-color: var(--blue); background: var(--bluePale); }
+      .slot.selected { background: var(--blue); border-color: var(--blue); color: #fff; }
+      .slot:disabled { opacity: 0.4; cursor: not-allowed; text-decoration: line-through; }
+      .slot small { display: block; font-weight: 500; font-size: 0.72rem; opacity: 0.8; }
+
+      .siteFooter { background: var(--navy); color: rgba(255, 255, 255, 0.75); text-align: center; padding: 1.25rem; font-size: 0.8125rem; margin-top: 2rem; }
+      .toast { position: fixed; bottom: 1.5rem; right: 1.5rem; background: var(--navy); color: #fff; padding: 0.85rem 1.25rem; border-radius: 10px; font-size: 0.875rem; font-weight: 500; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2); transform: translateY(120%); opacity: 0; transition: all 0.3s; z-index: 100; max-width: 320px; }
+      .toast.show { transform: translateY(0); opacity: 1; }
+      .toast.success { background: var(--success); }
+      .toast.danger { background: var(--danger); }
+
+      @media (max-width: 640px) {
+        .topBar { justify-content: center; text-align: center; }
+        .btnRow { flex-direction: column-reverse; }
+        .btnRow .btn { width: 100%; }
+        .summaryRow { flex-direction: column; gap: 0.1rem; }
+        .summaryRow > span:last-child { text-align: left; }
+      }
+      @media print {
+        .topBar, .siteHeader, .siteFooter, .btnRow, .progressBar, .toast, .noPrint { display: none !important; }
+        body { background: #fff; }
+        .card { box-shadow: none; border: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="topBar">
+      <div>Mon – Fri: 8:00 AM – 5:00 PM &nbsp;|&nbsp; Pasig City Hotline: 8643-1111</div>
+      <div>
+        <a href="#">Book Appointment</a> · <a href="#">Track Application</a>
+      </div>
+    </div>
+    <header class="siteHeader">
+      <div class="brand">
+        <img src="../MODULE1/assets/PASIG_CITY_SEAL.png" alt="Pasig City Seal" class="seal" />
+        <div class="brandText">
+          <h1>CSWDO Portal</h1>
+          <p>Lungsod ng Pasig · Umaagos ang Pag-asa</p>
+        </div>
+      </div>
+      <nav class="navLinks" aria-label="Main">
+        <a href="#">Home</a>
+        <a href="#">Services</a>
+        <a href="#" class="active" aria-current="page">Apply</a>
+        <a href="#">Status Check</a>
+        <a href="#">Contact</a>
+      </nav>
+    </header>
+
+    <main class="mainWrap">
+      <div class="pageTitle">
+        <h2>Online Application</h2>
+        <p>Apply from home, upload your requirements, and book your visit to the CSWDO office.</p>
+      </div>
+      <div class="progressBar" id="progressBar" aria-label="Progress"></div>
+
+      <div class="card">
+        <div class="cardHeader">
+          <h3 id="stepTitle"></h3>
+          <p id="stepDesc"></p>
+        </div>
+        <div class="cardBody">
+          <!-- ===== 0: ACCOUNT ===== -->
+          <div class="stepPanel" id="stepAcct" style="display: none">
+            <div id="acctContinue"></div>
+            <div id="acctForms">
+              <div class="tabs" role="tablist">
+                <button type="button" class="on" data-tab="reg" role="tab">Create Account</button>
+                <button type="button" data-tab="log" role="tab">Log In</button>
+              </div>
+              <div class="formGrid" id="regForm">
+                <div class="formGroup">
+                  <label for="aFirst">First Name <span class="req">*</span></label>
+                  <input type="text" id="aFirst" class="inputWords" autocomplete="given-name" />
+                </div>
+                <div class="formGroup">
+                  <label for="aLast">Last Name <span class="req">*</span></label>
+                  <input type="text" id="aLast" class="inputWords" autocomplete="family-name" />
+                </div>
+                <div class="formGroup">
+                  <label for="aEmail">Email <span class="req">*</span></label>
+                  <input type="email" id="aEmail" autocomplete="email" />
+                </div>
+                <div class="formGroup">
+                  <label for="aMobile">Mobile Number <span class="req">*</span></label>
+                  <input type="tel" id="aMobile" class="inputPhone" inputmode="numeric" maxlength="11" placeholder="09XXXXXXXXX" autocomplete="tel" />
+                </div>
+                <div class="formGroup">
+                  <label for="aPass">Password <span class="req">*</span></label>
+                  <input type="password" id="aPass" autocomplete="new-password" />
+                  <span class="helper">At least 8 characters, with a letter and a number</span>
+                </div>
+                <div class="formGroup">
+                  <label for="aPass2">Confirm Password <span class="req">*</span></label>
+                  <input type="password" id="aPass2" autocomplete="new-password" />
+                </div>
+                <div class="formGroup full">
+                  <button type="button" class="btn btnPrimary" id="btnReg">Create Account &amp; Continue →</button>
+                </div>
+              </div>
+              <div class="formGrid" id="logForm" style="display: none">
+                <div class="formGroup">
+                  <label for="lEmail">Email <span class="req">*</span></label>
+                  <input type="email" id="lEmail" autocomplete="email" />
+                </div>
+                <div class="formGroup">
+                  <label for="lPass">Password <span class="req">*</span></label>
+                  <input type="password" id="lPass" autocomplete="current-password" />
+                </div>
+                <div class="formGroup full">
+                  <button type="button" class="btn btnPrimary" id="btnLog">Log In &amp; Continue →</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ===== 1: ASSISTANCE ===== -->
+          <div class="stepPanel" id="stepAssist" style="display: none">
+            <div id="userChipBox"></div>
+            <p style="margin-bottom: 1rem; font-size: 0.9rem; color: var(--muted)">Select the type of assistance you are requesting.</p>
+            <div class="assistGrid" id="assistGrid" role="radiogroup" aria-label="Assistance type">
+              <button type="button" class="assistCard" role="radio" aria-checked="false" data-value="Medical Assistance"><div class="icon">🏥</div><h4>Medical Assistance</h4><p>Hospitalization, medicines, lab tests</p></button>
+              <button type="button" class="assistCard" role="radio" aria-checked="false" data-value="Financial Assistance"><div class="icon">💰</div><h4>Financial Assistance</h4><p>Support for financial difficulties</p></button>
+              <button type="button" class="assistCard" role="radio" aria-checked="false" data-value="Burial / Funeral Assistance"><div class="icon">⚱️</div><h4>Burial / Funeral</h4><p>Death and burial related expenses</p></button>
+              <button type="button" class="assistCard" role="radio" aria-checked="false" data-value="Transportation Assistance"><div class="icon">🚌</div><h4>Transportation</h4><p>Travel for social or emergency needs</p></button>
+              <button type="button" class="assistCard" role="radio" aria-checked="false" data-value="Balik Probinsya Assistance"><div class="icon">🏠</div><h4>Balik Probinsya</h4><p>Support to return to province of origin</p></button>
+              <button type="button" class="assistCard" role="radio" aria-checked="false" data-value="Emergency Assistance"><div class="icon">🚨</div><h4>Emergency</h4><p>Urgent or unexpected situations</p></button>
+              <button type="button" class="assistCard" role="radio" aria-checked="false" data-value="Disaster Assistance"><div class="icon">🌪️</div><h4>Disaster Assistance</h4><p>Flood, fire, typhoon, calamities</p></button>
+              <button type="button" class="assistCard" role="radio" aria-checked="false" data-value="Referral Assistance"><div class="icon">📋</div><h4>Referral</h4><p>Referral to other offices / institutions</p></button>
+            </div>
+          </div>
+
+          <!-- ===== 2: PERSONAL INFO ===== -->
+          <div class="stepPanel" id="stepPersonal" style="display: none">
+            <div class="formGrid">
+              <div class="formGroup">
+                <label for="lastName">Apelyido (Last Name) <span class="req">*</span></label>
+                <input type="text" id="lastName" class="inputWords" placeholder="e.g. Dela Cruz" autocomplete="family-name" />
+              </div>
+              <div class="formGroup">
+                <label for="firstName">Pangalan (First Name) <span class="req">*</span></label>
+                <input type="text" id="firstName" class="inputWords" placeholder="e.g. Juan" autocomplete="given-name" />
+              </div>
+              <div class="formGroup">
+                <label for="middleName">Gitnang Pangalan (Middle Name)</label>
+                <input type="text" id="middleName" class="inputWords" placeholder="Optional" autocomplete="additional-name" />
+              </div>
+              <div class="formGroup">
+                <label for="birthDate">Araw ng Kapanganakan <span class="req">*</span></label>
+                <input type="date" id="birthDate" />
+              </div>
+              <div class="formGroup">
+                <label for="birthPlace">Lugar ng Kapanganakan <span class="req">*</span></label>
+                <input type="text" id="birthPlace" class="inputWords" placeholder="City / Municipality" />
+              </div>
+              <div class="formGroup">
+                <label for="age">Edad</label>
+                <input type="text" id="age" class="autoField" placeholder="Auto-calculated" readonly tabindex="-1" />
+                <span class="helper">Calculated from birth date</span>
+              </div>
+              <div class="formGroup">
+                <label for="sex">Kasarian <span class="req">*</span></label>
+                <select id="sex">
+                  <option value="">Select</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
+              </div>
+              <div class="formGroup">
+                <label for="civilStatus">Civil Status <span class="req">*</span></label>
+                <select id="civilStatus">
+                  <option value="">Select</option>
+                  <option value="Single">Single</option>
+                  <option value="Married">Married</option>
+                  <option value="Widowed">Widowed</option>
+                  <option value="Separated">Separated</option>
+                  <option value="Others">Others</option>
+                </select>
+              </div>
+              <div class="formGroup">
+                <label for="education">Natapos na Pag-aaral</label>
+                <select id="education">
+                  <option value="">Select</option>
+                  <option value="No Formal Education">No Formal Education</option>
+                  <option value="Elementary">Elementary</option>
+                  <option value="High School">High School</option>
+                  <option value="Vocational">Vocational</option>
+                  <option value="College">College</option>
+                  <option value="Post Graduate">Post Graduate</option>
+                </select>
+              </div>
+              <div class="formGroup">
+                <label for="occupation">Trabaho / Occupation</label>
+                <input type="text" id="occupation" class="inputWords" placeholder="e.g. Vendor, Driver" />
+              </div>
+              <div class="formGroup">
+                <label for="monthlyIncome">Buwanang Kita (₱)</label>
+                <input type="text" id="monthlyIncome" class="inputNumber" inputmode="numeric" placeholder="0" />
+              </div>
+              <div class="formGroup">
+                <label for="contactNumber">Contact Number <span class="req">*</span></label>
+                <input type="tel" id="contactNumber" class="inputPhone" inputmode="numeric" maxlength="11" placeholder="09XXXXXXXXX" autocomplete="tel" />
+              </div>
+              <div class="formGroup full">
+                <label for="addressStreet">Address (House No., Street) <span class="req">*</span></label>
+                <input type="text" id="addressStreet" maxlength="150" placeholder="House No., Street" autocomplete="address-line1" />
+              </div>
+              <div class="formGroup">
+                <label for="barangay">Barangay <span class="req">*</span></label>
+                <input type="text" id="barangay" class="inputWords" list="brgyList" maxlength="100" placeholder="e.g. San Nicolas" />
+                <datalist id="brgyList">
+                  <option value="Bagong Ilog"><option value="Bagong Katipunan"><option value="Bambang"><option value="Buting"><option value="Caniogan"><option value="Dela Paz"><option value="Kalawaan"><option value="Kapasigan"><option value="Kapitolyo"><option value="Malinao"><option value="Manggahan"><option value="Maybunga"><option value="Oranbo"><option value="Palatiw"><option value="Pinagbuhatan"><option value="Pineda"><option value="Rosario"><option value="Sagad"><option value="San Antonio"><option value="San Joaquin"><option value="San Jose"><option value="San Miguel"><option value="San Nicolas"><option value="Santa Cruz"><option value="Santa Lucia"><option value="Santa Rosa"><option value="Santo Tomas"><option value="Santolan"><option value="Sumilang"><option value="Ugong">
+                </datalist>
+              </div>
+              <div class="formGroup">
+                <label for="city">City</label>
+                <input type="text" id="city" class="inputWords" maxlength="100" value="Pasig City" />
+              </div>
+              <div class="formGroup">
+                <label for="housing">Housing <span class="req">*</span></label>
+                <select id="housing">
+                  <option value="">Select</option>
+                  <option value="Owned">Sariling Bahay</option>
+                  <option value="Renter">Renter</option>
+                  <option value="Sharer/Relative">Sharer / Living with relatives</option>
+                </select>
+              </div>
+              <div class="formGroup">
+                <label for="monthlyRent">Buwanang Renta (₱)</label>
+                <input type="text" id="monthlyRent" class="inputNumber" inputmode="numeric" placeholder="If renter" disabled />
+              </div>
+              <div class="formGroup">
+                <label for="electricity">Kuryente (₱)</label>
+                <input type="text" id="electricity" class="inputNumber" inputmode="numeric" placeholder="0" />
+              </div>
+              <div class="formGroup">
+                <label for="water">Tubig (₱)</label>
+                <input type="text" id="water" class="inputNumber" inputmode="numeric" placeholder="0" />
+              </div>
+              <div class="formGroup">
+                <label for="food">Pagkain (₱)</label>
+                <input type="text" id="food" class="inputNumber" inputmode="numeric" placeholder="0" />
+              </div>
+              <div class="formGroup full">
+                <label for="otherSupport">Iba pang pinagkukunan / kamag-anak na tumutulong</label>
+                <input type="text" id="otherSupport" class="inputWords" placeholder="Optional" />
+              </div>
+              <div class="formGroup full">
+                <label for="requestingAgency">Requesting Agency / Nature of Need</label>
+                <input type="text" id="requestingAgency" class="inputWords" placeholder="e.g. Hospital, Barangay, Self" />
+              </div>
+              <div class="formGroup full">
+                <label id="catLabel">Client Category</label>
+                <div class="checkGrid" role="radiogroup" aria-labelledby="catLabel">
+                  <label class="checkItem"><input type="radio" name="category" value="None" checked /> None</label>
+                  <label class="checkItem"><input type="radio" name="category" value="4Ps" /> 4Ps</label>
+                  <label class="checkItem"><input type="radio" name="category" value="Solo Parent" /> Solo Parent</label>
+                  <label class="checkItem"><input type="radio" name="category" value="Senior Citizen" /> Senior Citizen</label>
+                  <label class="checkItem"><input type="radio" name="category" value="PWD" /> PWD</label>
+                  <label class="checkItem"><input type="radio" name="category" value="Other" /> Other</label>
+                </div>
+              </div>
+              <div class="formGroup" id="pwdIdBox" style="display: none">
+                <label for="pwdIdNo">PWD ID No.</label>
+                <input type="text" id="pwdIdNo" maxlength="50" />
+              </div>
+              <div class="formGroup full">
+                <label for="outputType">Requested Output</label>
+                <select id="outputType">
+                  <option value="Direct Financial Assistance">Direct Financial Assistance</option>
+                  <option value="Social Case Study Report">Social Case Study Report</option>
+                  <option value="Certificate of Indigency">Certificate of Indigency</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              <div class="formGroup full">
+                <label class="checkItem" style="font-weight: 500"><input type="checkbox" id="onBehalf" /> I am applying on behalf of a patient / beneficiary</label>
+              </div>
+              <div id="benBox" class="formGrid" style="display: none; grid-column: 1 / -1">
+                <div class="formGroup">
+                  <label for="beneficiaryName">Beneficiary Name <span class="req">*</span></label>
+                  <input type="text" id="beneficiaryName" class="inputWords" maxlength="150" />
+                </div>
+                <div class="formGroup">
+                  <label for="beneficiaryRelationship">Relationship to You <span class="req">*</span></label>
+                  <input type="text" id="beneficiaryRelationship" class="inputWords" maxlength="50" placeholder="e.g. Son" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ===== 3: FAMILY ===== -->
+          <div class="stepPanel" id="stepFamily" style="display: none">
+            <p style="margin-bottom: 1rem; font-size: 0.9rem; color: var(--muted)">List household members (optional but recommended). Empty rows are ignored.</p>
+            <div style="overflow-x: auto">
+              <table class="familyTable">
+                <thead>
+                  <tr>
+                    <th>Pangalan</th><th>Birthday / Edad</th><th>Kasarian</th><th>Civil Status</th>
+                    <th>Relation</th><th>Education</th><th>Occupation</th><th>Income (₱)</th><th><span class="sr-only"></span></th>
+                  </tr>
+                </thead>
+                <tbody id="familyBody"></tbody>
+              </table>
+            </div>
+            <button type="button" class="btn btnGhost" id="btnAddFamily" style="margin-top: 0.75rem">+ Add Family Member</button>
+          </div>
+
+          <!-- ===== 4: REQUIREMENTS ===== -->
+          <div class="stepPanel" id="stepReq" style="display: none">
+            <p style="margin-bottom: 1rem; font-size: 0.9rem; color: var(--muted)">
+              Upload clear photos or scans of your requirements. Accepted: PDF, JPG, PNG (max 5 MB each). Required items must be uploaded before you can continue.
+            </p>
+            <div id="reqList"></div>
+            <div class="formGroup" style="margin-top: 1.25rem">
+              <label for="remarks">Notes / Additional Remarks</label>
+              <textarea id="remarks" maxlength="500" placeholder="Any important notes for staff..."></textarea>
+            </div>
+          </div>
+
+          <!-- ===== 5: REVIEW / SUBMIT ===== -->
+          <div class="stepPanel" id="stepReview" style="display: none">
+            <div id="reviewContent">
+              <p style="margin-bottom: 1rem; font-size: 0.9rem; color: var(--muted)">Please review everything before submitting. Use <strong>Edit</strong> to fix a section.</p>
+              <div id="summaryGrid"></div>
+              <div class="consentBox">
+                <label for="consent">
+                  <input type="checkbox" id="consent" />
+                  <span>I confirm that the information and documents I provided are true and correct, and I consent to CSWDO Pasig City collecting and processing them for assessing my application, in accordance with the Data Privacy Act of 2012 (RA 10173).</span>
+                </label>
+              </div>
+            </div>
+            <div class="successBox" id="successBox" style="display: none">
+              <div class="successIcon">✓</div>
+              <h3 style="color: var(--navy); font-size: 1.25rem; margin-bottom: 0.35rem">Application Submitted</h3>
+              <p style="color: var(--muted); font-size: 0.9rem">Your application was received. Keep this Control Number for tracking.</p>
+              <div class="controlNumber" id="controlDisplay"></div>
+              <div style="margin: 0.75rem 0"><span class="statusBadge">FOR REVIEW</span></div>
+              <p style="font-size: 0.8125rem; color: var(--muted); max-width: 380px; margin: 0.75rem auto 0">
+                Next: <strong>book your schedule</strong> for requirements verification and interview.
+              </p>
+              <button type="button" class="btn btnPrimary" style="margin-top: 1.5rem" id="btnAfterSubmit">Schedule Appointment →</button>
+            </div>
+          </div>
+
+          <!-- ===== 6: SCHEDULE ===== -->
+          <div class="stepPanel" id="stepSched" style="display: none">
+            <div id="schedPick">
+              <p style="margin-bottom: 1rem; font-size: 0.9rem; color: var(--muted)" id="schedHint"></p>
+              <div class="formGroup" style="max-width: 260px">
+                <label for="schedDate">Preferred Date <span class="req">*</span></label>
+                <input type="date" id="schedDate" />
+              </div>
+              <div class="formGroup" style="margin-top: 1rem">
+                <label id="slotLabel">Available Sessions</label>
+                <div class="slotGrid" id="slotGrid" aria-labelledby="slotLabel"><span class="helper">Select a date first.</span></div>
+              </div>
+              <div class="btnRow">
+                <button type="button" class="btn btnSecondary" id="btnSchedBack">← Back</button>
+                <button type="button" class="btn btnSuccess" id="btnConfirmSched">Confirm Schedule</button>
+              </div>
+            </div>
+            <div class="successBox" id="schedDone" style="display: none">
+              <div class="successIcon">📅</div>
+              <h3 style="color: var(--navy); font-size: 1.25rem; margin-bottom: 0.35rem">Schedule Confirmed</h3>
+              <div class="controlNumber" id="doneControl"></div>
+              <div style="margin: 0.5rem 0"><span class="statusBadge ok">SCHEDULED</span></div>
+              <p style="font-size: 1rem; font-weight: 600; color: var(--navy)" id="doneWhen"></p>
+              <p style="font-size: 0.8125rem; color: var(--muted); max-width: 380px; margin: 0.75rem auto 0">
+                Please arrive 15 minutes early and bring your Control Number, your original documents, and a valid ID.
+              </p>
+              <div class="noPrint" style="margin-top: 1.5rem; display: flex; gap: 0.6rem; justify-content: center; flex-wrap: wrap">
+                <button type="button" class="btn btnSecondary" onclick="window.print()">🖨 Print confirmation</button>
+                <button type="button" class="btn btnPrimary" onclick="location.reload()">Done</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="btnRow" id="btnRow" style="display: none">
+            <button type="button" class="btn btnSecondary" id="btnPrev">← Previous</button>
+            <button type="button" class="btn btnPrimary" id="btnNext">Next →</button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="siteFooter">
+      City Social Welfare and Development Office · Pasig City<br />
+      Caruncho Avenue, Barangay San Nicolas, Pasig City 1600 Metro Manila
+    </footer>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script>
+      "use strict";
+      const $ = (id) => document.getElementById(id);
+
+      /* ===== CONFIG (change here, not in the code below) ===== */
+      const CONFIG = {
+        OFFICE_DAYS: [1, 2, 3, 4, 5], // 0 = Sun ... 6 = Sat. Walk-in site says Mon–Thu: set to [1,2,3,4] if online matches.
+        SLOT_CAPACITY: 30,            // max applicants per half-day session
+        MAX_FILE_MB: 5,
+        ALLOWED_EXT: ["pdf", "jpg", "jpeg", "png"],
+        MIN_AGE: 18,                  // applicant must be an adult
+        LOGIN_MAX_FAILS: 5,
+        LOGIN_LOCK_MS: 30000,
+      };
+
+      /* [document_name, is_mandatory]. Only Medical is defined so far; add the other types here
+         (names must match the assistance_requirements table). */
+      const REQUIREMENTS = {
+        "Medical Assistance": [["Valid ID", 1], ["Medical Certificate", 1], ["Hospital Bill", 1]],
+      };
+      const DEFAULT_REQ = [["Supporting documents", 0]];
+
+      /* ===== STATE ===== */
+      const STEP = { ACCT: 0, ASSIST: 1, PERSONAL: 2, FAMILY: 3, REQ: 4, REVIEW: 5, SCHED: 6 };
+      const STEPS = ["stepAcct", "stepAssist", "stepPersonal", "stepFamily", "stepReq", "stepReview", "stepSched"];
+      const META = [
+        ["Account", "Create an account or log in to track your application online."],
+        ["Select Assistance Type", "Choose the primary assistance you are requesting."],
+        ["Identifying Information", "Fill out your personal details based on the official Intake Sheet."],
+        ["Family Composition", "Add household members (optional)."],
+        ["Upload Requirements", "Attach your supporting documents. Staff will verify them at your visit."],
+        ["Review & Get Control Number", "Confirm all details. Submitting generates your Control Number."],
+        ["Schedule Your Visit", "Choose a date and time for verification / interview at the office."],
+      ];
+      const PROG = [
+        ["Account", [0]],
+        ["Application", [1, 2, 3]],
+        ["Requirements", [4]],
+        ["Review", [5]],
+        ["Schedule", [6]],
+      ];
+      let idx = STEP.ACCT, user = null, sched = null, submitted = false, isSubmitting = false, returnToReview = false;
+      let failCount = 0, lockUntil = 0;
+      const formData = { assistanceType: "", family: [], files: [], remarks: "", controlNumber: "" };
+
+      /* ===== HELPERS ===== */
+      const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+      let toastTimer;
+      function showToast(msg, type = "") {
+        const t = $("toast");
+        t.textContent = msg;
+        t.className = "toast show " + type;
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => t.classList.remove("show"), 3400);
+      }
+      const store = {
+        get(k, d) { try { const v = JSON.parse(localStorage.getItem(k)); return v ?? d; } catch { return d; } },
+        set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); return true; } catch { return false; } },
+        del(k) { try { localStorage.removeItem(k); } catch {} },
+      };
+      const iso = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+      function calcAge(dateStr) {
+        if (!dateStr) return "";
+        const bd = new Date(dateStr + "T00:00"), t = new Date();
+        if (isNaN(bd) || bd > t) return "";
+        let a = t.getFullYear() - bd.getFullYear();
+        const m = t.getMonth() - bd.getMonth();
+        if (m < 0 || (m === 0 && t.getDate() < bd.getDate())) a--;
+        return a;
+      }
+      function nextCounter(key) { const n = store.get(key, 0) + 1; store.set(key, n); return n; }
+      function getNextControl() {
+        const y = new Date().getFullYear();
+        return `ON-${y}-${String(nextCounter("cswdo_ctrl_ON_" + y)).padStart(5, "0")}`; // TODO: must come from the server
+      }
+      function fail(el, msg) {
+        if (el) { el.classList.add("invalid"); el.focus(); }
+        showToast(msg, "danger");
+        return false;
+      }
+      document.addEventListener("input", (e) => e.target.classList?.remove("invalid"));
+
+      /* ===== PASSWORD HASHING (demo only; real auth must be server-side) ===== */
+      function cyrb53(str) {
+        let h1 = 0xdeadbeef, h2 = 0x41c6ce57;
+        for (let i = 0; i < str.length; i++) { const c = str.charCodeAt(i); h1 = Math.imul(h1 ^ c, 2654435761); h2 = Math.imul(h2 ^ c, 1597334677); }
+        h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+        h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+        return (4294967296 * (2097151 & h2) + (h1 >>> 0)).toString(16);
+      }
+      async function hashPw(pw, salt) {
+        const data = new TextEncoder().encode(salt + ":" + pw);
+        if (window.crypto && crypto.subtle) {
+          const buf = await crypto.subtle.digest("SHA-256", data);
+          return [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, "0")).join("");
+        }
+        return "x" + cyrb53(salt + pw);
+      }
+      function makeSalt() {
+        const a = new Uint8Array(12);
+        (window.crypto || {}).getRandomValues ? crypto.getRandomValues(a) : a.forEach((_, i) => (a[i] = Math.random() * 256));
+        return [...a].map((b) => b.toString(16).padStart(2, "0")).join("");
+      }
+
+      /* ===== INPUT RESTRICTIONS ===== */
+      function bindFilter(el, re, maxLen) {
+        el.addEventListener("input", function () {
+          let v = this.value.replace(re, "");
+          if (maxLen) v = v.slice(0, maxLen);
+          if (v !== this.value) this.value = v;
+        });
+      }
+      const WORDS_RE = /[^a-zA-ZñÑ\s\-'.]/g, DIGITS_RE = /[^0-9]/g;
+      const bindWordsOnly = (el) => bindFilter(el, WORDS_RE);
+      const bindNumbersOnly = (el) => bindFilter(el, DIGITS_RE);
+      const bindPhoneOnly = (el) => bindFilter(el, DIGITS_RE, 11);
+      document.querySelectorAll(".inputWords").forEach(bindWordsOnly);
+      document.querySelectorAll(".inputNumber").forEach(bindNumbersOnly);
+      document.querySelectorAll(".inputPhone").forEach(bindPhoneOnly);
+
+      /* ===== DRAFT AUTOSAVE (so a refresh doesn't wipe a long form) ===== */
+      const DRAFT_FIELDS = ["lastName", "firstName", "middleName", "birthDate", "birthPlace", "sex", "civilStatus", "education",
+        "occupation", "monthlyIncome", "contactNumber", "addressStreet", "barangay", "city", "housing", "monthlyRent", "electricity",
+        "water", "food", "otherSupport", "requestingAgency", "pwdIdNo", "outputType", "beneficiaryName", "beneficiaryRelationship", "remarks"];
+      const draftKey = () => (user ? "cswdo_draft_" + user.email : null);
+      let draftTimer;
+      function saveDraft() {
+        const key = draftKey();
+        if (!key || submitted) return;
+        const d = { fields: {}, assistanceType: formData.assistanceType, category: document.querySelector('input[name="category"]:checked')?.value,
+          onBehalf: $("onBehalf").checked, step: Math.min(idx, STEP.REQ), family: [] };
+        DRAFT_FIELDS.forEach((f) => (d.fields[f] = $(f).value));
+        document.querySelectorAll("#familyBody tr").forEach((tr) => d.family.push([...tr.querySelectorAll("input,select")].map((x) => x.value)));
+        store.set(key, d);
+      }
+      const queueSave = () => { clearTimeout(draftTimer); draftTimer = setTimeout(saveDraft, 400); };
+      document.addEventListener("input", queueSave);
+      document.addEventListener("change", queueSave);
+
+      function restoreDraft() {
+        const key = draftKey(), d = key && store.get(key, null);
+        if (!d) return false;
+        DRAFT_FIELDS.forEach((f) => { if (d.fields?.[f] !== undefined) $(f).value = d.fields[f]; });
+        if (d.category) { const r = document.querySelector(`input[name="category"][value="${d.category}"]`); if (r) r.checked = true; }
+        $("onBehalf").checked = !!d.onBehalf;
+        if (d.assistanceType) selectAssistance(d.assistanceType);
+        $("age").value = calcAge($("birthDate").value);
+        syncToggles();
+        $("familyBody").innerHTML = "";
+        (d.family?.length ? d.family : [null]).forEach((r) => addFamilyRow(r));
+        return d;
+      }
+
+      /* ===== TOGGLES ===== */
+      function syncToggles() {
+        $("pwdIdBox").style.display = document.querySelector('input[name="category"]:checked').value === "PWD" ? "flex" : "none";
+        $("benBox").style.display = $("onBehalf").checked ? "grid" : "none";
+        const renter = $("housing").value === "Renter";
+        $("monthlyRent").disabled = !renter;
+        if (!renter) $("monthlyRent").value = "";
+      }
+      document.querySelectorAll('input[name="category"]').forEach((r) => r.addEventListener("change", syncToggles));
+      $("onBehalf").addEventListener("change", syncToggles);
+      $("housing").addEventListener("change", syncToggles);
+
+      /* ===== PROGRESS / NAVIGATION ===== */
+      function renderProgress() {
+        $("progressBar").innerHTML = PROG.map(([label, ids], i) => {
+          const done = Math.max(...ids) < idx || (submitted && ids.includes(STEP.REVIEW));
+          const active = !done && ids.includes(idx);
+          return `<div class="progressStep ${done ? "done" : ""} ${active ? "active" : ""}" ${active ? 'aria-current="step"' : ""}><div class="dot">${done ? "✓" : i + 1}</div><span>${label}</span></div>`;
+        }).join("");
+      }
+      function renderAcct() {
+        $("acctContinue").innerHTML = user
+          ? `<div class="userChip"><span>Signed in as <strong>${esc(user.first)} ${esc(user.last)}</strong> (${esc(user.email)})</span>
+             <span><button type="button" class="btn btnPrimary sm" id="btnContinue">Continue →</button> <button type="button" class="linkBtn" id="btnLogout">Log out</button></span></div>`
+          : "";
+        $("acctForms").style.display = user ? "none" : "block";
+        if (user) {
+          $("btnContinue").onclick = () => { idx = STEP.ASSIST; showStep(); };
+          $("btnLogout").onclick = logout;
+        }
+      }
+      function showStep() {
+        document.querySelectorAll(".stepPanel").forEach((p) => (p.style.display = "none"));
+        $(STEPS[idx]).style.display = "block";
+        $("stepTitle").textContent = META[idx][0];
+        $("stepDesc").textContent = META[idx][1];
+        const noNav = idx === STEP.ACCT || idx === STEP.SCHED || (submitted && idx === STEP.REVIEW);
+        $("btnRow").style.display = noNav ? "none" : "flex";
+        const last = idx === STEP.REVIEW;
+        $("btnNext").textContent = last ? "Submit Application" : returnToReview ? "Save & Return to Review →" : "Next →";
+        $("btnNext").className = "btn " + (last ? "btnSuccess" : "btnPrimary");
+        $("btnNext").disabled = false;
+        $("userChipBox").innerHTML = user && idx === STEP.ASSIST
+          ? `<div class="userChip"><span>Signed in as <strong>${esc(user.first)} ${esc(user.last)}</strong> (${esc(user.email)})</span><button type="button" class="linkBtn" id="btnLogout2">Log out</button></div>` : "";
+        if ($("btnLogout2")) $("btnLogout2").onclick = logout;
+        if (idx === STEP.ACCT) renderAcct();
+        if (idx === STEP.REQ) renderRequirements();
+        if (idx === STEP.REVIEW && !submitted) buildSummary();
+        if (idx === STEP.SCHED) initSched();
+        renderProgress();
+        saveDraft();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+      function goto(i, fromReview) { returnToReview = !!fromReview; idx = i; showStep(); }
+
+      /* ===== VALIDATION ===== */
+      function validateStep(i) {
+        if (i === STEP.ASSIST && !formData.assistanceType) return fail(null, "Please select an assistance type.");
+        if (i === STEP.PERSONAL) {
+          for (const f of ["lastName", "firstName", "birthDate", "birthPlace", "sex", "civilStatus", "contactNumber", "addressStreet", "barangay", "housing"])
+            if (!$(f).value.trim()) return fail($(f), "Please fill all required fields marked with *.");
+          const age = calcAge($("birthDate").value);
+          if (age === "") return fail($("birthDate"), "Please enter a valid birth date (not in the future).");
+          if (age < CONFIG.MIN_AGE) return fail($("birthDate"), `Applicants must be at least ${CONFIG.MIN_AGE}. If you are applying for a minor, use a parent/guardian's details and tick "on behalf of".`);
+          if (!/^09\d{9}$/.test($("contactNumber").value)) return fail($("contactNumber"), "Enter a valid 11-digit mobile number starting with 09.");
+          if ($("housing").value === "Renter" && !$("monthlyRent").value) return fail($("monthlyRent"), "Please enter your monthly rent.");
+          if ($("onBehalf").checked)
+            for (const f of ["beneficiaryName", "beneficiaryRelationship"])
+              if (!$(f).value.trim()) return fail($(f), "Please enter the beneficiary name and relationship.");
+        }
+        if (i === STEP.FAMILY) {
+          for (const tr of document.querySelectorAll("#familyBody tr")) {
+            const f = tr.querySelectorAll("input,select");
+            if (![...f].some((x) => x.value.trim())) continue;
+            if (!(f[0].value.trim() && f[1].value && f[2].value && f[4].value.trim()))
+              return fail(!f[0].value.trim() ? f[0] : !f[1].value ? f[1] : !f[2].value ? f[2] : f[4], "Each family member needs a name, birthday, sex and relationship.");
+          }
+        }
+        if (i === STEP.REQ) {
+          const missing = currentReqs().filter(([n, req]) => req && !formData.files.find((f) => f.requirement === n)).map((r) => r[0]);
+          if (missing.length) return fail(null, "Please upload: " + missing.join(", ") + ".");
+        }
+        if (i === STEP.REVIEW && !$("consent").checked) return fail($("consent"), "Please tick the consent box to submit.");
+        return true;
+      }
+      function collectStep(i) {
+        if (i === STEP.PERSONAL) {
+          DRAFT_FIELDS.filter((f) => f !== "remarks").forEach((f) => (formData[f] = $(f).value.trim()));
+          formData.age = String(calcAge(formData.birthDate)); // never trust the input field
+          formData.city = formData.city || "Pasig City";
+          formData.address = [formData.addressStreet, formData.barangay, formData.city].join(", ");
+          formData.sectoral = document.querySelector('input[name="category"]:checked').value;
+          if (formData.sectoral !== "PWD") formData.pwdIdNo = "";
+          formData.onBehalf = $("onBehalf").checked;
+          if (!formData.onBehalf) { formData.beneficiaryName = ""; formData.beneficiaryRelationship = ""; }
+        }
+        if (i === STEP.FAMILY)
+          formData.family = [...document.querySelectorAll("#familyBody tr")].map((tr) => {
+            const f = tr.querySelectorAll("input,select");
+            return { name: f[0].value.trim(), birthDate: f[1].value, age: calcAge(f[1].value), sex: f[2].value, civil: f[3].value,
+              relation: f[4].value.trim(), education: f[5].value.trim(), work: f[6].value.trim(), income: f[7].value };
+          }).filter((m) => m.name);
+        if (i === STEP.REQ) formData.remarks = $("remarks").value.trim();
+      }
+
+      function buildSummary() {
+        const d = formData;
+        const money = (v) => (v ? `₱${Number(v).toLocaleString()}` : "");
+        const missing = currentReqs().filter(([n, r]) => r && !d.files.find((f) => f.requirement === n)).map((r) => r[0]);
+        const rows = [
+          ["Account", user.email, null],
+          ["Assistance Type", d.assistanceType, STEP.ASSIST],
+          ["Full Name", [d.lastName, d.firstName, d.middleName].filter(Boolean).join(", "), STEP.PERSONAL],
+          ["Birth Date / Age", d.birthDate + (d.age ? ` (${d.age} y/o)` : ""), STEP.PERSONAL],
+          ["Birth Place", d.birthPlace, STEP.PERSONAL],
+          ["Sex / Civil Status", d.sex + " · " + d.civilStatus, STEP.PERSONAL],
+          ["Contact", d.contactNumber, STEP.PERSONAL],
+          ["Address", d.address, STEP.PERSONAL],
+          ["Housing", d.housing + (d.housing === "Renter" && d.monthlyRent ? ` · rent ${money(d.monthlyRent)}` : ""), STEP.PERSONAL],
+          ["Occupation / Income", (d.occupation || "—") + (d.monthlyIncome ? " · " + money(d.monthlyIncome) : ""), STEP.PERSONAL],
+          ["Category", d.sectoral + (d.sectoral === "PWD" && d.pwdIdNo ? ` (ID ${d.pwdIdNo})` : ""), STEP.PERSONAL],
+          ["Requested Output", d.outputType, STEP.PERSONAL],
+          ["Beneficiary", d.onBehalf ? `${d.beneficiaryName} (${d.beneficiaryRelationship})` : "Same as applicant", STEP.PERSONAL],
+          ["Family Members", d.family.length ? d.family.length + " listed" : "None", STEP.FAMILY],
+          ["Documents", d.files.length + " uploaded" + (missing.length ? " · missing: " + missing.join(", ") : ""), STEP.REQ],
+          ["Remarks", d.remarks || "—", STEP.REQ],
+        ];
+        $("summaryGrid").innerHTML = rows.map(([k, v, step]) =>
+          `<div class="summaryRow"><span>${k}</span><span>${esc(v || "—")}${step != null ? `<button type="button" class="linkBtn" data-edit="${step}">Edit</button>` : ""}</span></div>`).join("");
+        $("summaryGrid").querySelectorAll("[data-edit]").forEach((b) => (b.onclick = () => goto(+b.dataset.edit, true)));
+      }
+
+      $("btnNext").onclick = () => {
+        if (!validateStep(idx)) return;
+        collectStep(idx);
+        if (idx === STEP.REVIEW) return submitApplication();
+        if (returnToReview) { returnToReview = false; idx = STEP.REVIEW; } else idx++;
+        showStep();
+      };
+      $("btnPrev").onclick = () => {
+        returnToReview = false;
+        if (idx > 0) idx--;
+        showStep();
+      };
+
+      function submitApplication() {
+        if (isSubmitting || submitted) return;
+        isSubmitting = true;
+        $("btnNext").disabled = true;
+        formData.controlNumber = getNextControl();
+        formData.applicationType = "ONLINE";
+        formData.status = "FOR_REVIEW";
+        formData.accountEmail = user.email;
+        formData.submittedAt = new Date().toISOString();
+        submitted = true;
+        isSubmitting = false;
+        $("reviewContent").style.display = "none";
+        $("successBox").style.display = "block";
+        $("btnRow").style.display = "none";
+        $("controlDisplay").textContent = formData.controlNumber;
+        $("stepTitle").textContent = "Control Number Issued";
+        $("stepDesc").textContent = "Your application is now FOR REVIEW.";
+        $("btnAfterSubmit").onclick = () => goto(STEP.SCHED);
+        // File objects can't be stored in localStorage: keep metadata only (real uploads go to the server)
+        const apps = store.get("cswdo_online_apps", []);
+        apps.push({ ...formData, files: formData.files.map(({ requirement, name, size }) => ({ requirement, name, size })) });
+        store.set("cswdo_online_apps", apps);
+        store.del(draftKey());
+        renderProgress();
+        showToast("Application submitted!", "success");
+        console.log("APPLICATION DATA (ready for backend):", formData);
+      }
+
+      /* ===== ACCOUNT ===== */
+      document.querySelectorAll(".tabs button").forEach((b) => (b.onclick = () => {
+        document.querySelectorAll(".tabs button").forEach((x) => x.classList.toggle("on", x === b));
+        $("regForm").style.display = b.dataset.tab === "reg" ? "grid" : "none";
+        $("logForm").style.display = b.dataset.tab === "log" ? "grid" : "none";
+      }));
+      function loginSuccess(u, silent) {
+        user = u;
+        try { sessionStorage.setItem("cswdo_session", u.email); } catch {}
+        const d = restoreDraft();
+        if (!d) {
+          $("lastName").value = u.last; $("firstName").value = u.first; $("contactNumber").value = u.mobile;
+          if (!$("familyBody").children.length) addFamilyRow();
+        }
+        if (!silent) showToast(d ? "Welcome back, " + u.first + "! Your draft was restored." : "Welcome, " + u.first + "!", "success");
+        goto(d && d.step ? Math.max(STEP.ASSIST, d.step) : STEP.ASSIST);
+      }
+      function logout() {
+        try { sessionStorage.removeItem("cswdo_session"); } catch {}
+        location.reload();
+      }
+      $("btnReg").onclick = async () => {
+        const u = { first: $("aFirst").value.trim(), last: $("aLast").value.trim(), email: $("aEmail").value.trim().toLowerCase(),
+          mobile: $("aMobile").value.trim(), pass: $("aPass").value };
+        if (!u.first || !u.last || !u.email || !u.mobile || !u.pass) return fail(null, "Please complete all fields.");
+        if (!/^\S+@\S+\.\S+$/.test(u.email)) return fail($("aEmail"), "Enter a valid email.");
+        if (!/^09\d{9}$/.test(u.mobile)) return fail($("aMobile"), "Enter a valid 11-digit mobile number starting with 09.");
+        if (u.pass.length < 8 || !/[A-Za-z]/.test(u.pass) || !/\d/.test(u.pass)) return fail($("aPass"), "Password needs 8+ characters with a letter and a number.");
+        if (u.pass !== $("aPass2").value) return fail($("aPass2"), "Passwords do not match.");
+        const accts = store.get("cswdo_accounts", []);
+        if (accts.some((a) => a.email === u.email)) return fail($("aEmail"), "Email already registered. Please log in.");
+        const salt = makeSalt();
+        const acct = { first: u.first, last: u.last, email: u.email, mobile: u.mobile, salt, hash: await hashPw(u.pass, salt) };
+        accts.push(acct);
+        store.set("cswdo_accounts", accts);
+        $("aPass").value = $("aPass2").value = "";
+        loginSuccess(acct);
+      };
+      $("btnLog").onclick = async () => {
+        if (Date.now() < lockUntil) return fail(null, `Too many attempts. Try again in ${Math.ceil((lockUntil - Date.now()) / 1000)}s.`);
+        const e = $("lEmail").value.trim().toLowerCase(), p = $("lPass").value;
+        const accts = store.get("cswdo_accounts", []);
+        const a = accts.find((x) => x.email === e);
+        let ok = false;
+        if (a) {
+          if (a.hash) ok = (await hashPw(p, a.salt)) === a.hash;
+          else if (a.pass && a.pass === p) { // upgrade accounts saved by the old version (plain text)
+            ok = true;
+            a.salt = makeSalt(); a.hash = await hashPw(p, a.salt); delete a.pass;
+            store.set("cswdo_accounts", accts);
+          }
+        }
+        if (!ok) {
+          if (++failCount >= CONFIG.LOGIN_MAX_FAILS) { lockUntil = Date.now() + CONFIG.LOGIN_LOCK_MS; failCount = 0; }
+          return fail($("lPass"), "Incorrect email or password.");
+        }
+        failCount = 0;
+        $("lPass").value = "";
+        loginSuccess(a);
+      };
+
+      /* ===== ASSISTANCE ===== */
+      function selectAssistance(value) {
+        document.querySelectorAll("#assistGrid .assistCard").forEach((c) => {
+          const on = c.dataset.value === value;
+          c.classList.toggle("selected", on);
+          c.setAttribute("aria-checked", on);
+        });
+        if (formData.assistanceType !== value) formData.files = []; // requirements differ per type
+        formData.assistanceType = value;
+      }
+      document.querySelectorAll("#assistGrid .assistCard").forEach((c) => (c.onclick = () => { selectAssistance(c.dataset.value); queueSave(); }));
+
+      /* ===== BIRTH DATE / AGE ===== */
+      $("birthDate").max = iso(new Date());
+      $("birthDate").addEventListener("change", function () { $("age").value = calcAge(this.value); });
+
+      /* ===== FAMILY ===== */
+      $("familyBody").addEventListener("change", (e) => {
+        if (!e.target.classList.contains("fBirth")) return;
+        const a = calcAge(e.target.value);
+        e.target.parentElement.querySelector(".autoAge").textContent = "Age: " + (a === "" ? "—" : a);
+      });
+      function addFamilyRow(v) {
+        v = v || [];
+        const tr = document.createElement("tr");
+        const sel = (opts, cur) => opts.map((o) => `<option value="${o[0]}" ${cur === o[0] ? "selected" : ""}>${o[1]}</option>`).join("");
+        tr.innerHTML = `
+          <td><input type="text" class="inputWords" placeholder="Name" aria-label="Name" /></td>
+          <td><input type="date" class="fBirth" max="${iso(new Date())}" style="width:140px" aria-label="Birthday" /><span class="helper autoAge" style="display:block">Age: —</span></td>
+          <td><select aria-label="Sex">${sel([["", "—"], ["Male", "M"], ["Female", "F"]], v[2])}</select></td>
+          <td><select aria-label="Civil status">${sel([["", "—"], ["Single", "Single"], ["Married", "Married"], ["Widowed", "Widowed"], ["Separated", "Separated"]], v[3])}</select></td>
+          <td><input type="text" class="inputWords" placeholder="e.g. Spouse" style="width:90px" aria-label="Relation" /></td>
+          <td><input type="text" class="inputWords" placeholder="Educ." style="width:90px" aria-label="Education" /></td>
+          <td><input type="text" class="inputWords" placeholder="Occupation" style="width:100px" aria-label="Occupation" /></td>
+          <td><input type="text" class="inputNumber" inputmode="numeric" placeholder="0" style="width:80px" aria-label="Income" /></td>
+          <td><button type="button" class="btnRemove" title="Remove" aria-label="Remove member">×</button></td>`;
+        const f = tr.querySelectorAll("input,select");
+        [0, 1, 2, 3, 4, 5, 6, 7].forEach((i) => { if (v[i] !== undefined && i !== 2 && i !== 3) f[i].value = v[i]; });
+        if (v[1]) tr.querySelector(".autoAge").textContent = "Age: " + (calcAge(v[1]) === "" ? "—" : calcAge(v[1]));
+        tr.querySelectorAll(".inputWords").forEach(bindWordsOnly);
+        tr.querySelectorAll(".inputNumber").forEach(bindNumbersOnly);
+        tr.querySelector(".btnRemove").onclick = () => { tr.remove(); queueSave(); };
+        $("familyBody").appendChild(tr);
+      }
+      $("btnAddFamily").onclick = () => addFamilyRow();
+
+      /* ===== REQUIREMENTS (one slot per document, mandatory ones enforced) ===== */
+      const currentReqs = () => REQUIREMENTS[formData.assistanceType] || DEFAULT_REQ;
+      function renderRequirements() {
+        const list = currentReqs();
+        formData.files = formData.files.filter((f) => list.some((r) => r[0] === f.requirement));
+        $("reqList").innerHTML = list.map(([name, req], i) => {
+          const f = formData.files.find((x) => x.requirement === name);
+          return `<div class="reqItem ${f ? "ok" : req ? "missing" : ""}">
+            <div><strong>${esc(name)}</strong><span class="badge ${req ? "required" : "optional"}">${req ? "Required" : "Optional"}</span><br>
+              <span class="helper">${f ? "📄 " + esc(f.name) + " (" + (f.size / 1024).toFixed(1) + " KB)" : "No file chosen"}</span></div>
+            <div class="reqActions">
+              <button type="button" class="btn btnSecondary sm" data-pick="${i}">${f ? "Replace" : "Choose file"}</button>
+              ${f ? `<button type="button" class="btn btnGhost sm" data-del="${i}">Remove</button>` : ""}
+              <input type="file" id="file_${i}" accept=".pdf,.jpg,.jpeg,.png" hidden />
+            </div></div>`;
+        }).join("");
+        list.forEach(([name], i) => {
+          const input = $("file_" + i);
+          const pick = $("reqList").querySelector(`[data-pick="${i}"]`);
+          pick.onclick = () => input.click();
+          const del = $("reqList").querySelector(`[data-del="${i}"]`);
+          if (del) del.onclick = () => { formData.files = formData.files.filter((x) => x.requirement !== name); renderRequirements(); };
+          input.onchange = () => {
+            const f = input.files[0];
+            if (!f) return;
+            const ext = f.name.split(".").pop().toLowerCase();
+            if (!CONFIG.ALLOWED_EXT.includes(ext)) return fail(null, "Only PDF, JPG or PNG files are allowed.");
+            if (f.size === 0) return fail(null, f.name + " is empty.");
+            if (f.size > CONFIG.MAX_FILE_MB * 1024 * 1024) return fail(null, f.name + ` exceeds the ${CONFIG.MAX_FILE_MB}MB limit.`);
+            formData.files = formData.files.filter((x) => x.requirement !== name);
+            formData.files.push({ requirement: name, name: f.name, size: f.size, file: f });
+            renderRequirements();
+          };
+        });
+      }
+
+      /* ===== SCHEDULE ===== */
+      const SLOTS = [
+        { key: "AM", label: "Morning (AM)", hours: "8:00 AM – 12:00 NN" },
+        { key: "PM", label: "Afternoon (PM)", hours: "1:00 PM – 5:00 PM" },
+      ];
+      const DAY_NAMES = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+      function officeDaysText() {
+        const d = CONFIG.OFFICE_DAYS;
+        return d.length > 1 ? DAY_NAMES[d[0]] + "–" + DAY_NAMES[d[d.length - 1]] : DAY_NAMES[d[0]];
+      }
+      function initSched() {
+        const d = new Date();
+        d.setDate(d.getDate() + 1);
+        $("schedDate").min = iso(d);
+        $("schedDate").value = "";
+        sched = null;
+        $("schedHint").textContent = `Pick a date (${officeDaysText()}) and a session to visit the CSWDO office. Bring your original documents and a valid ID.`;
+        $("slotGrid").innerHTML = '<span class="helper">Select a date first.</span>';
+        $("schedPick").style.display = "block";
+        $("schedDone").style.display = "none";
+      }
+      $("schedDate").onchange = function () {
+        sched = null;
+        if (!this.value) { $("slotGrid").innerHTML = '<span class="helper">Select a date first.</span>'; return; }
+        const day = new Date(this.value + "T00:00").getDay();
+        if (!CONFIG.OFFICE_DAYS.includes(day)) {
+          this.value = "";
+          $("slotGrid").innerHTML = `<span class="helper">The office is open ${officeDaysText()} only. Please pick another date.</span>`;
+          return showToast(`Office is open ${officeDaysText()} only.`, "danger");
+        }
+        const booked = store.get("cswdo_slots", {});
+        $("slotGrid").innerHTML = SLOTS.map((o) => {
+          const left = CONFIG.SLOT_CAPACITY - (booked[this.value + " " + o.key] || 0);
+          return `<button type="button" class="slot" data-t="${o.key}" ${left <= 0 ? "disabled" : ""}>${o.label}<small>${o.hours} · ${left <= 0 ? "Full" : left + " slots left"}</small></button>`;
+        }).join("");
+        $("slotGrid").querySelectorAll(".slot").forEach((b) => (b.onclick = () => {
+          $("slotGrid").querySelectorAll(".slot").forEach((x) => x.classList.remove("selected"));
+          b.classList.add("selected");
+          sched = b.dataset.t;
+        }));
+      };
+      $("btnSchedBack").onclick = () => goto(STEP.REVIEW);
+      $("btnConfirmSched").onclick = () => {
+        const date = $("schedDate").value;
+        if (!date || !sched) return fail(null, "Please choose a date and an AM or PM session.");
+        const booked = store.get("cswdo_slots", {});
+        const key = date + " " + sched;
+        if ((booked[key] || 0) >= CONFIG.SLOT_CAPACITY) { $("schedDate").onchange.call($("schedDate")); return fail(null, "That session just filled up. Please pick another."); }
+        booked[key] = (booked[key] || 0) + 1;
+        store.set("cswdo_slots", booked);
+        const apps = store.get("cswdo_online_apps", []);
+        const a = apps.find((x) => x.controlNumber === formData.controlNumber);
+        if (a) { a.schedule = { date, time: sched }; a.status = "SCHEDULED"; store.set("cswdo_online_apps", apps); }
+        const slot = SLOTS.find((o) => o.key === sched);
+        $("schedPick").style.display = "none";
+        $("schedDone").style.display = "block";
+        $("doneControl").textContent = formData.controlNumber;
+        $("doneWhen").textContent = new Date(date + "T00:00").toLocaleDateString("en-PH", { weekday: "long", year: "numeric", month: "long", day: "numeric" }) + " · " + slot.label + " (" + slot.hours + ")";
+        $("stepTitle").textContent = "Schedule Confirmed";
+        $("stepDesc").textContent = "Status: SCHEDULED";
+        idx = STEPS.length;
+        renderProgress();
+        showToast("Schedule confirmed!", "success");
+      };
+
+      /* ===== SHOW / HIDE PASSWORD ===== */
+      document.querySelectorAll('input[type="password"]').forEach((input) => {
+        const wrap = document.createElement("div");
+        wrap.className = "pwWrap";
+        input.parentNode.insertBefore(wrap, input);
+        wrap.appendChild(input);
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "pwToggle";
+        btn.textContent = "Show";
+        btn.setAttribute("aria-label", "Show password");
+        btn.addEventListener("mousedown", (e) => e.preventDefault());
+        btn.addEventListener("click", () => {
+          const reveal = input.type === "password";
+          input.type = reveal ? "text" : "password";
+          btn.textContent = reveal ? "Hide" : "Show";
+          btn.setAttribute("aria-label", reveal ? "Hide password" : "Show password");
+        });
+        wrap.appendChild(btn);
+      });
+
+      /* ===== INIT ===== */
+      (function init() {
+        let email = null;
+        try { email = sessionStorage.getItem("cswdo_session"); } catch {}
+        const a = email && store.get("cswdo_accounts", []).find((x) => x.email === email);
+        if (a) return loginSuccess(a, true);
+        addFamilyRow();
+        syncToggles();
+        showStep();
+      })();
+    </script>
+  </body>
+</html>

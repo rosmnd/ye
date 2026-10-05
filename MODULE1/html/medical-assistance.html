@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Assistance — Pasig City CSWDO</title>
+    <link rel="stylesheet" href="../css/homepage.css">
+    <link rel="stylesheet" href="../css/service.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body class="servicePage">
+
+    <header class="govHeader" id="govHeader">
+        <div class="govHeaderContainer">
+
+            <div class="govHeaderAgency">
+                REPUBLIC OF THE PHILIPPINES | CITY GOVERNMENT OF PASIG
+            </div>
+
+            <div class="govHeaderDateTime" id="dateTimeDisplay">
+                <span class="dateDisplay" id="dateDisplay">
+                    Loading...
+                </span>
+
+                <span class="dateTimeSeparator" aria-hidden="true">|</span>
+
+                <span class="timeDisplay" id="timeDisplay">
+                    Loading...
+                </span>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- =========================================================
+         HEADER
+         ========================================================= -->
+    <header class="header">
+        <div class="headerContainer">
+            <a class="logoGroup" href="homepage.html" aria-label="Pasig City CSWDO home">
+                <img src="../assets/pasigLogo1.png" class="logo" alt="Pasig City seal">
+                <img src="../assets/pasigLogo2.png" class="logo" alt="Lungsod ng Pasig">
+            </a>
+
+            <nav class="navMenu">
+                <a href="homepage.html#services" data-en="Services" data-tl="Mga Serbisyo">Services</a>
+                <a href="homepage.html#how-it-works" data-en="How it works" data-tl="Paano ito gumagana">How it works</a>
+                <a href="register.html" data-en="Apply for Assistance" data-tl="Mag-apply ng Tulong">Apply for Assistance</a>
+                <div class="langSwitch" role="group" aria-label="Language">
+                    <button type="button" class="langBtn is-active" data-lang="en" aria-pressed="true">EN</button>
+                    <button type="button" class="langBtn" data-lang="tl" aria-pressed="false">TL</button>
+                </div>
+                <a href="login_draft.html" class="btnSignin" data-en="Sign In" data-tl="Mag-sign in">Sign In</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- =========================================================
+             SERVICE HERO
+             ========================================================= -->
+        <section class="serviceHero">
+            <div class="heroContainer">
+                <div class="heroText">
+                    <nav class="breadcrumb" aria-label="Breadcrumb">
+                        <a href="homepage.html">Home</a>
+                        <span class="crumbSep">/</span>
+                        <a href="homepage.html#services">Services</a>
+                        <span class="crumbSep">/</span>
+                        <span aria-current="page">Medical Assistance</span>
+                    </nav>
+
+                    <span class="sectionLabel">HEALTH · MEDICAL ASSISTANCE</span>
+
+                    <h1 data-en="Medical Assistance" data-tl="Tulong Medikal">Medical Assistance</h1>
+
+                    <p data-en="Financial help for hospital bills, medicines, and medical procedures for qualified Pasigueños who cannot afford treatment." data-tl="Tulong sa bayarin sa ospital, gamot, at medikal na pamamaraan para sa mga kwalipikadong Pasigueñong hindi kayang magpagamot.">
+                        Financial help for hospital bills, medicines, and medical
+                        procedures for qualified Pasigueños who cannot afford treatment.
+                    </p>
+
+                    <div class="heroButtons">
+                        <a href="register.html" class="btnPrimary">Apply for Assistance</a>
+                        <a href="homepage.html#services" class="btnSecondary">Back to Services</a>
+                    </div>
+                </div>
+
+                <div class="heroMedia">
+                    <div class="heroMediaFrame">
+                        <img src="../assets/pasigLogo1.png" alt="Pasig City seal">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================
+             QUICK FACTS
+             ========================================================= -->
+        <section class="factsBar">
+            <div class="headerContainer valueBarGrid">
+                <div class="valueBarItem"><span>🏥 Hospital &amp; medical bills</span></div>
+                <div class="valueBarItem"><span>💊 Medicines &amp; prescriptions</span></div>
+                <div class="valueBarItem"><span>🩺 Laboratory &amp; diagnostics</span></div>
+            </div>
+        </section>
+
+        <!-- =========================================================
+             WHY YOU MAY NEED IT
+             ========================================================= -->
+        <section class="section">
+            <div class="container">
+                <span class="sectionLabel" data-en="WHY YOU MAY NEED IT" data-tl="BAKIT MO ITO KAILANGAN">WHY YOU MAY NEED IT</span>
+                <h2 data-en="When medical costs get too heavy" data-tl="Kapag napakabigat na ng gastusin sa pagpapagamot">When medical costs get too heavy</h2>
+                <p class="sectionLead" data-en="Sickness can happen to anyone. When a hospital stay or a maintenance medicine becomes too expensive, CSWDO Medical Assistance helps ease the burden so you can focus on getting well." data-tl="Maaaring mangyari sa kahit sino ang magkasakit. Kapag napakamahal ng pagpapaospital o gamot, tumutulong ang CSWDO Medical Assistance upang gumaan ang pasanin mo at makapagpagamot ka.">
+                    Sickness can happen to anyone. When a hospital stay or a maintenance
+                    medicine becomes too expensive, CSWDO Medical Assistance helps ease the
+                    burden so you can focus on getting well.
+                </p>
+
+                <div class="infoGrid">
+                    <article class="infoCard">
+                        <span class="infoIcon">🏥</span>
+                        <h3 data-en="Hospitalization" data-tl="Pagpapaospital">Hospitalization</h3>
+                        <p data-en="Help with hospital confinement, room, and professional fees." data-tl="Tulong sa bayad sa confinement, kwarto, at propesyonal na bayarin.">
+                            Help with hospital confinement, room, and professional fees.
+                        </p>
+                    </article>
+
+                    <article class="infoCard">
+                        <span class="infoIcon">💊</span>
+                        <h3 data-en="Medicines" data-tl="Gamot">Medicines</h3>
+                        <p data-en="Assistance for prescription and maintenance medicines." data-tl="Tulong sa reseta at maintenance na gamot.">
+                            Assistance for prescription and maintenance medicines.
+                        </p>
+                    </article>
+
+                    <article class="infoCard">
+                        <span class="infoIcon">🩺</span>
+                        <h3 data-en="Procedures &amp; diagnostics" data-tl="Operasyon at pagsusuri">Procedures &amp; diagnostics</h3>
+                        <p data-en="Support for surgery, dialysis, laboratory tests, and check-ups." data-tl="Tulong sa operasyon, dialysis, laboratoryo, at check-up.">
+                            Support for surgery, dialysis, laboratory tests, and check-ups.
+                        </p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================
+             ELIGIBILITY & REQUIREMENTS
+             ========================================================= -->
+        <section class="section altSection">
+            <div class="container">
+                <span class="sectionLabel" data-en="WHO CAN APPLY &amp; WHAT TO PREPARE" data-tl="SINO ANG PEDENG MAG-APPLY AT ANONG IHANDA">WHO CAN APPLY &amp; WHAT TO PREPARE</span>
+                <h2 data-en="Eligibility and requirements" data-tl="Pagiging kwalipikado at mga kailangan">Eligibility and requirements</h2>
+
+                <div class="splitGrid">
+                    <div class="splitPanel">
+                        <h3 data-en="Who can apply" data-tl="Sino ang maaaring mag-apply">Who can apply</h3>
+                        <ul class="checkList">
+                            <li class="checkItem" data-en="Bonafide resident of Pasig City" data-tl="Naninirahan sa Pasig City">Bonafide resident of Pasig City</li>
+                            <li class="checkItem" data-en="Indigent or financially incapable, as assessed by CSWDO" data-tl="Mahirap o walang kakayahang magbayad, ayon sa pagtatasa ng CSWDO">Indigent or financially incapable, as assessed by CSWDO</li>
+                            <li class="checkItem" data-en="With a verified medical need or condition" data-tl="May kumpirmadong medikal na pangangailangan o kondisyon">With a verified medical need or condition</li>
+                            <li class="checkItem" data-en="Filipino citizen" data-tl="Mamamayang Pilipino">Filipino citizen</li>
+                            <li class="checkItem" data-en="Has a registered CSWDO MIS account" data-tl="May rehistradong CSWDO MIS account">Has a registered CSWDO MIS account</li>
+                        </ul>
+                    </div>
+
+                    <div class="splitPanel">
+                        <h3 data-en="Requirements to prepare" data-tl="Mga dokumentong ihahanda">Requirements to prepare</h3>
+                        <ul class="docList">
+                            <li class="docItem" data-en="Valid government-issued ID (Pasig Pass, UMID, PhilSys, or passport)" data-tl="Balidong ID mula sa gobyerno (Pasig Pass, UMID, PhilSys, o pasaporte)">Valid government-issued ID (Pasig Pass, UMID, PhilSys, or passport)</li>
+                            <li class="docItem" data-en="Barangay Certificate of Residency or Indigency" data-tl="Barangay Certificate of Residency o Indigency">Barangay Certificate of Residency or Indigency</li>
+                            <li class="docItem" data-en="Medical Certificate or Doctor's prescription" data-tl="Medical Certificate o reseta ng doktor">Medical Certificate or Doctor's prescription</li>
+                            <li class="docItem" data-en="Hospital bill or Statement of Account" data-tl="Bill sa ospital o Statement of Account">Hospital bill or Statement of Account</li>
+                            <li class="docItem" data-en="Laboratory, imaging, or diagnostic request (if applicable)" data-tl="Kahilingan para sa laboratoryo, imaging, o diagnostic (kung mayroon)">Laboratory, imaging, or diagnostic request (if applicable)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="noteBox">
+                    <span aria-hidden="true">ℹ️</span>
+                    <p data-en="&lt;strong&gt;Reminder:&lt;/strong&gt; Prepare original or certified true copies of your documents. Requirements may vary per case, and the CSWDO may ask for additional documents during assessment." data-tl="&lt;strong&gt;Paalala:&lt;/strong&gt; Ihanda ang orihinal o certified true copy ng iyong mga dokumento. Maaaring mag-iba ang mga kailangan sa bawat kaso, at maaaring humingi ng dagdag na dokumento ang CSWDO.">
+                        <strong>Reminder:</strong> Prepare original or certified true copies of
+                        your documents. Requirements may vary per case, and the CSWDO may ask for
+                        additional documents during assessment.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================
+             HOW TO APPLY
+             ========================================================= -->
+        <section class="stepsSection" id="how-to-apply">
+            <div class="container">
+                <span class="sectionLabel" data-en="HOW TO APPLY" data-tl="PAANO MAG-APPLY">HOW TO APPLY</span>
+                <h2 data-en="Steps to request this assistance" data-tl="Mga hakbang upang humingi ng tulong na ito">Steps to request this assistance</h2>
+
+                <div class="stepGrid">
+                    <article class="stepItem">
+                        <span class="stepNumber">01</span>
+                        <h3 data-en="Create an account" data-tl="Gumawa ng account">Create an account</h3>
+                        <p data-en="Register for a CSWDO MIS account or sign in to get started." data-tl="Magrehistro ng CSWDO MIS account o mag-sign in upang magsimula.">
+                            Register for a CSWDO MIS account or sign in to get started.
+                        </p>
+                    </article>
+
+                    <article class="stepItem">
+                        <span class="stepNumber">02</span>
+                        <h3 data-en="Choose Medical Assistance" data-tl="Piliin ang Medical Assistance">Choose Medical Assistance</h3>
+                        <p data-en="Select the service and complete the request form with your details." data-tl="Piliin ang serbisyo at kumpletuhin ang form kasama ang iyong mga detalye.">
+                            Select the service and complete the request form with your details.
+                        </p>
+                    </article>
+
+                    <article class="stepItem">
+                        <span class="stepNumber">03</span>
+                        <h3 data-en="Prepare &amp; attach requirements" data-tl="Ihanda at isumite ang mga kailangan">Prepare &amp; attach requirements</h3>
+                        <p data-en="Gather the documents listed above and attach or submit them." data-tl="Tipunin ang mga dokumentong nakalista sa itaas at isumite ang mga ito.">
+                            Gather the documents listed above and attach or submit them.
+                        </p>
+                    </article>
+
+                    <article class="stepItem">
+                        <span class="stepNumber">04</span>
+                        <h3 data-en="Wait for verification" data-tl="Hintayin ang beripikasyon">Wait for verification</h3>
+                        <p data-en="The CSWDO team will assess your request and notify you for the release or next steps." data-tl="Susuriin ng CSWDO ang iyong kahilingan at ipapaalam ang paglabas o susunod na hakbang.">
+                            The CSWDO team will assess your request and notify you for the release or next steps.
+                        </p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================
+             CTA
+             ========================================================= -->
+        <section class="ctaSection">
+            <div class="container">
+                <div class="ctaCard">
+                    <div class="ctaText">
+                        <h3 data-en="Ready to apply for Medical Assistance?" data-tl="Handa ka na bang mag-apply para sa Tulong Medikal?">Ready to apply for Medical Assistance?</h3>
+                        <p data-en="Create a CSWDO account or sign in to submit your request and track its status." data-tl="Gumawa ng CSWDO account o mag-sign in upang isumite ang kahilingan at subabayan ang kalagayan nito.">
+                            Create a CSWDO account or sign in to submit your request and track its status.
+                        </p>
+                    </div>
+                    <div class="ctaActions">
+                        <a href="register.html" class="btnPrimary">Apply for Assistance</a>
+                        <a href="login_draft.html" class="btnSecondary">Sign In</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- =========================================================
+         FOOTER
+         ========================================================= -->
+    <footer class="pageFooter">
+        <div class="container footerContent">
+            <div class="footerBrand">
+                <img src="../assets/pasigLogo1.png" class="logo" alt="Pasig City seal">
+                <div>
+                    <strong>Pasig City CSWDO</strong>
+                    <small data-en="SERVING THE PEOPLE OF PASIG" data-tl="PAGLILINGKOD SA MAMAMAYAN NG PASIG">SERVING THE PEOPLE OF PASIG</small>
+                </div>
+            </div>
+            <span class="footerHours">Mon–Thu 8:00 AM - 5:00 PM</span>
+        </div>
+    </footer>
+
+
+
+    <script src="../js/services.js"></script>
+    <script src="../js/lang.js"></script>
+</body>
+</html>

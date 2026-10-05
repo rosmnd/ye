@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>CSWDO Pasig - Appointment &amp; Scheduling</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- Module stylesheet (all module styling lives here — no inline CSS in this page) -->
+  <link rel="stylesheet" href="css/cswdo_client.css">
+</head>
+<body>
+
+  <!-- ==========================================================================
+       HEADER — Pasig City template style
+       Clean white brand bar (Yellow City Seal → Pasig typography logo) + blue nav.
+       Queue Management stays visible as a placeholder (separate module, later).
+       ========================================================================== -->
+  <header class="pageHeader">
+    <div class="headerBody">
+      <div class="container headerInner">
+        <div class="headerBrand">
+          <img src="logo.webp" alt="Lungsod ng Pasig official seal" class="headerLogo headerLogoSeal" width="56" height="56">
+          <img src="pasig_logo.webp" alt="Pasig City typography logo" class="headerLogo headerLogoPasig" width="56" height="56">
+          <div class="headerTitleWrap">
+            <h1 class="headerTitle">CSWDO Appointment and Scheduling</h1>
+            <span class="headerSubtitle">City Social Welfare and Development Office &middot; Pasig City</span>
+          </div>
+        </div>
+        <!-- Identity and clock are separate, independently spaced blocks -->
+        <div class="headerMeta">
+          <div class="headerUser" id="headerSession" hidden>
+            <span class="headerSessionName" id="headerSessionName">&mdash;</span>
+            <span class="headerSessionNote">Demo session &middot; CSWDO login coming soon</span>
+          </div>
+          <div class="headerClock" id="headerClock" aria-live="off">Philippine Standard Time</div>
+        </div>
+      </div>
+    </div>
+
+    <nav class="headerNav" aria-label="Module navigation">
+      <div class="container headerNavInner">
+        <a class="navLink navLinkActive" href="#schedulingSection" aria-current="page">Appointment &amp; Scheduling</a>
+        <a class="navLink" href="#checkinSection">My Appointment</a>
+        <a class="navLink navLinkDisabled" href="#checkinSection" aria-disabled="true"
+           title="Live Queue Management is a separate module (coming soon). Check-ins transition into the queue.">
+          Queue Management
+          <span class="badge badgeWarning badgePlain badgeSm">Soon</span>
+        </a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Demo-mode banner: shown only when the PHP backend is unreachable -->
+  <div class="apiModeBanner" id="apiModeBanner" role="status" hidden>
+    <strong>Demo mode</strong> &mdash; the CSWDO appointment backend is not reachable right now, so this page is using local sample data. Actions are simulated in the browser only.
+  </div>
+
+  <main class="container pageMain">
+
+    <!-- ============ Section heading ============ -->
+    <section class="sectionIntro" aria-labelledby="pageHeading">
+      <h2 class="h2Demo" id="pageHeading">Appointment &amp; Scheduling</h2>
+      <p class="sectionIntroText">
+        Reserve one session per visit &mdash; <strong>AM starts 8:00 AM</strong> or
+        <strong>PM starts 12:00 PM</strong>, 30 online slots each. Appointments are accepted on
+        weekdays only (Monday&ndash;Friday), excluding Philippine holidays.
+      </p>
+      <div class="notice noticeInfo" role="note">
+        <b>Scheduling policy</b>
+        No appointments on Saturdays, Sundays, or Philippine holidays. Same-day sessions close once
+        the session start time (8:00 AM / 12:00 PM) has passed.
+      </div>
+    </section>
+
+    <!-- ============ Application selector (applications table) ============ -->
+    <section class="sectionBlock" aria-labelledby="applicationHeading">
+      <div class="card">
+        <div class="cardHeaderRow">
+          <div>
+            <h3 class="cardTitle" id="applicationHeading">Your Assistance Application</h3>
+            <p class="fieldSublabel">Appointments are linked to a valid client application record.</p>
+          </div>
+          <span class="badge badgeInfo" id="applicationBadge">applications</span>
+        </div>
+
+        <div class="field">
+          <label class="fieldLabel" for="applicationSelect">Select application</label>
+          <select class="input" id="applicationSelect" aria-describedby="applicationSummary">
+            <option value="">Loading applications&hellip;</option>
+          </select>
+        </div>
+
+        <div class="applicationSummary" id="applicationSummary">
+          <div class="detailRow"><span class="detailLabel">Application ID</span><span class="monoCode" id="summaryApplicationId">&mdash;</span></div>
+          <div class="detailRow"><span class="detailLabel">Control Number</span><span class="detailValue monoCode" id="summaryControlNumber">&mdash;</span></div>
+          <div class="detailRow"><span class="detailLabel">Client ID</span><span class="detailValue monoTime" id="summaryClientId">&mdash;</span></div>
+          <div class="detailRow"><span class="detailLabel">Assistance Type</span><span class="detailValue" id="summaryAssistanceType">&mdash;</span></div>
+          <div class="detailRow"><span class="detailLabel">Current Status</span><span id="summaryApplicationStatus">&mdash;</span></div>
+        </div>
+
+        <div class="feedbackArea" id="applicationFeedback" role="alert" aria-live="assertive" hidden></div>
+      </div>
+    </section>
+
+    <!-- ============ Current Appointment Availability ============ -->
+    <section class="sectionBlock" aria-labelledby="availabilityHeading">
+      <div class="cardHeaderRow">
+        <h3 class="cardTitle" id="availabilityHeading">Current Appointment Availability</h3>
+        <span class="badge badgeInfo" id="availabilityDateBadge">Next working day</span>
+      </div>
+      <div class="sessionGrid" id="availabilityCards">
+        <!-- AM / PM availability cards rendered by JS -->
+      </div>
+      <p class="emptyStateText" id="availabilityEmptyText" hidden>
+        No appointments are available today. Please select the next available working day on the calendar.
+      </p>
+    </section>
+
+    <!-- ============ Calendar + Sessions layout ============ -->
+    <div class="schedulingLayout" id="schedulingSection">
+
+      <!-- Calendar column -->
+      <section class="sectionBlock" aria-labelledby="calendarHeading">
+        <div class="cardHeaderRow">
+          <h3 class="cardTitle" id="calendarHeading">Select Appointment Date</h3>
+          <span class="badge badgeNeutral" id="calendarMonthBadge">PH Calendar</span>
+        </div>
+
+        <div class="calendarContainer">
+          <div class="calendarToolbar">
+            <button type="button" class="btn btnGhost btnSm calendarNavBtn" id="btnPrevMonth" aria-label="Previous month">&larr; Prev</button>
+            <div class="calendarMonthYear" id="calendarMonthTitle" aria-live="polite">Month Year</div>
+            <button type="button" class="btn btnGhost btnSm calendarNavBtn" id="btnNextMonth" aria-label="Next month">Next &rarr;</button>
+          </div>
+
+          <div class="calendarGrid" role="grid" aria-label="Appointment calendar">
+            <div class="calendarDayHeader isWeekend">Sun</div>
+            <div class="calendarDayHeader">Mon</div>
+            <div class="calendarDayHeader">Tue</div>
+            <div class="calendarDayHeader">Wed</div>
+            <div class="calendarDayHeader">Thu</div>
+            <div class="calendarDayHeader">Fri</div>
+            <div class="calendarDayHeader isWeekend">Sat</div>
+          </div>
+          <div class="calendarDays" id="calendarDays"></div>
+        </div>
+
+        <!-- Calendar legend -->
+        <div class="calendarLegend">
+          <span class="legendItem"><span class="legendSwatch legendSwatchOpen"></span> Open</span>
+          <span class="legendItem"><span class="legendSwatch legendSwatchAlmost"></span> Almost Full</span>
+          <span class="legendItem"><span class="legendSwatch legendSwatchFull"></span> Full</span>
+          <span class="legendItem"><span class="legendSwatch legendSwatchLocked"></span> Locked</span>
+          <span class="legendItem"><span class="legendSwatch legendSwatchHoliday"></span> Holiday</span>
+          <span class="legendItem"><span class="legendSwatch legendSwatchWeekend"></span> Weekend</span>
+        </div>
+      </section>
+
+      <!-- Selected date + sessions column -->
+      <section class="sectionBlock" aria-labelledby="sessionsHeading">
+        <div class="card">
+          <div class="cardHeaderRow">
+            <div>
+              <h3 class="cardTitle" id="sessionsHeading">Selected Date</h3>
+              <p class="fieldSublabel" id="selectedDateLabel">No date selected yet</p>
+            </div>
+            <span class="badge badgeNeutral" id="selectedDateBadge">Pending</span>
+          </div>
+
+          <div class="selectedDateCallout" id="selectedDateCallout">
+            <div class="selectedDateCalloutLabel">Selected Schedule Date</div>
+            <div class="selectedDateCalloutDate" id="selectedDateDisplay">Please pick a weekday on the calendar</div>
+            <div class="selectedDateCalloutMeta" id="selectedDateMeta">Session: none selected</div>
+          </div>
+
+          <p class="fieldLabel">Appointment Sessions <span class="fieldSublabelInline">(30 online slots each)</span></p>
+          <div class="sessionGrid" id="sessionCards">
+            <!-- Reserve AM / Reserve PM cards rendered by JS -->
+          </div>
+
+          <p class="hintText" id="sessionHint">Select a working day first, then choose AM or PM.</p>
+
+          <div class="feedbackArea" id="schedulingFeedback" role="alert" aria-live="assertive" hidden></div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ============ My Appointment / Check-in ============ -->
+    <section class="sectionBlock" id="checkinSection" aria-labelledby="checkinHeading">
+      <div class="card">
+        <div class="cardHeaderRow">
+          <h3 class="cardTitle" id="checkinHeading">My Appointment &amp; Check-in</h3>
+          <span class="badge badgeNeutral" id="appointmentStatusBadge">No Appointment</span>
+        </div>
+
+        <div class="appointmentDetails" id="appointmentDetails">
+          <div class="detailRow"><span class="detailLabel">Appointment ID</span><span class="monoCode" id="detailAppointmentId">&mdash;</span></div>
+          <div class="detailRow"><span class="detailLabel">Control Number</span><span class="detailValue monoCode" id="detailControlNumber">&mdash;</span></div>
+          <div class="detailRow"><span class="detailLabel">Appointment Date</span><span class="detailValue" id="detailDate">&mdash;</span></div>
+          <div class="detailRow"><span class="detailLabel">Session</span><span class="detailValue" id="detailSession">&mdash;</span></div>
+          <div class="detailRow"><span class="detailLabel">Start Time</span><span class="detailValue monoTime" id="detailTime">&mdash;</span></div>
+          <div class="detailRow"><span class="detailLabel">Appointment Status</span><span id="detailApptStatus">&mdash;</span></div>
+          <div class="detailRow"><span class="detailLabel">Check-in Status</span><span id="detailCheckinStatus">&mdash;</span></div>
+          <div class="detailRow"><span class="detailLabel">Queue Number</span><span id="detailQueueNumber">&mdash;</span></div>
+        </div>
+
+        <div class="notice noticeWarning" id="lateNotice" hidden>
+          <b>Late Check-in</b>
+          Your appointment has been marked as <strong>LATE</strong>. You may be re-queued if capacity is
+          still available; if capacity is full, you will need to reschedule.
+        </div>
+
+        <div class="btnGroup" id="checkinActions">
+          <button type="button" class="btn btnPrimary" id="btnCheckIn" disabled>Check In</button>
+          <button type="button" class="btn btnSecondary" id="btnReschedule" disabled>Reschedule Appointment</button>
+          <button type="button" class="btn btnDanger" id="btnCancelAppointment" disabled>Cancel Appointment</button>
+        </div>
+
+        <div class="feedbackArea" id="appointmentFeedback" role="alert" aria-live="assertive" hidden></div>
+
+        <p class="hintText">Check-in opens at <strong>7:30 AM for AM sessions</strong> (valid until before 11:00 AM) and <strong>11:30 AM for PM sessions</strong> (valid until before 5:00 PM). Arriving past the check-in window marks your appointment as <strong>LATE</strong>. Missed AM sessions may be re-queued to the PM session subject to slot capacity, or rescheduled. Missed PM sessions must be rescheduled for the next working day. Re-queued clients receive a new queue number and must wait at the end of the line. The temporary queue number is issued only after check-in.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    City Social Welfare and Development Office &middot; Pasig City &mdash; Appointment &amp; Scheduling Module
+    (connected to <span class="monoInline">cswdo_db</span> through the PHP appointment API)
+  </footer>
+
+  <!-- ================= DIALOGS (UI guide modal style) ================= -->
+
+  <!-- 1. Initial policy / availability dialog (shown on load) -->
+  <div class="modalOverlay" id="policyModal" role="dialog" aria-modal="true" aria-labelledby="policyModalTitle">
+    <div class="modalCard modalCardWide">
+      <h3 id="policyModalTitle">Appointment &amp; Scheduling</h3>
+      <p>Appointments are available on <strong>weekdays only</strong>. Please select one available session:</p>
+
+      <div class="policySessions">
+        <div class="policySessionCard">
+          <span class="policySessionName">AM</span>
+          <span class="policySessionTime">8:00 AM</span>
+          <span class="policySessionSlots">30 slots</span>
+        </div>
+        <div class="policySessionCard">
+          <span class="policySessionName">PM</span>
+          <span class="policySessionTime">12:00 PM</span>
+          <span class="policySessionSlots">30 slots</span>
+        </div>
+      </div>
+
+      <p>Appointments are <strong>not available</strong> on:</p>
+      <ul class="policyList">
+        <li>Saturdays</li>
+        <li>Sundays</li>
+        <li>Philippine holidays</li>
+      </ul>
+
+      <p class="policySmall">
+        The available slot count updates based on current reservations. If your selected session is
+        already full, choose another available session or another working day.
+      </p>
+
+      <div class="policyAvailability" id="policyAvailability">
+        <div class="policyAvailabilityTitle">Today's Appointment Availability</div>
+        <div id="policyAvailabilityBody"><!-- rendered by JS --></div>
+      </div>
+
+      <div class="btnGroup btnGroupEnd">
+        <button type="button" class="btn btnPrimary" id="btnContinueToScheduling">Continue to Scheduling</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Reservation confirmation dialog -->
+  <div class="modalOverlay" id="confirmModal" role="dialog" aria-modal="true" aria-labelledby="confirmModalTitle">
+    <div class="modalCard">
+      <h3 id="confirmModalTitle">Confirm Appointment</h3>
+      <div class="confirmDetails">
+        <div class="detailRow"><span class="detailLabel">Application</span><span class="detailValue monoCode" id="confirmControlNumber">&mdash;</span></div>
+        <div class="detailRow"><span class="detailLabel">Date</span><span class="detailValue" id="confirmDate">&mdash;</span></div>
+        <div class="detailRow"><span class="detailLabel">Session</span><span class="detailValue" id="confirmSession">&mdash;</span></div>
+        <div class="detailRow"><span class="detailLabel">Start Time</span><span class="detailValue monoTime" id="confirmTime">&mdash;</span></div>
+        <div class="detailRow"><span class="detailLabel">Available Slots</span><span class="detailValue" id="confirmSlots">&mdash;</span></div>
+      </div>
+      <p>Are you sure you want to reserve this appointment?</p>
+      <div class="btnGroup btnGroupEnd">
+        <button type="button" class="btn btnSecondary" data-close-modal="confirmModal">Cancel</button>
+        <button type="button" class="btn btnConfirm" id="btnConfirmAppointment">Confirm Appointment</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Successful reservation dialog -->
+  <div class="modalOverlay" id="successModal" role="dialog" aria-modal="true" aria-labelledby="successModalTitle">
+    <div class="modalCard">
+      <span class="badge badgeSuccess" id="successBadge">Appointment Confirmed</span>
+      <h3 id="successModalTitle">Appointment Reserved</h3>
+      <div class="confirmDetails">
+        <div class="detailRow"><span class="detailLabel">Appointment ID</span><span class="monoCode" id="successAppointmentId">&mdash;</span></div>
+        <div class="detailRow"><span class="detailLabel">Control Number</span><span class="detailValue monoCode" id="successControlNumber">&mdash;</span></div>
+        <div class="detailRow"><span class="detailLabel">Appointment Date</span><span class="detailValue" id="successDate">&mdash;</span></div>
+        <div class="detailRow"><span class="detailLabel">Session</span><span class="detailValue" id="successSession">&mdash;</span></div>
+        <div class="detailRow"><span class="detailLabel">Start Time</span><span class="detailValue monoTime" id="successTime">&mdash;</span></div>
+        <div class="detailRow"><span class="detailLabel">Check-in Opens</span><span class="detailValue monoTime" id="successCheckinOpens">&mdash;</span></div>
+        <div class="detailRow"><span class="detailLabel">Appointment Status</span><span id="successStatus"></span></div>
+      </div>
+      <p class="policySmall">
+        Present the control number at the CSWDO intake counter on your appointment day.
+        <strong>Your queue number will only be generated after you check in on the appointment date.</strong>
+      </p>
+      <div class="btnGroup btnGroupEnd">
+        <button type="button" class="btn btnPrimary" data-close-modal="successModal">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Late check-in dialog -->
+  <div class="modalOverlay" id="lateModal" role="dialog" aria-modal="true" aria-labelledby="lateModalTitle">
+    <div class="modalCard">
+      <span class="badge badgeWarning" id="lateBadge">Late Check-in</span>
+      <h3 id="lateModalTitle">Your appointment has been marked as LATE</h3>
+      <div class="confirmDetails">
+        <div class="detailRow"><span class="detailLabel">Original Appointment</span><span class="detailValue" id="lateOriginal">&mdash;</span></div>
+        <div class="detailRow"><span class="detailLabel">Session</span><span class="detailValue" id="lateSession">&mdash;</span></div>
+        <div class="detailRow"><span class="detailLabel">Status</span><span id="lateStatus"></span></div>
+      </div>
+      <p id="lateExplanation">
+        <!-- Filled by showLateDialog(): AM-late offers same-day PM re-queue
+             (new RQ-### strictly at the end of the line) while capacity lasts;
+             PM-late means the office day has concluded — reschedule instead. -->
+      </p>
+      <div class="btnGroup btnGroupEnd" id="lateActions"><!-- action buttons rendered by JS --></div>
+    </div>
+  </div>
+
+  <!-- 5. Re-queue confirmation dialog -->
+  <div class="modalOverlay" id="requeueModal" role="dialog" aria-modal="true" aria-labelledby="requeueModalTitle">
+    <div class="modalCard">
+      <h3 id="requeueModalTitle">Re-Queue Appointment</h3>
+      <div class="confirmDetails">
+        <div class="detailRow"><span class="detailLabel">Original Appointment</span><span class="detailValue" id="requeueOriginal">&mdash;</span></div>
+        <div class="detailRow"><span class="detailLabel">Status</span><span id="requeueStatus"></span></div>
+      </div>
+      <p>Your appointment will be transferred into the same-day <strong>PM session</strong>. Your old
+        queue number is invalidated and you will receive a <strong>new RQ-### number placed strictly
+        at the end of the PM line</strong> — there is no queue jumping. Your permanent control number
+        and the appointment record stay connected.</p>
+      <div class="btnGroup btnGroupEnd">
+        <button type="button" class="btn btnSecondary" data-close-modal="requeueModal">Cancel</button>
+        <button type="button" class="btn btnConfirm" id="btnConfirmRequeue">Confirm Re-Queue</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. Rescheduling dialog -->
+  <div class="modalOverlay" id="rescheduleModal" role="dialog" aria-modal="true" aria-labelledby="rescheduleModalTitle">
+    <div class="modalCard">
+      <h3 id="rescheduleModalTitle">Reschedule Appointment</h3>
+      <p id="rescheduleMessage">
+        The current session has no available capacity. Please select another available working day and
+        AM or PM session.
+      </p>
+      <p class="policySmall">Rescheduling is validated against weekends, holidays, and slot capacity
+        before the new appointment is confirmed.</p>
+      <div class="btnGroup btnGroupEnd">
+        <button type="button" class="btn btnSecondary" data-close-modal="rescheduleModal">Cancel</button>
+        <button type="button" class="btn btnPrimary" id="btnOpenCalendarForReschedule">Open Calendar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast notification -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <!-- Module logic -->
+  <script src="js/cswdo_client.js"></script>
+</body>
+</html>
