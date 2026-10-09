@@ -44,11 +44,19 @@
   updateDateTime();
   setInterval(updateDateTime, 1000);
 
+  // Initialize Lucide Icons if available
+  function initLucideIcons() {
+    if (typeof lucide !== 'undefined' && typeof lucide.createIcons === 'function') {
+      lucide.createIcons();
+    }
+  }
+
   // =====================================================
   // SETUP ON DOM READY
   // =====================================================
 
   document.addEventListener("DOMContentLoaded", () => {
+    initLucideIcons();
 
     const registrationForm =
         document.getElementById("registrationForm");
@@ -58,6 +66,23 @@
 
     const ageInput =
         document.getElementById("age");
+
+    /* =====================================================
+   BIRTH DATE RESTRICTION
+   Prevent future dates; today is the latest allowed date
+   ===================================================== */
+
+    if (birthDateInput) {
+        const today = new Date();
+
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, "0");
+        const day = String(today.getDate()).padStart(2, "0");
+
+        const todayDate = `${year}-${month}-${day}`;
+
+        birthDateInput.max = todayDate;
+    }
 
     const pwdYes =
         document.getElementById("pwdYes");
@@ -93,6 +118,106 @@
 
     const contactNumberInput =
         document.getElementById("contactNumber");
+
+    const pasigPassAttachmentInput =
+        document.getElementById("pasigPassAttachment");
+
+    const pasigPassPreview =
+        document.getElementById("pasigPassPreview");
+
+    const pasigPassName =
+        document.getElementById("pasigPassName");
+
+    const pasigPassSize =
+        document.getElementById("pasigPassSize");
+
+    const removePasigPassBtn =
+        document.getElementById("removePasigPassAttachment");
+
+    let currentObjectUrl = null;
+
+    /* =====================================================
+       PASIG PASS QR IMAGE ATTACHMENT (OPTIONAL)
+       ===================================================== */
+
+    function formatFileSize(bytes) {
+      if (bytes === 0) return '0 Bytes';
+      const k = 1024;
+      const sizes = ['Bytes', 'KB', 'MB'];
+      const i = Math.floor(Math.log(bytes) / Math.log(k));
+      return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    }
+
+    function clearPasigPassFile() {
+      if (pasigPassAttachmentInput) {
+        pasigPassAttachmentInput.value = "";
+      }
+      if (currentObjectUrl) {
+        URL.revokeObjectURL(currentObjectUrl);
+        currentObjectUrl = null;
+      }
+      if (pasigPassPreview) {
+        pasigPassPreview.classList.add("isHidden");
+        const img = pasigPassPreview.querySelector(".filePreviewImage");
+        if (img) img.src = "#";
+      }
+      if (pasigPassName) pasigPassName.textContent = "";
+      if (pasigPassSize) pasigPassSize.textContent = "";
+      removeFieldError(pasigPassAttachmentInput);
+    }
+
+    if (removePasigPassBtn) {
+      removePasigPassBtn.addEventListener("click", () => {
+        clearPasigPassFile();
+      });
+    }
+
+    if (pasigPassAttachmentInput) {
+      pasigPassAttachmentInput.addEventListener("change", (e) => {
+        removeFieldError(pasigPassAttachmentInput);
+        const file = e.target.files && e.target.files[0];
+
+        if (!file) {
+          clearPasigPassFile();
+          return;
+        }
+
+        const validTypes = ["image/png", "image/jpeg", "image/webp"];
+        if (!validTypes.includes(file.type)) {
+          clearPasigPassFile();
+          showValidationError(
+            pasigPassAttachmentInput,
+            "Invalid file type. Please upload a PNG, JPG/JPEG, or WEBP image."
+          );
+          return;
+        }
+
+        const maxSize = 5 * 1024 * 1024; // 5 MB
+        if (file.size > maxSize) {
+          clearPasigPassFile();
+          showValidationError(
+            pasigPassAttachmentInput,
+            "File size exceeds 5 MB. Please upload a smaller image."
+          );
+          return;
+        }
+
+        // Show preview
+        if (currentObjectUrl) {
+          URL.revokeObjectURL(currentObjectUrl);
+        }
+        currentObjectUrl = URL.createObjectURL(file);
+
+        if (pasigPassPreview) {
+          const img = pasigPassPreview.querySelector(".filePreviewImage");
+          if (img) img.src = currentObjectUrl;
+          if (pasigPassName) pasigPassName.textContent = file.name;
+          if (pasigPassSize) pasigPassSize.textContent = formatFileSize(file.size);
+          pasigPassPreview.classList.remove("isHidden");
+          initLucideIcons();
+        }
+      });
+    }
 
 
     /* =====================================================
@@ -811,7 +936,7 @@
         // Place error outside input wrappers so buttons/icons are not shifted
         const wrapper =
             input.closest(
-                ".passwordInputWrapper, .contactInputWrapper"
+                ".passwordInputWrapper, .contactInputWrapper, .fileUpload"
             );
 
         if (wrapper) {
@@ -1034,6 +1159,38 @@
                     }
                 );
 
+                /* -----------------------------------------
+                BIRTH DATE VALIDATION
+                Must not be later than today
+                ----------------------------------------- */
+
+                if (
+                    birthDateInput &&
+                    birthDateInput.value
+                ) {
+                    const today = new Date();
+
+                    const year = today.getFullYear();
+                    const month = String(today.getMonth() + 1).padStart(2, "0");
+                    const day = String(today.getDate()).padStart(2, "0");
+
+                    const todayDate = `${year}-${month}-${day}`;
+
+                    if (birthDateInput.value > todayDate) {
+
+                        isValid = false;
+
+                        showValidationError(
+                            birthDateInput,
+                            "Birth date cannot be in the future."
+                        );
+
+                        if (!firstError) {
+                            firstError = birthDateInput;
+                        }
+                    }
+                }
+                
 
                 /* -----------------------------------------
                    EMAIL VALIDATION (@ symbol + format)

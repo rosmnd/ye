@@ -19,6 +19,8 @@
     >
 
     <link rel="stylesheet" href="../css/register.css">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 
 <body>
@@ -843,28 +845,51 @@
 
 
                         <div class="formGroup formGroupFull">
-
-                            <label
-                                for="pasigPassId"
-                                class="formLabel"
-                            >
-                                Pasig Pass ID
+                            <label for="pasigPassAttachment" class="formLabel">
+                                Pasig Pass QR Code
                                 <span class="optional">(Optional)</span>
                             </label>
 
-                            <input
-                                type="text"
-                                id="pasigPassId"
-                                name="pasigPassId"
-                                class="formInput"
-                                placeholder="Enter your Pasig Pass ID if available"
-                                maxlength="50"
-                            >
+                            <div class="fileUpload">
+                                <input
+                                    type="file"
+                                    id="pasigPassAttachment"
+                                    name="pasigPassAttachment"
+                                    class="fileInput"
+                                    accept="image/png,image/jpeg,image/webp"
+                                    aria-describedby="fileUploadHint"
+                                >
+                                <label for="pasigPassAttachment" class="fileUploadButton">
+                                    <span class="fileUploadIcon" aria-hidden="true">
+                                        <i data-lucide="upload"></i>
+                                    </span>
+                                    <span class="fileUploadText">Upload Pasig Pass QR Image</span>
+                                </label>
+                            </div>
 
-                            <small class="formHint">
-                                Optional. No Pasig Pass verification is performed at this stage.
+                            <small class="formHint" id="fileUploadHint">
+                                Optional. Upload a clear image of your Pasig Pass QR code (PNG, JPG/JPEG, or WEBP, max 5MB).
                             </small>
 
+                            <!-- File preview area -->
+                            <div class="filePreview isHidden" id="pasigPassPreview" aria-live="polite">
+                                <div class="filePreviewContent">
+                                    <img src="#" alt="Preview" class="filePreviewImage">
+                                    <div class="filePreviewInfo">
+                                        <span class="filePreviewName" id="pasigPassName"></span>
+                                        <span class="filePreviewSize" id="pasigPassSize"></span>
+                                    </div>
+                                    <button
+                                        type="button"
+                                        class="fileRemoveButton"
+                                        id="removePasigPassAttachment"
+                                        aria-label="Remove uploaded Pasig Pass QR image"
+                                    >
+                                        <i data-lucide="x" aria-hidden="true"></i>
+                                        <span>Remove</span>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
 
 
