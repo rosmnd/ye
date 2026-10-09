@@ -244,6 +244,77 @@
         );
 
 
+    const passwordRequirementItems =
+        document.querySelectorAll(
+            "[data-password-requirement]"
+        );
+
+
+    function getPasswordRequirementStatus(password) {
+
+        return {
+            uppercase: /[A-Z]/.test(password),
+            lowercase: /[a-z]/.test(password),
+            number: /[0-9]/.test(password),
+            special: /[^A-Za-z0-9\s]/.test(password)
+        };
+
+    }
+
+
+    function updatePasswordRequirements() {
+
+        if (!passwordInput) {
+            return;
+        }
+
+
+        const requirementStatus =
+            getPasswordRequirementStatus(
+                passwordInput.value
+            );
+
+
+        passwordRequirementItems.forEach((item) => {
+
+            const isMet =
+                requirementStatus[
+                    item.dataset.passwordRequirement
+                ];
+
+            const indicator =
+                item.querySelector(
+                    ".passwordRequirementIndicator"
+                );
+
+            const status =
+                item.querySelector(
+                    ".passwordRequirementStatus"
+                );
+
+
+            item.classList.toggle(
+                "isMet",
+                isMet
+            );
+
+
+            if (indicator) {
+                indicator.textContent =
+                    isMet ? "✓" : "○";
+            }
+
+
+            if (status) {
+                status.textContent =
+                    isMet ? "Met" : "Not met";
+            }
+
+        });
+
+    }
+
+
     function resetPasswordStrength() {
 
         strengthBars.forEach((bar) => {
@@ -294,7 +365,7 @@
         }
 
 
-        if (/[^A-Za-z0-9]/.test(password)) {
+        if (/[^A-Za-z0-9\s]/.test(password)) {
             characterTypes++;
         }
 
@@ -461,10 +532,16 @@
             updatePasswordStrength
         );
 
+        passwordInput.addEventListener(
+            "input",
+            updatePasswordRequirements
+        );
+
     }
 
 
     resetPasswordStrength();
+    updatePasswordRequirements();
 
 
     /* =====================================================
@@ -1101,6 +1178,17 @@
                         showValidationError(
                             passwordInput,
                             "This field is required."
+                        );
+                        if (!firstError) firstError = passwordInput;
+                    } else if (
+                        Object.values(
+                            getPasswordRequirementStatus(passVal)
+                        ).some((isMet) => !isMet)
+                    ) {
+                        isValid = false;
+                        showValidationError(
+                            passwordInput,
+                            "Password must include at least one uppercase letter, one lowercase letter, one number, and one special character."
                         );
                         if (!firstError) firstError = passwordInput;
                     }
