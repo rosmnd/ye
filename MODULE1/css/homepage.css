@@ -426,6 +426,23 @@ textarea {
     text-align: center;
 }
 
+.valueBarItem > span {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space2);
+}
+
+.valueBarIcon {
+    display: inline-flex;
+    flex-shrink: 0;
+    color: var(--blue);
+}
+
+.valueBarIcon svg {
+    width: 18px;
+    height: 18px;
+}
+
 /* Services Section */
 .servicesSection {
     background: var(--white);
@@ -447,6 +464,9 @@ textarea {
     border: 1px solid var(--gray-300);
     border-radius: var(--radiusMd);
     box-shadow: var(--shadowSm);
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
     transition:
         transform 0.12s ease,
         box-shadow 0.12s ease,
@@ -457,6 +477,11 @@ textarea {
     transform: translateY(-2px);
     border-color: var(--gray-200);
     box-shadow: var(--shadowMd);
+}
+
+.serviceCard:focus-visible {
+    outline: none;
+    box-shadow: var(--shadowMd), var(--focus-ring);
 }
 
 /* Card header row: icon tile on the left, category label on the right */
@@ -513,7 +538,7 @@ textarea {
     color: var(--gray-700);
 }
 
-.serviceCard a {
+.serviceCard .serviceCardCta {
     margin-top: auto;
     padding-top: var(--space3);
     font-size: 0.9rem;
@@ -521,7 +546,7 @@ textarea {
     color: var(--blue);
 }
 
-.serviceCard a:hover {
+.serviceCard:hover .serviceCardCta {
     color: var(--blue-hover);
 }
 
@@ -770,4 +795,61 @@ textarea {
     .govHeaderDateTime {
         justify-content: flex-start;
     }
+}
+/* =========================================================
+   BACK TO TOP - floating scroll button
+   ========================================================= */
+
+.backToTop {
+    position: fixed;
+    right: var(--space5);
+    bottom: var(--space5);
+    z-index: 90;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    padding: 0;
+
+    background-color: var(--navy);
+    color: var(--white);
+    border: none;
+    border-radius: 50%;
+    box-shadow: var(--shadowMd);
+    cursor: pointer;
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(8px);
+    transition:
+        opacity 0.15s ease,
+        transform 0.15s ease,
+        visibility 0.15s ease,
+        background-color 0.12s ease;
+}
+
+.backToTop.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.backToTop:hover {
+    background-color: var(--blue);
+}
+
+.backToTop:focus-visible {
+    outline: none;
+    box-shadow: var(--shadowMd), var(--focus-ring);
+}
+
+.backToTop:active {
+    transform: translateY(1px);
+}
+
+.backToTop svg {
+    width: 20px;
+    height: 20px;
 }

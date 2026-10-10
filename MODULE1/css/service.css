@@ -100,16 +100,11 @@
 }
 
 .heroMediaFrame {
-    width: min(100%, 300px);
-    aspect-ratio: 1 / 1;
+    width: min(100%, 440px);
+    aspect-ratio: 634 / 427;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: var(--space5);
-    background: var(--white);
-    border: 1px solid var(--gray-200);
-    border-radius: 50%;
-    box-shadow: var(--shadowMd);
 }
 
 .heroMediaFrame img {
@@ -134,6 +129,48 @@
 
 .factsBar .valueBarItem {
     color: var(--blue-pale);
+}
+
+.factsBar .valueBarIcon {
+    color: var(--blue-pale);
+}
+
+/* ---------- Hero secondary actions ---------- */
+
+/* Return icon button — formal replacement for the old "Back to Services" link */
+.btnReturn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    background-color: var(--white);
+    color: var(--blue);
+    border: 1px solid var(--gray-300);
+    border-radius: var(--radiusMd);
+    cursor: pointer;
+    transition:
+        background-color 0.12s ease,
+        border-color 0.12s ease,
+        color 0.12s ease,
+        box-shadow 0.12s ease,
+        transform 0.12s ease;
+}
+
+.btnReturn:hover {
+    color: var(--blue-hover);
+    background-color: var(--gray-100);
+    border-color: var(--gray-200);
+}
+
+.btnReturn:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
+}
+
+.btnReturn:active {
+    transform: translateY(1px);
 }
 
 
@@ -180,8 +217,14 @@
     height: 42px;
     margin-bottom: var(--space3);
     font-size: 1.15rem;
+    color: var(--blue);
     border-radius: var(--radiusMd);
     background: var(--blue-pale);
+}
+
+.infoIcon svg {
+    width: 22px;
+    height: 22px;
 }
 
 .infoCard h3 {

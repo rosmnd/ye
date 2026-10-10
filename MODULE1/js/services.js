@@ -43,3 +43,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
     setInterval(updateDateTime, 1000);
 });
+/* =========================================================
+   BACK TO TOP - floating button, appears after scrolling
+   (mirrors the homepage implementation)
+   ========================================================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const backToTop = document.getElementById("backToTop");
+
+    if (!backToTop) {
+        return;
+    }
+
+    const toggleBackToTop = () => {
+        backToTop.classList.toggle("is-visible", window.scrollY > 400);
+    };
+
+    window.addEventListener("scroll", toggleBackToTop, { passive: true });
+    toggleBackToTop();
+
+    backToTop.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+});
