@@ -58,3 +58,144 @@ document.addEventListener("DOMContentLoaded", () => {
         window.scrollTo({ top: 0, behavior: "smooth" });
     });
 });
+
+
+/* =========================================================
+   ACCOUNT PROFILE - SIGN IN / PROFILE / SIGN OUT
+   ========================================================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const auth = window.CswdoAuthSession;
+
+    const signInLink = document.getElementById("signInLink");
+    const profileContainer = document.getElementById("profileContainer");
+    const profileButton = document.getElementById("profileButton");
+    const profileDropdown = document.getElementById("profileDropdown");
+    const profileUsername = document.getElementById("profileUsername");
+    const profileDropdownName = document.getElementById("profileDropdownName");
+    const profileRole = document.getElementById("profileRole");
+    const profileAvatarImage = document.getElementById("profileAvatarImage");
+    const profileInitials = document.getElementById("profileInitials");
+    const logoutButton = document.getElementById("logoutButton");
+
+    if (
+        !auth ||
+        !signInLink ||
+        !profileContainer ||
+        !profileButton ||
+        !profileDropdown
+    ) {
+        return;
+    }
+
+    function getInitials(name) {
+        const parts = String(name || "U")
+            .trim()
+            .split(/\s+/)
+            .filter(Boolean);
+
+        if (parts.length >= 2) {
+            return (parts[0][0] + parts[parts.length - 1][0])
+                .toUpperCase();
+        }
+
+        return (parts[0] || "U").slice(0, 2).toUpperCase();
+    }
+
+    function closeProfileDropdown() {
+        profileDropdown.hidden = true;
+        profileButton.setAttribute("aria-expanded", "false");
+    }
+
+    function renderAccount() {
+        const user = auth.getCurrentUser();
+
+        closeProfileDropdown();
+
+        if (!user) {
+            signInLink.hidden = false;
+            profileContainer.hidden = true;
+            return;
+        }
+
+        signInLink.hidden = true;
+        profileContainer.hidden = false;
+
+        // The visible navigation label is the account's username.
+        profileUsername.textContent = user.username;
+
+        profileDropdownName.textContent =
+            user.displayName || user.username;
+
+        profileRole.textContent = user.role;
+
+        // Use the uploaded/stored profile image if the backend provides one.
+        if (user.avatarUrl) {
+            profileAvatarImage.onerror = () => {
+                profileAvatarImage.hidden = true;
+                profileAvatarImage.removeAttribute("src");
+                profileInitials.hidden = false;
+            };
+
+            profileAvatarImage.src = user.avatarUrl;
+            profileAvatarImage.hidden = false;
+            profileInitials.hidden = true;
+        } else {
+            profileAvatarImage.hidden = true;
+            profileAvatarImage.removeAttribute("src");
+
+            profileInitials.textContent =
+                getInitials(user.displayName || user.username);
+
+            profileInitials.hidden = false;
+        }
+    }
+
+    profileButton.addEventListener("click", (event) => {
+        event.stopPropagation();
+
+        const willOpen = profileDropdown.hidden;
+
+        profileDropdown.hidden = !willOpen;
+        profileButton.setAttribute(
+            "aria-expanded",
+            String(willOpen)
+        );
+    });
+
+    document.addEventListener("click", (event) => {
+        if (!profileContainer.contains(event.target)) {
+            closeProfileDropdown();
+        }
+    });
+
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+            closeProfileDropdown();
+        }
+    });
+
+    
+    /* Sign out only after confirmation */
+    if (logoutButton) {
+        logoutButton.addEventListener("click", async () => {
+
+            const confirmed = window.CswdoLogoutModal
+                ? await window.CswdoLogoutModal.confirm()
+                : window.confirm(
+                    "Are you sure you want to sign out of your CSWDO MIS account?"
+                );
+
+            // Cancel means the session remains active.
+            if (!confirmed) {
+                return;
+            }
+
+            auth.clearUserSession();
+            renderAccount();
+        });
+    }
+
+    renderAccount();
+});

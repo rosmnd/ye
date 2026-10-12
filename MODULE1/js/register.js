@@ -1086,7 +1086,7 @@
 
         registrationForm.addEventListener(
             "submit",
-            (event) => {
+            async (event) => {
 
                 event.preventDefault();
 
@@ -1110,7 +1110,7 @@
 
                         if (
                             input.disabled ||
-                            input.offsetParent === null
+                            input.closest(".isHidden")
                         ) {
                             return;
                         }
@@ -1376,96 +1376,198 @@
                     }
                 }
 
+                
+                /* Validate Terms of Service */
+                const agreeTerms = document.getElementById("agreeTerms");
+                const agreePrivacy = document.getElementById("agreePrivacy");
 
-                /* -----------------------------------------
-                   TERMS
-                   ----------------------------------------- */
-
-                const agreeTerms =
-                    document.getElementById(
-                        "agreeTerms"
-                    );
-
-                const agreePrivacy =
-                    document.getElementById(
-                        "agreePrivacy"
-                    );
-
-
-                if (
-                    agreeTerms &&
-                    !agreeTerms.checked
-                ) {
-
+                if (agreeTerms && !agreeTerms.checked) {
                     isValid = false;
-
 
                     showChoiceError(
                         agreeTerms,
                         "You must agree to the Terms of Service."
                     );
 
+                    if (!firstError) {
+                        firstError = agreeTerms;
+                    }
                 }
 
-
-                if (
-                    agreePrivacy &&
-                    !agreePrivacy.checked
-                ) {
-
+                /* Validate Privacy Policy */
+                if (agreePrivacy && !agreePrivacy.checked) {
                     isValid = false;
-
 
                     showChoiceError(
                         agreePrivacy,
                         "You must agree to the Privacy Policy."
                     );
 
+                    if (!firstError) {
+                        firstError = agreePrivacy;
+                    }
                 }
 
+                
+                /* Recheck native constraints across every step */
+                const allControls = registrationForm.querySelectorAll(
+                    "input, select, textarea"
+                );
 
-                /* -----------------------------------------
-                   VALIDATION RESULT
-                   ----------------------------------------- */
+                allControls.forEach((input) => {
+                    if (
+                        input.disabled ||
+                        input.closest(".isHidden") ||
+                        input.type === "checkbox" ||
+                        input.type === "radio"
+                    ) {
+                        return;
+                    }
+
+                    if (!input.checkValidity()) {
+                        isValid = false;
+
+                        if (!firstError) {
+                            firstError = input;
+                        }
+
+                        // Avoid adding duplicate errors where custom validation
+                        // already supplies a message.
+                        const hasExistingError = input
+                            .closest(".formGroup")
+                            ?.querySelector(".errorMessage");
+
+                        if (!hasExistingError) {
+                            showValidationError(
+                                input,
+                                input.validationMessage
+                            );
+                        }
+                    }
+                });
+
+                
+                /* =========================================================
+                VALIDATION RESULT AND BACKEND SUBMISSION
+                ========================================================= */
 
                 if (!isValid) {
-
                     if (firstError) {
+                        if (window.CswdoRegistrationTabs) {
+                            window.CswdoRegistrationTabs.showForElement(
+                                firstError
+                            );
+                        }
 
                         firstError.scrollIntoView({
                             behavior: "smooth",
                             block: "center"
                         });
 
-
                         setTimeout(() => {
                             firstError.focus();
                         }, 250);
-
                     }
-
 
                     return;
                 }
 
-
-                /*
-                 * Frontend validation succeeded.
-                 *
-                 * No account is created yet.
-                 *
-                 * Backend integration will later create:
-                 *
-                 * users.role = CLIENT
-                 *
-                 * and the corresponding client_profiles
-                 * record.
-                 */
-
-                console.log(
-                    "Registration form passed frontend validation."
+                const registrationStatus = document.getElementById(
+                    "registrationStatus"
                 );
 
+                const submitButton = document.getElementById(
+                    "createAccountButton"
+                );
+
+                const endpoint = registrationForm.dataset.endpoint;
+
+                function showRegistrationStatus(message, type) {
+                    if (!registrationStatus) return;
+
+                    registrationStatus.textContent = message;
+                    registrationStatus.className =
+                        `registrationStatus ${type}`;
+
+                    registrationStatus.hidden = false;
+                }
+
+                if (!endpoint) {
+                    showRegistrationStatus(
+                        "The registration endpoint has not been configured. Please contact the development team.",
+                        "isError"
+                    );
+
+                    return;
+                }
+
+                if (registrationStatus) {
+                    registrationStatus.hidden = true;
+                    registrationStatus.textContent = "";
+                    registrationStatus.className = "registrationStatus";
+                }
+
+                const originalButtonText = submitButton
+                    ? submitButton.textContent
+                    : "Create Account";
+
+                if (submitButton) {
+                    submitButton.disabled = true;
+                    submitButton.textContent = "Submitting...";
+                }
+
+                try {
+                    const response = await fetch(endpoint, {
+                        method: "POST",
+                        headers: {
+                            "Accept": "application/json"
+                        },
+
+                        // FormData includes text fields and the uploaded image.
+                        // Do not manually set Content-Type; the browser adds
+                        // the multipart boundary for the file upload.
+                        body: new FormData(registrationForm)
+                    });
+
+                    const result = await response.json().catch(() => null);
+
+                    if (
+                        !response.ok ||
+                        !result ||
+                        result.success !== true
+                    ) {
+                        showRegistrationStatus(
+                            result && result.message
+                                ? result.message
+                                : "Registration could not be completed. Check that the backend registration endpoint is available.",
+                            "isError"
+                        );
+
+                        return;
+                    }
+
+                    showRegistrationStatus(
+                        result.message || "Your registration was submitted successfully.",
+                        "isSuccess"
+                    );
+
+                } catch (error) {
+                    console.error(
+                        "Registration request failed.",
+                        error
+                    );
+
+                    showRegistrationStatus(
+                        "The registration service could not be reached. Please check the backend endpoint and try again.",
+                        "isError"
+                    );
+
+                } finally {
+                    if (submitButton) {
+                        submitButton.disabled = false;
+                        submitButton.textContent = originalButtonText;
+                    }
+                }
             }
         );
 

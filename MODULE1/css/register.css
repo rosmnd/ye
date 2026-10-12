@@ -1831,3 +1831,382 @@ a {
     }
 
 }
+
+
+/* =========================================================
+   COMPACT REGISTRATION HEADER
+   ========================================================= */
+
+.registrationPage {
+    padding: var(--space-5) var(--space-4);
+}
+
+.registrationCard {
+    max-width: 66rem;
+}
+
+.registrationHeader {
+    min-height: 13rem;
+    padding: var(--space-6);
+    justify-content: flex-start;
+}
+
+.headerContent {
+    width: 100%;
+    max-width: 49rem;
+    text-align: left;
+    padding-right: var(--space-5);
+}
+
+.registrationTitle {
+    margin: 0 0 var(--space-3);
+    font-size: var(--text-lg);
+    line-height: var(--leading-tight);
+}
+
+.registrationSubtitle {
+    max-width: 45rem;
+    margin: 0 0 var(--space-3);
+}
+
+.loginRedirect {
+    margin: 0;
+}
+
+.registrationHeader::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+
+    background-image: url("../assets/PASIG_CITY_SEAL.png");
+    background-repeat: no-repeat;
+    background-position: right 2rem center;
+    background-size: clamp(9rem, 22vw, 15rem);
+
+    opacity: 0.13;
+}
+
+.headerWave {
+    display: none;
+}
+
+@media (max-width: 640px) {
+    .registrationPage {
+        padding: var(--space-3);
+    }
+
+    .registrationHeader {
+        min-height: 12rem;
+        padding: var(--space-5) var(--space-4);
+    }
+
+    .headerContent {
+        max-width: 100%;
+        padding-right: 0;
+    }
+
+    .registrationHeader::after {
+        background-position: right 0.5rem center;
+        background-size: 8rem;
+        opacity: 0.09;
+    }
+}
+
+
+/* =========================================================
+   MULTI-STEP REGISTRATION
+   ========================================================= */
+
+.registrationForm {
+    padding: var(--space-5) var(--space-6) var(--space-6);
+}
+
+.registrationProgress {
+    margin-bottom: var(--space-6);
+}
+
+.registrationProgressMeta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+
+    margin-bottom: var(--space-2);
+
+    font-size: var(--text-xs);
+    font-weight: 600;
+    color: var(--navy);
+}
+
+#registrationProgressPercent {
+    color: var(--gray-500);
+    font-weight: 500;
+}
+
+.registrationProgressTrack {
+    height: 0.4rem;
+    overflow: hidden;
+
+    background: var(--gray-200);
+    border-radius: var(--radius-pill);
+}
+
+.registrationProgressFill {
+    display: block;
+    width: 33.333%;
+    height: 100%;
+
+    background: linear-gradient(
+        90deg,
+        var(--navy),
+        var(--blue)
+    );
+
+    border-radius: inherit;
+    transition: width var(--duration-med) var(--ease);
+}
+
+.registrationTabs {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-3);
+
+    margin-top: var(--space-4);
+}
+
+.registrationTab {
+    min-width: 0;
+    min-height: 4.5rem;
+
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+
+    padding: var(--space-3);
+
+    text-align: left;
+    font-family: var(--font);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    line-height: var(--leading-tight);
+    color: var(--gray-700);
+
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-md);
+
+    cursor: pointer;
+    transition:
+        border-color var(--duration-fast) var(--ease),
+        background var(--duration-fast) var(--ease),
+        color var(--duration-fast) var(--ease);
+}
+
+.registrationTab:hover:not(:disabled) {
+    background: var(--blue-faint);
+    border-color: var(--blue-light);
+}
+
+.registrationTab.isActive,
+.registrationTab[aria-selected="true"] {
+    color: var(--navy);
+    background: var(--blue-faint);
+    border-color: var(--blue);
+}
+
+.registrationTab.isComplete .registrationTabNumber {
+    color: var(--success);
+    background: var(--success-bg);
+    border-color: var(--success-bd);
+}
+
+.registrationTabNumber {
+    display: inline-flex;
+    flex: 0 0 2rem;
+    align-items: center;
+    justify-content: center;
+
+    width: 2rem;
+    height: 2rem;
+
+    font-size: var(--text-xs);
+    font-weight: 700;
+    color: var(--gray-700);
+
+    background: var(--gray-100);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-pill);
+}
+
+.registrationTab.isActive .registrationTabNumber,
+.registrationTab[aria-selected="true"] .registrationTabNumber {
+    color: var(--white);
+    background: var(--blue);
+    border-color: var(--blue);
+}
+
+.registrationTabLabel {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.registrationTab:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+.registrationTab:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
+}
+
+.registrationSection[hidden],
+[hidden] {
+    display: none !important;
+}
+
+.registrationSection {
+    padding-bottom: var(--space-5);
+    margin-bottom: var(--space-5);
+}
+
+.registrationSection:last-of-type {
+    padding-bottom: var(--space-4);
+    margin-bottom: 0;
+}
+
+/* Step navigation */
+.registrationActions {
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.registrationActionsEnd {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+}
+
+.stepBackButton:hover {
+    background: var(--gray-100);
+    border-color: var(--gray-500);
+}
+
+/* Submission feedback */
+.registrationStatus {
+    margin: 0 0 var(--space-4);
+    padding: var(--space-3) var(--space-4);
+
+    font-size: var(--text-sm);
+    line-height: var(--leading-normal);
+
+    border: 1px solid var(--gray-300);
+    border-radius: var(--radius-md);
+}
+
+.registrationStatus.isError {
+    color: var(--danger);
+    background: var(--danger-bg);
+    border-color: var(--danger-bd);
+}
+
+.registrationStatus.isSuccess {
+    color: var(--success);
+    background: var(--success-bg);
+    border-color: var(--success-bd);
+}
+
+.createAccountButton:disabled {
+    opacity: 0.65;
+    cursor: wait;
+}
+
+@media (max-width: 768px) {
+    .registrationForm {
+        padding: var(--space-5);
+    }
+
+    .registrationTabs {
+        gap: var(--space-2);
+    }
+
+    .registrationTab {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-2);
+        padding: var(--space-3);
+        font-size: var(--text-xs);
+    }
+
+    .registrationActions {
+        gap: var(--space-3);
+    }
+
+    .registrationActionsEnd {
+        gap: var(--space-2);
+    }
+}
+
+@media (max-width: 480px) {
+    .registrationForm {
+        padding: var(--space-4);
+    }
+
+    .registrationTabs {
+        gap: var(--space-1);
+    }
+
+    .registrationTab {
+        align-items: center;
+        text-align: center;
+        padding: var(--space-2) var(--space-1);
+        font-size: 0.68rem;
+        overflow-wrap: anywhere;
+    }
+
+    .registrationTabNumber {
+        flex-basis: 1.75rem;
+        width: 1.75rem;
+        height: 1.75rem;
+    }
+
+    .registrationActions {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .registrationActionsEnd {
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: stretch;
+        width: 100%;
+    }
+
+    .registrationActions .cancelButton,
+    .registrationActions .createAccountButton {
+        width: 100%;
+    }
+}
+
+/* =========================================================
+   REGISTRATION HEADER — REFINED WATERMARK SIZE
+   ========================================================= */
+
+.registrationHeader::after {
+    background-size: clamp(7rem, 14vw, 9rem);
+    background-position: right 2.5rem center;
+    opacity: 0.50;
+}
+
+@media (max-width: 640px) {
+    .registrationHeader::after {
+        background-size: 5.5rem;
+        background-position: right 1.25rem center;
+        opacity: 0.08;
+    }
+}

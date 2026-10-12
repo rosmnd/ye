@@ -49,7 +49,92 @@
                     <button type="button" class="langBtn is-active" data-lang="en" aria-pressed="true">EN</button>
                     <button type="button" class="langBtn" data-lang="tl" aria-pressed="false">TL</button>
                 </div>
-                <a href="login_draft.html" class="btnSignin" data-en="Sign In" data-tl="Mag-sign in">Sign In</a>
+                
+                <!-- Account area: Sign In or authenticated user profile -->
+                <div class="accountArea" id="accountArea">
+
+                    <a
+                        href="login_draft.html"
+                        class="btnSignin"
+                        id="signInLink"
+                        data-en="Sign In"
+                        data-tl="Mag-sign in"
+                    >
+                        Sign In
+                    </a>
+
+                    <div class="profileContainer" id="profileContainer" hidden>
+
+                        <button
+                            type="button"
+                            class="profileButton"
+                            id="profileButton"
+                            aria-expanded="false"
+                            aria-controls="profileDropdown"
+                        >
+                            <span class="profileAvatar" aria-hidden="true">
+
+                                <img
+                                    src=""
+                                    alt=""
+                                    class="profileAvatarImage"
+                                    id="profileAvatarImage"
+                                    hidden
+                                >
+
+                                <span class="profileInitials" id="profileInitials">
+                                    U
+                                </span>
+
+                            </span>
+
+                            <span class="profileUsername" id="profileUsername">
+                                Username
+                            </span>
+
+                            <svg
+                                class="profileChevron"
+                                width="16"
+                                height="16"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                aria-hidden="true"
+                            >
+                                <path d="m6 9 6 6 6-6"></path>
+                            </svg>
+
+                        </button>
+
+                        <div
+                            class="profileDropdown"
+                            id="profileDropdown"
+                            hidden
+                        >
+                            <p class="profileDropdownName" id="profileDropdownName">
+                                Account
+                            </p>
+
+                            <p class="profileDropdownRole">
+                                Account role:
+                                <strong id="profileRole">CLIENT</strong>
+                            </p>
+
+                            <button
+                                type="button"
+                                class="profileLogoutButton"
+                                id="logoutButton"
+                            >
+                                Sign out
+                            </button>
+                        </div>
+
+                    </div>
+
+                </div>
             </nav>
         </div>
     </header>
@@ -277,6 +362,8 @@
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="m5 12 7-7 7 7"></path><path d="M12 19V5"></path></svg>
     </button>
 
+    <script src="../js/auth-session.js"></script>
+    <script src="../js/logout-modal.js"></script>
     <script src="../js/homepage.js"></script>
     <script src="../js/lang.js"></script>
 </body>

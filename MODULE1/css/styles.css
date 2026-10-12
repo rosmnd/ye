@@ -993,6 +993,18 @@ a {
     outline-offset: 2px;
 }
 
+.loginFeedback {
+    margin: 0;
+    padding: var(--space3);
+
+    border: 1px solid var(--danger-bd);
+    border-radius: var(--radius-md);
+
+    background: var(--danger-bg);
+    color: var(--danger);
+
+    font-size: var(--text-sm);
+}
 
 /* =========================================================
    TABLET

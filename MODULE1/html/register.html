@@ -50,68 +50,136 @@
             <!-- ==================================================
                  PAGE HEADER
                  ================================================== -->
-            <header class="registrationHeader">
+                <header class="registrationHeader">
 
-                <div class="headerContent">
+                    <div class="headerContent">
 
-                    <!-- Pasig City logo -->
-                    <div class="logoPlaceholder" aria-label="Pasig City logo placeholder">
-                        <span class="logo-mark">
-                            <img src="../assets/PASIG_CITY_SEAL.png" alt="Pasig City Logo">
-                        </span>
+                        <h1 class="registrationTitle">
+                            Create Your CSWDO Account
+                        </h1>
+
+                        <p class="registrationSubtitle">
+                            Create an account to access CSWDO assistance
+                            services and track your applications.
+                        </p>
+
+                        <p class="loginRedirect">
+                            Already have an account?
+                            <a href="login_draft.html" class="loginLink">
+                                Login here
+                            </a>
+                        </p>
+
                     </div>
 
-                    <p class="headerEyebrow">
-                        PASIG CITY
-                    </p>
-
-                    <h1 class="registrationTitle">
-                        Create Your CSWDO Account
-                    </h1>
-
-                    <p class="registrationSubtitle">
-                        Create an account to access CSWDO assistance
-                        services and track your applications.
-                    </p>
-
-                    <p class="loginRedirect">
-                        Already have an account?
-                        <a
-                            href="login_draft.html"
-                            class="loginLink"
-                        >
-                            Login here
-                        </a>
-                    </p>
-
-                </div>
-
-                <div
-                    class="headerWave headerWaveOne"
-                    aria-hidden="true"
-                ></div>
-
-                <div
-                    class="headerWave headerWaveTwo"
-                    aria-hidden="true"
-                ></div>
-
-            </header>
-
+                </header>
 
             <!-- ==================================================
                  REGISTRATION FORM
                  ================================================== -->
-            <form
-                class="registrationForm"
-                id="registrationForm"
-                novalidate
-            >
+                <form
+                    class="registrationForm"
+                    id="registrationForm"
+                    method="post"
+                    action="../backend/register.php"
+                    enctype="multipart/form-data"
+                    data-endpoint="../backend/register.php"
+                    novalidate
+                >
+
+                    <!-- REGISTRATION PROGRESS -->
+                    <div class="registrationProgress">
+
+                        <div class="registrationProgressMeta">
+                            <span id="registrationStepLabel" aria-live="polite">
+                                Step 1 of 3
+                            </span>
+
+                            <span id="registrationProgressPercent">
+                                33% complete
+                            </span>
+                        </div>
+
+                        <div
+                            class="registrationProgressTrack"
+                            id="registrationProgressBar"
+                            role="progressbar"
+                            aria-label="Registration progress"
+                            aria-valuemin="1"
+                            aria-valuemax="3"
+                            aria-valuenow="1"
+                        >
+                            <span
+                                class="registrationProgressFill"
+                                id="registrationProgressFill"
+                            ></span>
+                        </div>
+
+                        <div
+                            class="registrationTabs"
+                            role="tablist"
+                            aria-label="Registration sections"
+                        >
+                            <button
+                                type="button"
+                                class="registrationTab isActive"
+                                id="registrationTabPersonal"
+                                role="tab"
+                                aria-selected="true"
+                                aria-controls="personalInformationPanel"
+                                tabindex="0"
+                            >
+                                <span class="registrationTabNumber">01</span>
+                                <span class="registrationTabLabel">
+                                    Personal Information
+                                </span>
+                            </button>
+
+                            <button
+                                type="button"
+                                class="registrationTab"
+                                id="registrationTabResidence"
+                                role="tab"
+                                aria-selected="false"
+                                aria-controls="residenceInformationPanel"
+                                tabindex="-1"
+                                disabled
+                            >
+                                <span class="registrationTabNumber">02</span>
+                                <span class="registrationTabLabel">
+                                    Residence &amp; Household Information
+                                </span>
+                            </button>
+
+                            <button
+                                type="button"
+                                class="registrationTab"
+                                id="registrationTabAccount"
+                                role="tab"
+                                aria-selected="false"
+                                aria-controls="accountInformationPanel"
+                                tabindex="-1"
+                                disabled
+                            >
+                                <span class="registrationTabNumber">03</span>
+                                <span class="registrationTabLabel">
+                                    Account Information
+                                </span>
+                            </button>
+                        </div>
+
+                    </div>
 
                 <!-- ==================================================
                      01 PERSONAL INFORMATION
                      ================================================== -->
-                <section class="registrationSection">
+                <section
+                    class="registrationSection"
+                    id="personalInformationPanel"
+                    role="tabpanel"
+                    aria-labelledby="registrationTabPersonal"
+                    tabindex="-1"
+                >
 
                     <div class="sectionHeader">
 
@@ -489,7 +557,14 @@
                 <!-- ==================================================
                      02 RESIDENCE & HOUSEHOLD
                      ================================================== -->
-                <section class="registrationSection">
+                <section
+                    class="registrationSection"
+                    id="residenceInformationPanel"
+                    role="tabpanel"
+                    aria-labelledby="registrationTabResidence"
+                    tabindex="-1"
+                    hidden
+                >
 
                     <div class="sectionHeader">
 
@@ -515,33 +590,87 @@
 
                     <div class="formGrid">
 
-                        <div class="formGroup formGroupFull">
-                            <label
-                                for="addressStreet"
-                                class="formLabel"
+                        
+                        <!-- Unit Number -->
+                        <div class="formGroup">
+                            <label for="unitNumber" class="formLabel">
+                                Unit Number
+                                <span class="optional">(Optional)</span>
+                            </label>
+
+                            <input
+                                type="text"
+                                id="unitNumber"
+                                name="unitNumber"
+                                class="formInput"
+                                placeholder="Enter unit number"
+                                maxlength="30"
+                                autocomplete="address-line2"
                             >
-                                Street / House / Address
+                        </div>
+
+
+                        <!-- House Number -->
+                        <div class="formGroup">
+                            <label for="houseNumber" class="formLabel">
+                                House Number
+                                <span class="optional">(Optional)</span>
+                            </label>
+
+                            <input
+                                type="text"
+                                id="houseNumber"
+                                name="houseNumber"
+                                class="formInput"
+                                placeholder="Enter house number"
+                                maxlength="30"
+                                autocomplete="address-line1"
+                            >
+                        </div>
+
+
+                        <!-- Street Name or Subdivision -->
+                        <div class="formGroup formGroupFull">
+                            <label for="streetSubdivision" class="formLabel">
+                                Street Name or Subdivision
                                 <span class="required" aria-hidden="true">*</span>
                             </label>
 
                             <input
                                 type="text"
-                                id="addressStreet"
-                                name="addressStreet"
+                                id="streetSubdivision"
+                                name="streetSubdivision"
                                 class="formInput"
-                                placeholder="Enter your complete address"
-                                autocomplete="street-address"
+                                placeholder="Enter street name or subdivision"
                                 maxlength="150"
+                                required
+                                autocomplete="address-line1"
+                            >
+                        </div>
+
+
+                        <!-- Permanent Address -->
+                        <div class="formGroup formGroupFull">
+                            <label for="permanentAddress" class="formLabel">
+                                Permanent Address
+                                <span class="required" aria-hidden="true">*</span>
+                            </label>
+
+                            <input
+                                type="text"
+                                id="permanentAddress"
+                                name="permanentAddress"
+                                class="formInput"
+                                placeholder="Enter your complete permanent address"
+                                maxlength="250"
                                 required
                             >
                         </div>
 
 
+                        <!-- Barangay -->
                         <div class="formGroup">
-                            <label
-                                for="barangay"
-                                class="formLabel"
-                            >
+                            <label for="barangay" class="formLabel">
                                 Barangay
                                 <span class="required" aria-hidden="true">*</span>
                             </label>
@@ -554,26 +683,7 @@
                                 placeholder="Enter your barangay"
                                 maxlength="100"
                                 required
-                            >
-                        </div>
-
-
-                        <div class="formGroup">
-                            <label
-                                for="city"
-                                class="formLabel"
-                            >
-                                City
-                                <span class="required" aria-hidden="true">*</span>
-                            </label>
-
-                            <input
-                                type="text"
-                                id="city"
-                                name="city"
-                                class="formInput formInputReadOnly"
-                                value="Pasig City"
-                                readonly
+                                autocomplete="address-level3"
                             >
                         </div>
 
@@ -710,7 +820,14 @@
                 <!-- ==================================================
                      03 ACCOUNT INFORMATION
                      ================================================== -->
-                <section class="registrationSection">
+                <section
+                    class="registrationSection"
+                    id="accountInformationPanel"
+                    role="tabpanel"
+                    aria-labelledby="registrationTabAccount"
+                    tabindex="-1"
+                    hidden
+                >
 
                     <div class="sectionHeader">
 
@@ -1171,63 +1288,62 @@
 
                     </div>
 
-                </section>
-
-
-                <!-- ==================================================
+                    <!-- ==================================================
                      TERMS & PRIVACY
                      ================================================== -->
-                <section
-                    class="termsSection"
-                    aria-label="Terms and privacy agreements"
-                >
+                    <section
+                        class="termsSection"
+                        aria-label="Terms and privacy agreements"
+                    >
 
-                    <div class="termsGroup">
+                        <div class="termsGroup">
 
-                        <label class="choice">
+                            <label class="choice">
 
-                            <input
-                                type="checkbox"
-                                id="agreeTerms"
-                                name="agreeTerms"
-                                class="choiceInput"
-                                required
-                            >
+                                <input
+                                    type="checkbox"
+                                    id="agreeTerms"
+                                    name="agreeTerms"
+                                    class="choiceInput"
+                                    required
+                                >
 
-                            <span>
-                                I have read and agree to the
-                                <a href="terms.html">
-                                    Terms of Service
-                                </a>.
-                            </span>
+                                <span>
+                                    I have read and agree to the
+                                    <a href="terms.html">
+                                        Terms of Service
+                                    </a>.
+                                </span>
 
-                        </label>
+                            </label>
 
-                    </div>
+                        </div>
 
 
-                    <div class="termsGroup">
+                        <div class="termsGroup">
 
-                        <label class="choice">
+                            <label class="choice">
 
-                            <input
-                                type="checkbox"
-                                id="agreePrivacy"
-                                name="agreePrivacy"
-                                class="choiceInput"
-                                required
-                            >
+                                <input
+                                    type="checkbox"
+                                    id="agreePrivacy"
+                                    name="agreePrivacy"
+                                    class="choiceInput"
+                                    required
+                                >
 
-                            <span>
-                                I have read and agree to the
-                                <a href="privacy.html">
-                                    Privacy Policy
-                                </a>.
-                            </span>
+                                <span>
+                                    I have read and agree to the
+                                    <a href="privacy.html">
+                                        Privacy Policy
+                                    </a>.
+                                </span>
 
-                        </label>
+                            </label>
 
-                    </div>
+                        </div>
+
+                    </section>
 
                 </section>
 
@@ -1235,24 +1351,55 @@
                 <!-- ==================================================
                      ACTIONS
                      ================================================== -->
-                <div class="registrationActions">
+                    <p
+                        class="registrationStatus"
+                        id="registrationStatus"
+                        role="status"
+                        aria-live="polite"
+                        hidden
+                    ></p>
 
-                    <button
-                        type="button"
-                        class="cancelButton"
-                        id="cancelButton"
-                    >
-                        Cancel
-                    </button>
+                    <div class="registrationActions">
 
-                    <button
-                        type="submit"
-                        class="createAccountButton"
-                    >
-                        Create Account
-                    </button>
+                        <button
+                            type="button"
+                            class="cancelButton"
+                            id="cancelButton"
+                        >
+                            Cancel
+                        </button>
 
-                </div>
+                        <div class="registrationActionsEnd">
+
+                            <button
+                                type="button"
+                                class="cancelButton stepBackButton"
+                                id="previousStepButton"
+                                hidden
+                            >
+                                Back
+                            </button>
+
+                            <button
+                                type="button"
+                                class="createAccountButton"
+                                id="nextStepButton"
+                            >
+                                Continue
+                            </button>
+
+                            <button
+                                type="submit"
+                                class="createAccountButton"
+                                id="createAccountButton"
+                                hidden
+                            >
+                                Create Account
+                            </button>
+
+                        </div>
+
+                    </div>
 
             </form>
 
@@ -1261,6 +1408,7 @@
     </main>
 
     <script src="../js/register.js"></script>
+    <script src="../js/register-tabs.js"></script>
 
 </body>
 </html>

@@ -28,26 +28,40 @@
   updateDateTime();
   window.setInterval(updateDateTime, 1000);
 
-  form.addEventListener('submit', function (event) {
-    event.preventDefault();
-    message.hidden = false;
-    message.classList.remove('is-success');
+  
+  form.addEventListener("submit", function (event) {
+      event.preventDefault();
 
-    const username = document.getElementById('demoUsername').value.trim().toLowerCase();
-    const password = document.getElementById('demoPassword').value;
-    const validAdmin = username === 'admin' && password === 'admin';
+      message.hidden = false;
+      message.classList.remove("is-success");
 
-    if (!validAdmin && !validClient) {
-      message.textContent = 'Use admin / admin or client / client.';
-      return;
-    }
+      const username =
+          document.getElementById("demoUsername").value.trim();
 
-    message.classList.add('is-success');
-    message.textContent = 'Demo login accepted. Opening the module directory...';
-    button.disabled = true;
-    button.textContent = 'Opening modules...';
-    window.setTimeout(function () {
-      window.location.href = '../../modules.html';
-    }, 350);
+      const password =
+          document.getElementById("demoPassword").value;
+
+      const user = window.CswdoAuthSession
+          ? window.CswdoAuthSession.authenticateDemoCredentials(
+              username,
+              password
+          )
+          : null;
+
+      if (!user) {
+          message.textContent =
+              "Invalid demo credentials. Use admin / admin or client / client.";
+          return;
+      }
+
+      message.classList.add("is-success");
+      message.textContent =
+          "Demo login accepted. Returning to the homepage...";
+
+      button.disabled = true;
+
+      window.setTimeout(() => {
+          window.location.href = "homepage.html";
+      }, 350);
   });
 })();

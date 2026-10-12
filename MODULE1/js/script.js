@@ -95,43 +95,62 @@
   // Initialize password toggles
   setupPasswordToggle('togglePassword', 'password');
 
-  // =====================================================
-  // LOGIN FORM SUBMISSION (Frontend only)
-  // =====================================================
   
-  const loginForm = document.getElementById('loginForm');
-  if (loginForm) {
-    loginForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      
-      const username = document.getElementById('username').value.trim();
-      const password = document.getElementById('password').value;
-      
-      // Basic front-end validation
-      if (!username || !password) {
-        console.log('Please fill in all fields');
-        return;
-      }
-      
-      // Frontend validation passed - no backend implementation
-      console.log('Login form submitted (backend not implemented)');
-      console.log('Username/Email:', username);
-      
-      // Visual feedback (for demo purposes only)
-      const loginButton = this.querySelector('.loginButton');
-      if (loginButton) {
-        loginButton.textContent = 'Signing in...';
-        loginButton.disabled = true;
-        
-        setTimeout(function() {
-          loginButton.textContent = 'Login';
-          loginButton.disabled = false;
-          // No alert - navigation handled naturally
-          console.log('Login requires backend implementation');
-        }, 1500);
-      }
+/* =====================================================
+   LOGIN FORM - TEMPORARY FRONTEND DEMO
+   Replace this demo authentication with the backend API.
+   ===================================================== */
+
+const loginForm = document.getElementById("loginForm");
+
+if (loginForm) {
+
+    loginForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const usernameInput = document.getElementById("username");
+        const passwordInput = document.getElementById("password");
+        const feedback = document.getElementById("loginFeedback");
+
+        const username = usernameInput.value.trim();
+        const password = passwordInput.value;
+
+        function showMessage(message) {
+            if (feedback) {
+                feedback.textContent = message;
+                feedback.hidden = false;
+            } else {
+                console.warn(message);
+            }
+        }
+
+        if (!username || !password) {
+            showMessage("Enter your username and password.");
+            return;
+        }
+
+        if (!window.CswdoAuthSession) {
+            showMessage("The login session component could not be loaded.");
+            return;
+        }
+
+        const user =
+            window.CswdoAuthSession.authenticateDemoCredentials(
+                username,
+                password
+            );
+
+        if (!user) {
+            showMessage(
+                "For frontend testing, use admin / admin or client / client."
+            );
+            return;
+        }
+
+        // A demo session has been stored. This is not real authentication.
+        window.location.href = "homepage.html";
     });
-  }
+}
   
   // Note: Register link in HTML uses href="register.html" directly
   // No JavaScript interception needed
