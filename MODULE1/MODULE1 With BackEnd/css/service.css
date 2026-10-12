@@ -1,0 +1,527 @@
+/* =========================================================
+   CSWDO MIS - ASSISTANCE SERVICE LANDING PAGES
+   Shared stylesheet for the per-service landing pages.
+   Extends homepage.css (same design tokens & components).
+   Note: homepage.css uses camelCase tokens (--space6, --radiusMd).
+   ========================================================= */
+
+
+/* =========================================================
+   BREADCRUMB
+   ========================================================= */
+
+.breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space2);
+    margin-bottom: var(--space4);
+    font-size: var(--textXs);
+    color: var(--gray-500);
+}
+
+.breadcrumb a {
+    font-weight: 600;
+    color: var(--blue);
+    transition: color 0.12s ease;
+}
+
+.breadcrumb a:hover {
+    color: var(--blue-hover);
+}
+
+.breadcrumb .crumbSep {
+    color: var(--gray-300);
+}
+
+.breadcrumb [aria-current="page"] {
+    font-weight: 600;
+    color: var(--gray-700);
+}
+
+
+/* =========================================================
+   SERVICE HERO  (city skyline + Pasig seal)
+   ========================================================= */
+
+.serviceHero {
+    position: relative;
+    overflow: hidden;
+    padding-block: var(--space7);
+    border-bottom: 1px solid var(--gray-200);
+    background:
+        linear-gradient(
+            180deg,
+            rgba(227, 240, 253, 0.92) 0%,
+            rgba(227, 240, 253, 0.68) 50%,
+            rgba(227, 240, 253, 0.9) 100%
+        ),
+        url("../assets/cswdo_background.png") bottom center / cover no-repeat;
+    background-color: var(--blue-pale);
+}
+
+.serviceHero .heroContainer {
+    position: relative;
+    z-index: 1;
+    min-height: 400px;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+    align-items: center;
+    gap: var(--space6);
+}
+
+.serviceHero .heroText {
+    max-width: 640px;
+    padding: 0;
+}
+
+.serviceHero .heroText h1 {
+    margin: 0;
+    font-size: var(--textXl);
+    font-weight: 800;
+    line-height: var(--leadingTight);
+    color: var(--navy);
+}
+
+.serviceHero .heroText p {
+    max-width: 560px;
+    margin: var(--space4) 0 0;
+    font-size: var(--textSm);
+    line-height: 1.6;
+    color: var(--gray-700);
+}
+
+
+/* ---------- Hero seal panel ---------- */
+
+.heroMedia {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.heroMediaFrame {
+    width: min(100%, 440px);
+    aspect-ratio: 634 / 427;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.heroMediaFrame img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+
+/* =========================================================
+   QUICK FACTS BAR
+   ========================================================= */
+
+.factsBar {
+    background: var(--navy);
+    color: var(--white);
+}
+
+.factsBar .valueBarGrid {
+    min-height: 56px;
+}
+
+.factsBar .valueBarItem {
+    color: var(--blue-pale);
+}
+
+.factsBar .valueBarIcon {
+    color: var(--blue-pale);
+}
+
+/* ---------- Hero secondary actions ---------- */
+
+/* Return icon button — formal replacement for the old "Back to Services" link */
+.btnReturn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    background-color: var(--white);
+    color: var(--blue);
+    border: 1px solid var(--gray-300);
+    border-radius: var(--radiusMd);
+    cursor: pointer;
+    transition:
+        background-color 0.12s ease,
+        border-color 0.12s ease,
+        color 0.12s ease,
+        box-shadow 0.12s ease,
+        transform 0.12s ease;
+}
+
+.btnReturn:hover {
+    color: var(--blue-hover);
+    background-color: var(--gray-100);
+    border-color: var(--gray-200);
+}
+
+.btnReturn:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
+}
+
+.btnReturn:active {
+    transform: translateY(1px);
+}
+
+
+/* =========================================================
+   CONTENT SECTIONS
+   ========================================================= */
+
+.altSection {
+    background: var(--blue-faint);
+    border-block: 1px solid var(--gray-200);
+}
+
+.sectionLead {
+    max-width: 760px;
+    margin: var(--space2) 0 0;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--gray-700);
+}
+
+
+/* ---------- Info cards ---------- */
+
+.infoGrid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space4);
+    margin-top: var(--space5);
+}
+
+.infoCard {
+    padding: var(--space5);
+    background: var(--white);
+    border: 1px solid var(--gray-300);
+    border-radius: var(--radiusMd);
+    box-shadow: var(--shadowSm);
+}
+
+.infoIcon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    margin-bottom: var(--space3);
+    font-size: 1.15rem;
+    color: var(--blue);
+    border-radius: var(--radiusMd);
+    background: var(--blue-pale);
+}
+
+.infoIcon svg {
+    width: 22px;
+    height: 22px;
+}
+
+.infoCard h3 {
+    margin: 0;
+    font-size: var(--textMd);
+    font-weight: 600;
+    line-height: 1.35;
+    color: var(--navy);
+}
+
+.infoCard p {
+    margin: var(--space2) 0 0;
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: var(--gray-700);
+}
+
+
+/* ---------- Two-column split ---------- */
+
+.splitGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space5);
+    margin-top: var(--space5);
+    align-items: start;
+}
+
+.splitPanel {
+    padding: var(--space6);
+    background: var(--white);
+    border: 1px solid var(--gray-300);
+    border-radius: var(--radiusMd);
+}
+
+.splitPanel > h3 {
+    margin: 0 0 var(--space4);
+    font-size: var(--textMd);
+    font-weight: 700;
+    color: var(--navy);
+}
+
+
+/* ---------- Checklists ---------- */
+
+.checkList,
+.docList {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space4);
+}
+
+.checkItem,
+.docItem {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space3);
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--gray-700);
+}
+
+.checkItem::before {
+    content: "\2713";
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    margin-top: 2px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--white);
+    background: var(--success);
+    border-radius: 50%;
+}
+
+.docList {
+    counter-reset: doc;
+}
+
+.docItem::before {
+    counter-increment: doc;
+    content: counter(doc);
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    margin-top: 2px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--blue);
+    background: var(--blue-pale);
+    border-radius: 50%;
+}
+
+
+/* ---------- Steps (how to apply) ---------- */
+
+.stepsSection {
+    padding-block: var(--space7);
+    background: var(--blue-pale);
+}
+
+.stepGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: var(--space5);
+    margin-top: var(--space5);
+}
+
+.stepItem {
+    min-width: 0;
+}
+
+.stepNumber {
+    display: block;
+    margin-bottom: var(--space2);
+    font-size: var(--textXs);
+    font-weight: 700;
+    color: var(--blue);
+}
+
+.stepItem h3 {
+    margin: 0;
+    font-size: var(--textMd);
+    font-weight: 600;
+    line-height: 1.35;
+    color: var(--navy);
+}
+
+.stepItem p {
+    margin: var(--space2) 0 0;
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: var(--gray-700);
+}
+
+
+/* ---------- Note box ---------- */
+
+.noteBox {
+    display: flex;
+    gap: var(--space3);
+    margin-top: var(--space5);
+    padding: var(--space4) var(--space5);
+    font-size: var(--textSm);
+    line-height: 1.6;
+    color: var(--gray-700);
+    background: var(--warning-bg);
+    border: 1px solid var(--warning-border);
+    border-radius: var(--radiusMd);
+}
+
+.noteBox p {
+    margin: 0;
+}
+
+.noteBox strong {
+    color: var(--warning);
+}
+
+
+/* ---------- CTA card ---------- */
+
+.ctaSection {
+    padding-block: var(--space7);
+}
+
+.ctaCard {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space6);
+    padding: var(--space7);
+    color: var(--white);
+    background: var(--navy);
+    border-radius: var(--radiusLg);
+    box-shadow: var(--shadowMd);
+}
+
+.ctaCard::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        rgba(13, 44, 84, 0.82),
+        rgba(13, 44, 84, 0.92)
+    ), url("../assets/branding_background.png") center center / cover no-repeat;
+    opacity: 0.55;
+    pointer-events: none;
+}
+
+.ctaCard > * {
+    position: relative;
+    z-index: 1;
+}
+
+.ctaText h3 {
+    margin: 0;
+    font-size: var(--textMd);
+    font-weight: 700;
+    color: var(--white);
+}
+
+.ctaText p {
+    max-width: 48ch;
+    margin: var(--space2) 0 0;
+    font-size: var(--textSm);
+    line-height: 1.55;
+    color: var(--blue-pale);
+}
+
+.ctaActions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space3);
+    flex-shrink: 0;
+}
+
+.ctaCard .btnPrimary {
+    margin-left: 0;
+    background: var(--white);
+    color: var(--navy);
+}
+
+.ctaCard .btnPrimary:hover {
+    background: var(--blue-pale);
+    color: var(--navy);
+}
+
+.ctaCard .btnSecondary {
+    background: transparent;
+    color: var(--white);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.ctaCard .btnSecondary:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: var(--white);
+    border-color: var(--white);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 960px) {
+
+    .headerContainer {
+        flex-wrap: wrap;
+        gap: var(--space3);
+        padding-block: var(--space3);
+    }
+
+    .serviceHero .heroContainer {
+        grid-template-columns: 1fr;
+        min-height: 0;
+    }
+
+    .heroMedia {
+        display: none;
+    }
+
+    .infoGrid,
+    .splitGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .ctaCard {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: var(--space6);
+    }
+}
+
+@media (max-width: 680px) {
+
+    .valueBarGrid {
+        grid-template-columns: 1fr;
+        gap: var(--space2);
+        padding-block: var(--space3);
+    }
+
+    .navMenu {
+        width: 100%;
+        justify-content: flex-start;
+        gap: var(--space4);
+        overflow-x: auto;
+    }
+}
+

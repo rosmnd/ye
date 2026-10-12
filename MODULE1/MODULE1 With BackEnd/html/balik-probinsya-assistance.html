@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Balik Probinsya Assistance — Pasig City CSWDO</title>
+    <link rel="stylesheet" href="../css/homepage.css">
+    <link rel="stylesheet" href="../css/service.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body class="servicePage">
+
+    <header class="govHeader" id="govHeader">
+        <div class="govHeaderContainer">
+
+            <div class="govHeaderAgency">
+                REPUBLIC OF THE PHILIPPINES | CITY GOVERNMENT OF PASIG
+            </div>
+
+            <div class="govHeaderDateTime" id="dateTimeDisplay">
+                <span class="dateDisplay" id="dateDisplay">
+                    Loading...
+                </span>
+
+                <span class="dateTimeSeparator" aria-hidden="true">|</span>
+
+                <span class="timeDisplay" id="timeDisplay">
+                    Loading...
+                </span>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- =========================================================
+         HEADER
+         ========================================================= -->
+    <header class="header">
+        <div class="headerContainer">
+            <a class="logoGroup" href="homepage.html" aria-label="Pasig City CSWDO home">
+                <img src="../assets/pasigLogo1.png" class="logo" alt="Pasig City seal">
+                <img src="../assets/pasigLogo2.png" class="logo" alt="Lungsod ng Pasig">
+            </a>
+
+            <nav class="navMenu">
+                <a href="homepage.html#services" data-en="Services" data-tl="Mga Serbisyo">Services</a>
+                <a href="homepage.html#how-it-works" data-en="How it works" data-tl="Paano ito gumagana">How it works</a>
+                <a href="register.html" data-en="Apply for Assistance" data-tl="Mag-apply ng Tulong">Apply for Assistance</a>
+                <div class="langSwitch" role="group" aria-label="Language">
+                    <button type="button" class="langBtn is-active" data-lang="en" aria-pressed="true">EN</button>
+                    <button type="button" class="langBtn" data-lang="tl" aria-pressed="false">TL</button>
+                </div>
+                
+                <!-- Account area: Sign In or authenticated user profile -->
+                <div class="accountArea" id="accountArea">
+
+                    <a
+                        href="login_draft.html"
+                        class="btnSignin"
+                        id="signInLink"
+                        data-en="Sign In"
+                        data-tl="Mag-sign in"
+                    >
+                        Sign In
+                    </a>
+
+                    <div class="profileContainer" id="profileContainer" hidden>
+
+                        <button
+                            type="button"
+                            class="profileButton"
+                            id="profileButton"
+                            aria-expanded="false"
+                            aria-controls="profileDropdown"
+                        >
+                            <span class="profileAvatar" aria-hidden="true">
+
+                                <img
+                                    src=""
+                                    alt=""
+                                    class="profileAvatarImage"
+                                    id="profileAvatarImage"
+                                    hidden
+                                >
+
+                                <span class="profileInitials" id="profileInitials">
+                                    U
+                                </span>
+
+                            </span>
+
+                            <span class="profileUsername" id="profileUsername">
+                                Username
+                            </span>
+
+                            <svg
+                                class="profileChevron"
+                                width="16"
+                                height="16"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                aria-hidden="true"
+                            >
+                                <path d="m6 9 6 6 6-6"></path>
+                            </svg>
+                        </button>
+
+                        <div
+                            class="profileDropdown"
+                            id="profileDropdown"
+                            hidden
+                        >
+                            <p
+                                class="profileDropdownName"
+                                id="profileDropdownName"
+                            >
+                                Account
+                            </p>
+
+                            <p class="profileDropdownRole">
+                                Account role:
+                                <strong id="profileRole">CLIENT</strong>
+                            </p>
+
+                            <button
+                                type="button"
+                                class="profileLogoutButton"
+                                id="logoutButton"
+                            >
+                                Sign out
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- =========================================================
+             SERVICE HERO
+             ========================================================= -->
+        <section class="serviceHero">
+            <div class="heroContainer">
+                <div class="heroText">
+                    <nav class="breadcrumb" aria-label="Breadcrumb">
+                        <a href="homepage.html">Home</a>
+                        <span class="crumbSep">/</span>
+                        <a href="homepage.html#services">Services</a>
+                        <span class="crumbSep">/</span>
+                        <span aria-current="page">Balik Probinsya Assistance</span>
+                    </nav>
+
+                    <span class="sectionLabel">TRAVEL · BALIK PROBINSYA</span>
+
+                    <h1 data-en="Balik Probinsya Assistance" data-tl="Tulong Balik Probinsya">Balik Probinsya Assistance</h1>
+
+                    <p data-en="Support for Pasigueños who wish to return to their home province, including travel and relocation assistance." data-tl="Suporta para sa mga Pasigueñong nais bumalik sa kanilang lalawigan, kasama ang tulong sa paglalakbay at paglipat.">
+                        Support for Pasigueños who wish to return to their home province,
+                        including travel and relocation assistance.
+                    </p>
+
+                    <div class="heroButtons">
+                        <a href="register.html" class="btnPrimary">Apply for Assistance</a>
+                        <a href="#requirements" class="btnSecondary">See Requirements &amp; Eligibility</a>
+                        <a href="homepage.html#services" class="btnReturn" aria-label="Back to Services" title="Back to Services">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M20 20v-7a4 4 0 0 0-4-4H4"></path><path d="M9 14 4 9l5-5"></path></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="heroMedia">
+                    <div class="heroMediaFrame">
+                        <img src="../assets/pasigLogo2-cropped.png" alt="Lungsod ng Pasig">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================
+             QUICK FACTS
+             ========================================================= -->
+        <section class="factsBar">
+            <div class="headerContainer valueBarGrid">
+                <div class="valueBarItem"><span><span class="valueBarIcon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M8 6v6"></path><path d="M15 6v6"></path><path d="M2 12h19.6"></path><path d="M18 18h3s.5-1.7.8-2.8c.1-.4.2-.8.2-1.2 0-.4-.1-.8-.2-1.2l-1.4-5C20.1 6.8 19.1 6 18 6H4a2 2 0 0 0-2 2v10h3"></path><circle cx="7" cy="18" r="2"></circle><path d="M9 18h5"></path><circle cx="16" cy="18" r="2"></circle></svg></span> Return travel support</span></div>
+                <div class="valueBarItem"><span><span class="valueBarIcon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg></span> Resettlement aid</span></div>
+                <div class="valueBarItem"><span><span class="valueBarIcon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><path d="M16 3.128a4 4 0 0 1 0 7.744"></path><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><circle cx="9" cy="7" r="4"></circle></svg></span> Family reunification</span></div>
+            </div>
+        </section>
+
+        <!-- =========================================================
+             WHY YOU MAY NEED IT
+             ========================================================= -->
+        <section class="section">
+            <div class="container">
+                <span class="sectionLabel" data-en="WHY YOU MAY NEED IT" data-tl="BAKIT MO ITO KAILANGAN">WHY YOU MAY NEED IT</span>
+                <h2 data-en="A fresh start in the province" data-tl="Bagong simula sa probinsya">A fresh start in the province</h2>
+                <p class="sectionLead" data-en="Many Pasigueños dream of going back to their home province to be with family and start anew. CSWDO Balik Probinsya Assistance helps make that move possible." data-tl="Maraming Pasigueño ang nangangarap na makabalik sa kanilang lalawigan upang makapiling ang pamilya at magsimulang muli. Tinutulong ng CSWDO Balik Probinsya Assistance na matupad ang paglipat na iyon.">
+                    Many Pasigueños dream of going back to their home province to be with
+                    family and start anew. CSWDO Balik Probinsya Assistance helps make that
+                    move possible.
+                </p>
+
+                <div class="infoGrid">
+                    <article class="infoCard">
+                        <span class="infoIcon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M8 6v6"></path><path d="M15 6v6"></path><path d="M2 12h19.6"></path><path d="M18 18h3s.5-1.7.8-2.8c.1-.4.2-.8.2-1.2 0-.4-.1-.8-.2-1.2l-1.4-5C20.1 6.8 19.1 6 18 6H4a2 2 0 0 0-2 2v10h3"></path><circle cx="7" cy="18" r="2"></circle><path d="M9 18h5"></path><circle cx="16" cy="18" r="2"></circle></svg></span>
+                        <h3 data-en="Travel assistance" data-tl="Tulong sa paglalakbay">Travel assistance</h3>
+                        <p data-en="Transportation support for you and your family returning home." data-tl="Suporta sa transportasyon para sa iyo at sa iyong pamilyang uuwi.">
+                            Transportation support for you and your family returning home.
+                        </p>
+                    </article>
+
+                    <article class="infoCard">
+                        <span class="infoIcon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg></span>
+                        <h3 data-en="Resettlement" data-tl="Paglipat o resettlement">Resettlement</h3>
+                        <p data-en="Help with relocation needs as you resettle in the province." data-tl="Tulong sa mga pangangailangan sa paglipat habang naninirahan sa lalawigan.">
+                            Help with relocation needs as you resettle in the province.
+                        </p>
+                    </article>
+
+                    <article class="infoCard">
+                        <span class="infoIcon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><path d="M16 3.128a4 4 0 0 1 0 7.744"></path><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><circle cx="9" cy="7" r="4"></circle></svg></span>
+                        <h3 data-en="Family reunification" data-tl="Pagkakasama ng pamilya">Family reunification</h3>
+                        <p data-en="Be reunited with loved ones and begin a new chapter." data-tl="Muling makapiling ang mga mahal sa buhay at magsimula ng bagong yugto.">
+                            Be reunited with loved ones and begin a new chapter.
+                        </p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================
+             ELIGIBILITY & REQUIREMENTS
+             ========================================================= -->
+        <section class="section altSection" id="requirements">
+            <div class="container">
+                <span class="sectionLabel" data-en="WHO CAN APPLY &amp; WHAT TO PREPARE" data-tl="SINO ANG PEDENG MAG-APPLY AT ANONG IHANDA">WHO CAN APPLY &amp; WHAT TO PREPARE</span>
+                <h2 data-en="Eligibility and requirements" data-tl="Pagiging kwalipikado at mga kailangan">Eligibility and requirements</h2>
+
+                <div class="splitGrid">
+                    <div class="splitPanel">
+                        <h3 data-en="Who can apply" data-tl="Sino ang maaaring mag-apply">Who can apply</h3>
+                        <ul class="checkList">
+                            <li class="checkItem" data-en="Bonafide resident of Pasig City" data-tl="Naninirahan sa Pasig City">Bonafide resident of Pasig City</li>
+                            <li class="checkItem" data-en="Intends to return or relocate to a home province" data-tl="Nais bumalik o lumipat sa sariling lalawigan">Intends to return or relocate to a home province</li>
+                            <li class="checkItem" data-en="Low-income or displaced family" data-tl="Mababang kita o nawalan ng tirahan na pamilya">Low-income or displaced family</li>
+                            <li class="checkItem" data-en="With a receiving province, LGU, or family" data-tl="May tatanggap na lalawigan, LGU, o pamilya">With a receiving province, LGU, or family</li>
+                            <li class="checkItem" data-en="Has a registered CSWDO MIS account" data-tl="May rehistradong CSWDO MIS account">Has a registered CSWDO MIS account</li>
+                        </ul>
+                    </div>
+
+                    <div class="splitPanel">
+                        <h3 data-en="Requirements to prepare" data-tl="Mga dokumentong ihahanda">Requirements to prepare</h3>
+                        <ul class="docList">
+                            <li class="docItem" data-en="Valid government-issued ID" data-tl="Balidong ID mula sa gobyerno">Valid government-issued ID</li>
+                            <li class="docItem" data-en="Barangay Certificate of Residency in Pasig" data-tl="Barangay Certificate of Residency sa Pasig">Barangay Certificate of Residency in Pasig</li>
+                            <li class="docItem" data-en="Letter of Intent to return to the province" data-tl="Liham ng hangarin na bumalik sa lalawigan (Letter of Intent)">Letter of Intent to return to the province</li>
+                            <li class="docItem" data-en="Proof of destination or acceptance from the receiving LGU or family" data-tl="Patunay ng destinasyon o pagtanggap mula sa tatanggap na LGU o pamilya">Proof of destination or acceptance from the receiving LGU or family</li>
+                            <li class="docItem" data-en="List of accompanying family members (if any)" data-tl="Listahan ng mga kasamang miyembro ng pamilya (kung mayroon)">List of accompanying family members (if any)</li>
+                            <li class="docItem" data-en="Accomplished CSWDO application form" data-tl="Nakumpletong CSWDO application form">Accomplished CSWDO application form</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="noteBox">
+                    <span aria-hidden="true">ℹ️</span>
+                    <p data-en="&lt;strong&gt;Reminder:&lt;/strong&gt; Coordinate with the CSWDO so your travel and relocation can be properly scheduled and supported." data-tl="&lt;strong&gt;Paalala:&lt;/strong&gt; Makipag-ugnayan sa CSWDO upang maayos na maiiskedyul at masuportahan ang iyong paglalakbay at paglipat.">
+                        <strong>Reminder:</strong> Coordinate with the CSWDO so your travel and
+                        relocation can be properly scheduled and supported.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================
+             HOW TO APPLY
+             ========================================================= -->
+        <section class="stepsSection" id="how-to-apply">
+            <div class="container">
+                <span class="sectionLabel" data-en="HOW TO APPLY" data-tl="PAANO MAG-APPLY">HOW TO APPLY</span>
+                <h2 data-en="Steps to request this assistance" data-tl="Mga hakbang upang humingi ng tulong na ito">Steps to request this assistance</h2>
+
+                <div class="stepGrid">
+                    <article class="stepItem">
+                        <span class="stepNumber">01</span>
+                        <h3 data-en="Create an account" data-tl="Gumawa ng account">Create an account</h3>
+                        <p data-en="Register for a CSWDO MIS account or sign in to get started." data-tl="Magrehistro ng CSWDO MIS account o mag-sign in upang magsimula.">
+                            Register for a CSWDO MIS account or sign in to get started.
+                        </p>
+                    </article>
+
+                    <article class="stepItem">
+                        <span class="stepNumber">02</span>
+                        <h3 data-en="Choose Balik Probinsya" data-tl="Piliin ang Balik Probinsya">Choose Balik Probinsya</h3>
+                        <p data-en="Select the service and complete the request form with your details." data-tl="Piliin ang serbisyo at kumpletuhin ang form kasama ang iyong mga detalye.">
+                            Select the service and complete the request form with your details.
+                        </p>
+                    </article>
+
+                    <article class="stepItem">
+                        <span class="stepNumber">03</span>
+                        <h3 data-en="Prepare &amp; attach requirements" data-tl="Ihanda at isumite ang mga kailangan">Prepare &amp; attach requirements</h3>
+                        <p data-en="Gather the documents listed above and attach or submit them." data-tl="Tipunin ang mga dokumentong nakalista sa itaas at isumite ang mga ito.">
+                            Gather the documents listed above and attach or submit them.
+                        </p>
+                    </article>
+
+                    <article class="stepItem">
+                        <span class="stepNumber">04</span>
+                        <h3 data-en="Wait for verification" data-tl="Hintayin ang beripikasyon">Wait for verification</h3>
+                        <p data-en="The CSWDO team will assess your request and notify you for the release or next steps." data-tl="Susuriin ng CSWDO ang iyong kahilingan at ipapaalam ang paglabas o susunod na hakbang.">
+                            The CSWDO team will assess your request and notify you for the release or next steps.
+                        </p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================
+             CTA
+             ========================================================= -->
+        <section class="ctaSection">
+            <div class="container">
+                <div class="ctaCard">
+                    <div class="ctaText">
+                        <h3 data-en="Ready to apply for Balik Probinsya Assistance?" data-tl="Handa ka na bang mag-apply para sa Tulong Balik Probinsya?">Ready to apply for Balik Probinsya Assistance?</h3>
+                        <p data-en="Create a CSWDO account or sign in to submit your request and track its status." data-tl="Gumawa ng CSWDO account o mag-sign in upang isumite ang kahilingan at subabayan ang kalagayan nito.">
+                            Create a CSWDO account or sign in to submit your request and track its status.
+                        </p>
+                    </div>
+                    <div class="ctaActions">
+                        <a href="register.html" class="btnPrimary">Apply for Assistance</a>
+                        <a href="login_draft.html" class="btnSecondary serviceSignInCta">Sign In</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- =========================================================
+         FOOTER
+         ========================================================= -->
+    <footer class="pageFooter">
+        <div class="container footerContent">
+            <div class="footerBrand">
+                <img src="../assets/pasigLogo1.png" class="logo" alt="Pasig City seal">
+                <div>
+                    <strong>Pasig City CSWDO</strong>
+                    <small data-en="SERVING THE PEOPLE OF PASIG" data-tl="PAGLILINGKOD SA MAMAMAYAN NG PASIG">SERVING THE PEOPLE OF PASIG</small>
+                </div>
+            </div>
+            <span class="footerHours">Mon–Thu 8:00 AM - 5:00 PM</span>
+        </div>
+    </footer>
+
+
+
+    <!-- Back to Top floating button -->
+    <button type="button" class="backToTop" id="backToTop" aria-label="Back to top">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="m5 12 7-7 7 7"></path><path d="M12 19V5"></path></svg>
+    </button>
+
+    <script src="../js/auth-session.js"></script>
+    <script src="../js/logout-modal.js"></script>
+    <script src="../js/services.js"></script>
+    <script src="../js/lang.js"></script>
+</body>
+</html>
