@@ -1,0 +1,1431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, viewport-fit=cover"
+    >
+
+    <title>CSWDO MIS - Register</title>
+
+    <!-- UI Guide Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="../css/register.css">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+
+    <!-- =========================================
+         OFFICIAL GOVERNMENT HEADER
+         ========================================= -->
+    <header class="govHeader" id="govHeader">
+        <div class="govHeaderContainer">
+            <div class="govHeaderAgency">
+                REPUBLIC OF THE PHILIPPINES | CITY GOVERNMENT OF PASIG
+            </div>
+            <div class="govHeaderDateTime" id="dateTimeDisplay">
+                <span class="dateDisplay" id="dateDisplay">Loading...</span>
+                <span class="timeDisplay" id="timeDisplay"></span>
+            </div>
+        </div>
+    </header>
+
+    <main class="registrationPage">
+
+        <section
+            class="registrationCard"
+            aria-label="CSWDO client registration"
+        >
+
+            <!-- ==================================================
+                 PAGE HEADER
+                 ================================================== -->
+                <header class="registrationHeader">
+
+                    <div class="headerContent">
+
+                        <h1 class="registrationTitle">
+                            Create Your CSWDO Account
+                        </h1>
+
+                        <p class="registrationSubtitle">
+                            Create an account to access CSWDO assistance
+                            services and track your applications.
+                        </p>
+
+                        <p class="loginRedirect">
+                            Already have an account?
+                            <a href="login_draft.html" class="loginLink">
+                                Login here
+                            </a>
+                        </p>
+
+                    </div>
+
+                </header>
+
+            <!-- ==================================================
+                 REGISTRATION FORM
+                 ================================================== -->
+                <form
+                    class="registrationForm"
+                    id="registrationForm"
+                    method="post"
+                    action="../backend/register.php"
+                    enctype="multipart/form-data"
+                    data-endpoint="../backend/register.php"
+                    novalidate
+                >
+
+                    <!-- REGISTRATION PROGRESS -->
+                    <div class="registrationProgress">
+
+                        <div class="registrationProgressMeta">
+                            <span id="registrationStepLabel" aria-live="polite">
+                                Step 1 of 3
+                            </span>
+
+                            <span id="registrationProgressPercent">
+                                33% complete
+                            </span>
+                        </div>
+
+                        <div
+                            class="registrationProgressTrack"
+                            id="registrationProgressBar"
+                            role="progressbar"
+                            aria-label="Registration progress"
+                            aria-valuemin="1"
+                            aria-valuemax="3"
+                            aria-valuenow="1"
+                        >
+                            <span
+                                class="registrationProgressFill"
+                                id="registrationProgressFill"
+                            ></span>
+                        </div>
+
+                        <div
+                            class="registrationTabs"
+                            role="tablist"
+                            aria-label="Registration sections"
+                        >
+                            <button
+                                type="button"
+                                class="registrationTab isActive"
+                                id="registrationTabPersonal"
+                                role="tab"
+                                aria-selected="true"
+                                aria-controls="personalInformationPanel"
+                                tabindex="0"
+                            >
+                                <span class="registrationTabNumber">01</span>
+                                <span class="registrationTabLabel">
+                                    Personal Information
+                                </span>
+                            </button>
+
+                            <button
+                                type="button"
+                                class="registrationTab"
+                                id="registrationTabResidence"
+                                role="tab"
+                                aria-selected="false"
+                                aria-controls="residenceInformationPanel"
+                                tabindex="-1"
+                                disabled
+                            >
+                                <span class="registrationTabNumber">02</span>
+                                <span class="registrationTabLabel">
+                                    Residence &amp; Household Information
+                                </span>
+                            </button>
+
+                            <button
+                                type="button"
+                                class="registrationTab"
+                                id="registrationTabAccount"
+                                role="tab"
+                                aria-selected="false"
+                                aria-controls="accountInformationPanel"
+                                tabindex="-1"
+                                disabled
+                            >
+                                <span class="registrationTabNumber">03</span>
+                                <span class="registrationTabLabel">
+                                    Account Information
+                                </span>
+                            </button>
+                        </div>
+
+                    </div>
+
+                <!-- ==================================================
+                     01 PERSONAL INFORMATION
+                     ================================================== -->
+                <section
+                    class="registrationSection"
+                    id="personalInformationPanel"
+                    role="tabpanel"
+                    aria-labelledby="registrationTabPersonal"
+                    tabindex="-1"
+                >
+
+                    <div class="sectionHeader">
+
+                        <span
+                            class="sectionNumber"
+                            aria-hidden="true"
+                        >
+                            01
+                        </span>
+
+                        <div>
+                            <h2 class="sectionTitle">
+                                Personal Information
+                            </h2>
+
+                            <p class="sectionDescription">
+                                Provide your basic personal information.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="formGrid">
+
+                        <div class="formGroup">
+                            <label
+                                for="firstName"
+                                class="formLabel"
+                            >
+                                First Name
+                                <span class="required" aria-hidden="true">*</span>
+                            </label>
+
+                            <input
+                                type="text"
+                                id="firstName"
+                                name="firstName"
+                                class="formInput"
+                                placeholder="Enter your first name"
+                                autocomplete="given-name"
+                                maxlength="50"
+                                required
+                            >
+                        </div>
+
+
+                        <div class="formGroup">
+                            <label
+                                for="middleName"
+                                class="formLabel"
+                            >
+                                Middle Name
+                                <span class="optional">(Optional)</span>
+                            </label>
+
+                            <input
+                                type="text"
+                                id="middleName"
+                                name="middleName"
+                                class="formInput"
+                                placeholder="Enter your middle name"
+                                autocomplete="additional-name"
+                                maxlength="50"
+                            >
+                        </div>
+
+
+                        <div class="formGroup">
+                            <label
+                                for="lastName"
+                                class="formLabel"
+                            >
+                                Last Name
+                                <span class="required" aria-hidden="true">*</span>
+                            </label>
+
+                            <input
+                                type="text"
+                                id="lastName"
+                                name="lastName"
+                                class="formInput"
+                                placeholder="Enter your last name"
+                                autocomplete="family-name"
+                                maxlength="50"
+                                required
+                            >
+                        </div>
+
+
+                        <div class="formGroup">
+                            <label
+                                for="birthDate"
+                                class="formLabel"
+                            >
+                                Birth Date
+                                <span class="required" aria-hidden="true">*</span>
+                            </label>
+
+                            <input
+                                type="date"
+                                id="birthDate"
+                                name="birthDate"
+                                class="formInput"
+                                autocomplete="bday"
+                                required
+                            >
+                        </div>
+
+
+                        <div class="formGroup">
+                            <label
+                                for="birthPlace"
+                                class="formLabel"
+                            >
+                                Birth Place
+                                <span class="required" aria-hidden="true">*</span>
+                            </label>
+
+                            <input
+                                type="text"
+                                id="birthPlace"
+                                name="birthPlace"
+                                class="formInput"
+                                placeholder="Enter your birth place"
+                                maxlength="100"
+                                required
+                            >
+                        </div>
+
+
+                        <div class="formGroup">
+                            <label
+                                for="age"
+                                class="formLabel"
+                            >
+                                Age
+                            </label>
+
+                            <input
+                                type="number"
+                                id="age"
+                                name="age"
+                                class="formInput formInputReadOnly"
+                                placeholder="Calculated from birth date"
+                                readonly
+                            >
+
+                            <small class="formHint">
+                                Age is calculated from your birth date.
+                            </small>
+                        </div>
+
+
+                        <div class="formGroup">
+                            <label
+                                for="sex"
+                                class="formLabel"
+                            >
+                                Sex
+                                <span class="required" aria-hidden="true">*</span>
+                            </label>
+
+                            <select
+                                id="sex"
+                                name="sex"
+                                class="formInput formSelect"
+                                required
+                            >
+                                <option value="">Select sex</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                        </div>
+
+
+                        <div class="formGroup">
+                            <label
+                                for="civilStatus"
+                                class="formLabel"
+                            >
+                                Civil Status
+                                <span class="required" aria-hidden="true">*</span>
+                            </label>
+
+                            <select
+                                id="civilStatus"
+                                name="civilStatus"
+                                class="formInput formSelect"
+                                required
+                            >
+                                <option value="">Select civil status</option>
+                                <option value="Single">Single</option>
+                                <option value="Married">Married</option>
+                                <option value="Widowed">Widowed</option>
+                                <option value="Separated">Separated</option>
+                                <option value="Others">Others</option>
+                            </select>
+                        </div>
+
+
+                        <div class="formGroup">
+                            <label
+                                for="sectoralCategory"
+                                class="formLabel"
+                            >
+                                Sectoral Category
+                            </label>
+
+                            <select
+                                id="sectoralCategory"
+                                name="sectoralCategory"
+                                class="formInput formSelect"
+                            >
+                                <option value="">Select category</option>
+                                <option value="4Ps">4Ps</option>
+                                <option value="Solo Parent">Solo Parent</option>
+                                <option value="Senior Citizen">Senior Citizen</option>
+                                <option value="PWD">PWD</option>
+                                <option value="Other">Other</option>
+                                <option value="None">None</option>
+                            </select>
+                        </div>
+
+
+                        <div class="formGroup formGroupFull">
+
+                            <span class="formLabel">
+                                Are you a Person with Disability (PWD)?
+                            </span>
+
+                            <div
+                                class="choiceGroup"
+                                role="radiogroup"
+                                aria-label="PWD status"
+                            >
+
+                                <label class="choice">
+                                    <input
+                                        type="radio"
+                                        id="pwdYes"
+                                        name="isPwd"
+                                        value="1"
+                                        class="choiceInput"
+                                    >
+                                    <span>Yes</span>
+                                </label>
+
+                                <label class="choice">
+                                    <input
+                                        type="radio"
+                                        id="pwdNo"
+                                        name="isPwd"
+                                        value="0"
+                                        class="choiceInput"
+                                        checked
+                                    >
+                                    <span>No</span>
+                                </label>
+
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            class="formGroup formGroupFull isHidden"
+                            id="pwdIdGroup"
+                        >
+                            <label
+                                for="pwdIdNo"
+                                class="formLabel"
+                            >
+                                PWD ID Number
+                            </label>
+
+                            <input
+                                type="text"
+                                id="pwdIdNo"
+                                name="pwdIdNo"
+                                class="formInput"
+                                placeholder="Enter your PWD ID number"
+                                maxlength="50"
+                            >
+                        </div>
+
+
+                        <div class="formGroup">
+                            <label
+                                for="educationalAttainment"
+                                class="formLabel"
+                            >
+                                Educational Attainment
+                            </label>
+
+                            <select
+                                id="educationalAttainment"
+                                name="educationalAttainment"
+                                class="formInput formSelect"
+                            >
+                                <option value="">Select educational attainment</option>
+                                <option value="No Formal Education">
+                                    No Formal Education
+                                </option>
+                                <option value="Elementary Level">
+                                    Elementary Level
+                                </option>
+                                <option value="Elementary Graduate">
+                                    Elementary Graduate
+                                </option>
+                                <option value="High School Level">
+                                    High School Level
+                                </option>
+                                <option value="High School Graduate">
+                                    High School Graduate
+                                </option>
+                                <option value="Vocational">
+                                    Vocational
+                                </option>
+                                <option value="College Level">
+                                    College Level
+                                </option>
+                                <option value="College Graduate">
+                                    College Graduate
+                                </option>
+                                <option value="Post Graduate">
+                                    Post Graduate
+                                </option>
+                            </select>
+                        </div>
+
+
+                        <div class="formGroup">
+                            <label
+                                for="occupation"
+                                class="formLabel"
+                            >
+                                Occupation
+                            </label>
+
+                            <input
+                                type="text"
+                                id="occupation"
+                                name="occupation"
+                                class="formInput"
+                                placeholder="Enter your occupation"
+                                maxlength="100"
+                            >
+                        </div>
+
+
+                        <div class="formGroup">
+                            <label
+                                for="monthlyIncome"
+                                class="formLabel"
+                            >
+                                Monthly Income (₱)
+                            </label>
+
+                            <input
+                                type="number"
+                                id="monthlyIncome"
+                                name="monthlyIncome"
+                                class="formInput"
+                                placeholder="0.00"
+                                min="0"
+                                step="0.01"
+                            >
+                        </div>
+
+                    </div>
+                </section>
+
+
+                <!-- ==================================================
+                     02 RESIDENCE & HOUSEHOLD
+                     ================================================== -->
+                <section
+                    class="registrationSection"
+                    id="residenceInformationPanel"
+                    role="tabpanel"
+                    aria-labelledby="registrationTabResidence"
+                    tabindex="-1"
+                    hidden
+                >
+
+                    <div class="sectionHeader">
+
+                        <span
+                            class="sectionNumber"
+                            aria-hidden="true"
+                        >
+                            02
+                        </span>
+
+                        <div>
+                            <h2 class="sectionTitle">
+                                Residence & Household Information
+                            </h2>
+
+                            <p class="sectionDescription">
+                                Provide your current residential and household information.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="formGrid">
+
+                        
+                        <!-- Unit Number -->
+                        <div class="formGroup">
+                            <label for="unitNumber" class="formLabel">
+                                Unit Number
+                                <span class="optional">(Optional)</span>
+                            </label>
+
+                            <input
+                                type="text"
+                                id="unitNumber"
+                                name="unitNumber"
+                                class="formInput"
+                                placeholder="Enter unit number"
+                                maxlength="30"
+                                autocomplete="address-line2"
+                            >
+                        </div>
+
+
+                        <!-- House Number -->
+                        <div class="formGroup">
+                            <label for="houseNumber" class="formLabel">
+                                House Number
+                                <span class="optional">(Optional)</span>
+                            </label>
+
+                            <input
+                                type="text"
+                                id="houseNumber"
+                                name="houseNumber"
+                                class="formInput"
+                                placeholder="Enter house number"
+                                maxlength="30"
+                                autocomplete="address-line1"
+                            >
+                        </div>
+
+
+                        <!-- Street Name or Subdivision -->
+                        <div class="formGroup formGroupFull">
+                            <label for="streetSubdivision" class="formLabel">
+                                Street Name or Subdivision
+                                <span class="required" aria-hidden="true">*</span>
+                            </label>
+
+                            <input
+                                type="text"
+                                id="streetSubdivision"
+                                name="streetSubdivision"
+                                class="formInput"
+                                placeholder="Enter street name or subdivision"
+                                maxlength="150"
+                                required
+                                autocomplete="address-line1"
+                            >
+                        </div>
+
+
+                        <!-- Permanent Address -->
+                        <div class="formGroup formGroupFull">
+                            <label for="permanentAddress" class="formLabel">
+                                Permanent Address
+                                <span class="required" aria-hidden="true">*</span>
+                            </label>
+
+                            <input
+                                type="text"
+                                id="permanentAddress"
+                                name="permanentAddress"
+                                class="formInput"
+                                placeholder="Enter your complete permanent address"
+                                maxlength="250"
+                                required
+                            >
+                        </div>
+
+
+                        <!-- Barangay -->
+                        <div class="formGroup">
+                            <label for="barangay" class="formLabel">
+                                Barangay
+                                <span class="required" aria-hidden="true">*</span>
+                            </label>
+
+                            <input
+                                type="text"
+                                id="barangay"
+                                name="barangay"
+                                class="formInput"
+                                placeholder="Enter your barangay"
+                                maxlength="100"
+                                required
+                                autocomplete="address-level3"
+                            >
+                        </div>
+
+
+                        <div class="formGroup">
+                            <label
+                                for="housingStatus"
+                                class="formLabel"
+                            >
+                                Housing Status
+                                <span class="required" aria-hidden="true">*</span>
+                            </label>
+
+                            <select
+                                id="housingStatus"
+                                name="housingStatus"
+                                class="formInput formSelect"
+                                required
+                            >
+                                <option value="">Select housing status</option>
+                                <option value="Owned">Owned</option>
+                                <option value="Renter">Renter</option>
+                                <option value="Sharer/Relative">
+                                    Sharer/Relative
+                                </option>
+                            </select>
+                        </div>
+
+
+                        <div
+                            class="formGroup isHidden"
+                            id="monthlyRentGroup"
+                        >
+                            <label
+                                for="monthlyRent"
+                                class="formLabel"
+                            >
+                                Monthly Rent (₱)
+                            </label>
+
+                            <input
+                                type="number"
+                                id="monthlyRent"
+                                name="monthlyRent"
+                                class="formInput"
+                                placeholder="0.00"
+                                min="0"
+                                step="0.01"
+                            >
+                        </div>
+
+
+                        <div class="formGroup">
+                            <label
+                                for="monthlyExpensesElectricity"
+                                class="formLabel"
+                            >
+                                Monthly Electricity Expense (₱)
+                            </label>
+
+                            <input
+                                type="number"
+                                id="monthlyExpensesElectricity"
+                                name="monthlyExpensesElectricity"
+                                class="formInput"
+                                placeholder="0.00"
+                                min="0"
+                                step="0.01"
+                            >
+                        </div>
+
+
+                        <div class="formGroup">
+                            <label
+                                for="monthlyExpensesWater"
+                                class="formLabel"
+                            >
+                                Monthly Water Expense (₱)
+                            </label>
+
+                            <input
+                                type="number"
+                                id="monthlyExpensesWater"
+                                name="monthlyExpensesWater"
+                                class="formInput"
+                                placeholder="0.00"
+                                min="0"
+                                step="0.01"
+                            >
+                        </div>
+
+
+                        <div class="formGroup">
+                            <label
+                                for="monthlyExpensesFood"
+                                class="formLabel"
+                            >
+                                Monthly Food Expense (₱)
+                            </label>
+
+                            <input
+                                type="number"
+                                id="monthlyExpensesFood"
+                                name="monthlyExpensesFood"
+                                class="formInput"
+                                placeholder="0.00"
+                                min="0"
+                                step="0.01"
+                            >
+                        </div>
+
+
+                        <div class="formGroup formGroupFull">
+                            <label
+                                for="otherSourcesOfHelp"
+                                class="formLabel"
+                            >
+                                Other Sources of Help
+                            </label>
+
+                            <textarea
+                                id="otherSourcesOfHelp"
+                                name="otherSourcesOfHelp"
+                                class="formInput formTextarea"
+                                rows="4"
+                                placeholder="List other sources of assistance, if applicable."
+                            ></textarea>
+                        </div>
+
+                    </div>
+                </section>
+
+
+                <!-- ==================================================
+                     03 ACCOUNT INFORMATION
+                     ================================================== -->
+                <section
+                    class="registrationSection"
+                    id="accountInformationPanel"
+                    role="tabpanel"
+                    aria-labelledby="registrationTabAccount"
+                    tabindex="-1"
+                    hidden
+                >
+
+                    <div class="sectionHeader">
+
+                        <span
+                            class="sectionNumber"
+                            aria-hidden="true"
+                        >
+                            03
+                        </span>
+
+                        <div>
+                            <h2 class="sectionTitle">
+                                Account Information
+                            </h2>
+
+                            <p class="sectionDescription">
+                                Set up your login credentials and account contact information.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="formGrid">
+
+                        <div class="formGroup">
+
+                            <label
+                                for="username"
+                                class="formLabel"
+                            >
+                                Username
+                                <span class="required" aria-hidden="true">*</span>
+                            </label>
+
+                            <input
+                                type="text"
+                                id="username"
+                                name="username"
+                                class="formInput"
+                                placeholder="Choose a username"
+                                autocomplete="username"
+                                maxlength="50"
+                                required
+                            >
+
+                            <small class="formHint">
+                                This will be used to sign in to your account.
+                            </small>
+
+                        </div>
+
+
+                        <div class="formGroup">
+
+                            <label
+                                for="email"
+                                class="formLabel"
+                            >
+                                Email Address
+                                <span class="required" aria-hidden="true">*</span>
+                            </label>
+
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                class="formInput"
+                                placeholder="Enter your email address"
+                                autocomplete="email"
+                                maxlength="100"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="formGroup">
+
+                            <label
+                                for="confirmEmail"
+                                class="formLabel"
+                            >
+                                Confirm Email Address
+                                <span class="required" aria-hidden="true">*</span>
+                            </label>
+
+                            <input
+                                type="email"
+                                id="confirmEmail"
+                                name="confirmEmail"
+                                class="formInput"
+                                placeholder="Re-enter your email address"
+                                autocomplete="off"
+                                maxlength="100"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="formGroup">
+
+                            <label
+                                for="contactNumber"
+                                class="formLabel"
+                            >
+                                Contact Number
+                                <span class="required" aria-hidden="true">*</span>
+                            </label>
+
+                            <div class="contactInputWrapper">
+                                <span class="contactPrefix" aria-hidden="true">+63</span>
+                                <input
+                                    type="tel"
+                                    id="contactNumber"
+                                    name="contactNumber"
+                                    class="formInput contactInput"
+                                    placeholder="9XX XXX XXXX"
+                                    autocomplete="tel-national"
+                                    maxlength="10"
+                                    inputmode="numeric"
+                                    required
+                                >
+                            </div>
+
+                            <small class="formHint">
+                                Enter a 10-digit Philippine mobile number starting with 9 (e.g., 9171234567).
+                            </small>
+
+                        </div>
+
+
+                        <div class="formGroup formGroupFull">
+                            <label for="pasigPassAttachment" class="formLabel">
+                                Pasig Pass QR Code
+                                <span class="optional">(Optional)</span>
+                            </label>
+
+                            <div class="fileUpload">
+                                <input
+                                    type="file"
+                                    id="pasigPassAttachment"
+                                    name="pasigPassAttachment"
+                                    class="fileInput"
+                                    accept="image/png,image/jpeg,image/webp"
+                                    aria-describedby="fileUploadHint"
+                                >
+                                <label for="pasigPassAttachment" class="fileUploadButton">
+                                    <span class="fileUploadIcon" aria-hidden="true">
+                                        <i data-lucide="upload"></i>
+                                    </span>
+                                    <span class="fileUploadText">Upload Pasig Pass QR Image</span>
+                                </label>
+                            </div>
+
+                            <small class="formHint" id="fileUploadHint">
+                                Placeholder only. A selected file is not uploaded or stored.
+                            </small>
+
+                            <!-- File preview area -->
+                            <div class="filePreview isHidden" id="pasigPassPreview" aria-live="polite">
+                                <div class="filePreviewContent">
+                                    <img src="#" alt="Preview" class="filePreviewImage">
+                                    <div class="filePreviewInfo">
+                                        <span class="filePreviewName" id="pasigPassName"></span>
+                                        <span class="filePreviewSize" id="pasigPassSize"></span>
+                                    </div>
+                                    <button
+                                        type="button"
+                                        class="fileRemoveButton"
+                                        id="removePasigPassAttachment"
+                                        aria-label="Remove uploaded Pasig Pass QR image"
+                                    >
+                                        <i data-lucide="x" aria-hidden="true"></i>
+                                        <span>Remove</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- Password -->
+                        <div class="formGroup">
+
+                            <label
+                                for="password"
+                                class="formLabel"
+                            >
+                                Password
+                                <span class="required" aria-hidden="true">*</span>
+                            </label>
+
+                            <div class="passwordInputWrapper">
+
+                                <input
+                                    type="password"
+                                    id="password"
+                                    name="password"
+                                    class="formInput"
+                                    placeholder="Create a password"
+                                    autocomplete="new-password"
+                                    required
+                                >
+
+                                <button
+                                    type="button"
+                                    class="passwordToggle"
+                                    id="togglePassword"
+                                    aria-label="Show password"
+                                    aria-controls="password"
+                                    aria-pressed="false"
+                                >
+                                    <svg
+                                        class="eyeIcon"
+                                        width="20"
+                                        height="20"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        aria-hidden="true"
+                                    >
+                                        <path
+                                            class="eyeOpen"
+                                            d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"
+                                        ></path>
+
+                                        <circle
+                                            class="eyeOpen"
+                                            cx="12"
+                                            cy="12"
+                                            r="3"
+                                        ></circle>
+
+                                        <path
+                                            class="eyeClosed"
+                                            d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"
+                                            style="display: none;"
+                                        ></path>
+
+                                        <line
+                                            class="eyeClosed"
+                                            x1="1"
+                                            y1="1"
+                                            x2="23"
+                                            y2="23"
+                                            style="display: none;"
+                                        ></line>
+                                    </svg>
+                                </button>
+
+                            </div>
+
+
+                            <!-- ==================================================
+                                 PASSWORD STRENGTH
+                                 ================================================== -->
+                            <div
+                                class="passwordStrength"
+                                id="passwordStrength"
+                                aria-live="polite"
+                            >
+
+                                <div
+                                    class="passwordStrengthBars"
+                                    aria-hidden="true"
+                                >
+
+                                    <span
+                                        class="strengthBar strengthBarWeak"
+                                        data-level="1"
+                                    ></span>
+
+                                    <span
+                                        class="strengthBar strengthBarAverage"
+                                        data-level="2"
+                                    ></span>
+
+                                    <span
+                                        class="strengthBar strengthBarStrong"
+                                        data-level="3"
+                                    ></span>
+
+                                    <span
+                                        class="strengthBar strengthBarSecure"
+                                        data-level="4"
+                                    ></span>
+
+                                </div>
+
+
+                                <div class="passwordStrengthLabels">
+
+                                    <span class="strengthLabel strengthLabelWeak">
+                                        Weak
+                                    </span>
+
+                                    <span class="strengthLabel strengthLabelAverage">
+                                        Average
+                                    </span>
+
+                                    <span class="strengthLabel strengthLabelStrong">
+                                        Strong
+                                    </span>
+
+                                    <span class="strengthLabel strengthLabelSecure">
+                                        Secure
+                                    </span>
+
+                                </div>
+
+
+                                <p
+                                    class="passwordStrengthMessage"
+                                    id="passwordStrengthMessage"
+                                >
+                                    Enter a password to check its strength.
+                                </p>
+
+                            </div>
+
+
+                            <!-- Password requirements -->
+                            <div
+                                class="passwordRequirements"
+                                id="passwordRequirements"
+                                role="group"
+                                aria-label="Password requirements"
+                                aria-live="polite"
+                                aria-relevant="text"
+                            >
+                                <p class="passwordRequirementsTitle">
+                                    Your password must include:
+                                </p>
+
+                                <ul class="passwordRequirementsList">
+                                    <li
+                                        class="passwordRequirement"
+                                        data-password-requirement="uppercase"
+                                    >
+                                        <span class="passwordRequirementIndicator" aria-hidden="true">○</span>
+                                        <span class="passwordRequirementLabel">At least one uppercase letter (A–Z)</span>
+                                        <span class="passwordRequirementStatus">Not met</span>
+                                    </li>
+                                    <li
+                                        class="passwordRequirement"
+                                        data-password-requirement="lowercase"
+                                    >
+                                        <span class="passwordRequirementIndicator" aria-hidden="true">○</span>
+                                        <span class="passwordRequirementLabel">At least one lowercase letter (a–z)</span>
+                                        <span class="passwordRequirementStatus">Not met</span>
+                                    </li>
+                                    <li
+                                        class="passwordRequirement"
+                                        data-password-requirement="number"
+                                    >
+                                        <span class="passwordRequirementIndicator" aria-hidden="true">○</span>
+                                        <span class="passwordRequirementLabel">At least one number (0–9)</span>
+                                        <span class="passwordRequirementStatus">Not met</span>
+                                    </li>
+                                    <li
+                                        class="passwordRequirement"
+                                        data-password-requirement="special"
+                                    >
+                                        <span class="passwordRequirementIndicator" aria-hidden="true">○</span>
+                                        <span class="passwordRequirementLabel">At least one special character (such as !, @, or #)</span>
+                                        <span class="passwordRequirementStatus">Not met</span>
+                                    </li>
+                                    <li
+                                        class="passwordRequirement"
+                                        data-password-requirement="minLength"
+                                    >
+                                        <span class="passwordRequirementIndicator" aria-hidden="true">○</span>
+                                        <span class="passwordRequirementLabel">At least 8 characters</span>
+                                        <span class="passwordRequirementStatus">Not met</span>
+                                    </li>
+                                    <li
+                                        class="passwordRequirement"
+                                        data-password-requirement="maxBytes"
+                                    >
+                                        <span class="passwordRequirementIndicator" aria-hidden="true">○</span>
+                                        <span class="passwordRequirementLabel">No more than 72 bytes</span>
+                                        <span class="passwordRequirementStatus">Not met</span>
+                                    </li>
+                                </ul>
+                            </div>
+
+
+                            <small class="formHint">
+                                Strength is a visual estimate only.
+                            </small>
+
+                        </div>
+
+
+                        <!-- Confirm Password -->
+                        <div class="formGroup">
+
+                            <label
+                                for="confirmPassword"
+                                class="formLabel"
+                            >
+                                Confirm Password
+                                <span class="required" aria-hidden="true">*</span>
+                            </label>
+
+                            <div class="passwordInputWrapper">
+
+                                <input
+                                    type="password"
+                                    id="confirmPassword"
+                                    name="confirmPassword"
+                                    class="formInput"
+                                    placeholder="Re-enter your password"
+                                    autocomplete="new-password"
+                                    required
+                                >
+
+                                <button
+                                    type="button"
+                                    class="passwordToggle"
+                                    id="toggleConfirmPassword"
+                                    aria-label="Show password"
+                                    aria-controls="confirmPassword"
+                                    aria-pressed="false"
+                                >
+                                    <svg
+                                        class="eyeIcon"
+                                        width="20"
+                                        height="20"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        aria-hidden="true"
+                                    >
+                                        <path
+                                            class="eyeOpen"
+                                            d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"
+                                        ></path>
+
+                                        <circle
+                                            class="eyeOpen"
+                                            cx="12"
+                                            cy="12"
+                                            r="3"
+                                        ></circle>
+
+                                        <path
+                                            class="eyeClosed"
+                                            d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"
+                                            style="display: none;"
+                                        ></path>
+
+                                        <line
+                                            class="eyeClosed"
+                                            x1="1"
+                                            y1="1"
+                                            x2="23"
+                                            y2="23"
+                                            style="display: none;"
+                                        ></line>
+                                    </svg>
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- ==================================================
+                     TERMS & PRIVACY
+                     ================================================== -->
+                    <section
+                        class="termsSection"
+                        aria-label="Terms and privacy agreements"
+                    >
+
+                        <div class="termsGroup">
+
+                            <label class="choice">
+
+                                <input
+                                    type="checkbox"
+                                    id="agreeTerms"
+                                    name="agreeTerms"
+                                    class="choiceInput"
+                                    required
+                                >
+
+                                <span>
+                                    I have read and agree to the
+                                    <a href="terms.html">
+                                        Terms of Service
+                                    </a>.
+                                </span>
+
+                            </label>
+
+                        </div>
+
+
+                        <div class="termsGroup">
+
+                            <label class="choice">
+
+                                <input
+                                    type="checkbox"
+                                    id="agreePrivacy"
+                                    name="agreePrivacy"
+                                    class="choiceInput"
+                                    required
+                                >
+
+                                <span>
+                                    I have read and agree to the
+                                    <a href="privacy.html">
+                                        Privacy Policy
+                                    </a>.
+                                </span>
+
+                            </label>
+
+                        </div>
+
+                    </section>
+
+                </section>
+
+
+                <!-- ==================================================
+                     ACTIONS
+                     ================================================== -->
+                    <p
+                        class="registrationStatus"
+                        id="registrationStatus"
+                        role="status"
+                        aria-live="polite"
+                        hidden
+                    ></p>
+
+                    <div class="registrationActions">
+
+                        <button
+                            type="button"
+                            class="cancelButton"
+                            id="cancelButton"
+                        >
+                            Cancel
+                        </button>
+
+                        <div class="registrationActionsEnd">
+
+                            <button
+                                type="button"
+                                class="cancelButton stepBackButton"
+                                id="previousStepButton"
+                                hidden
+                            >
+                                Back
+                            </button>
+
+                            <button
+                                type="button"
+                                class="createAccountButton"
+                                id="nextStepButton"
+                            >
+                                Continue
+                            </button>
+
+                            <button
+                                type="submit"
+                                class="createAccountButton"
+                                id="createAccountButton"
+                                hidden
+                            >
+                                Create Account
+                            </button>
+
+                        </div>
+
+                    </div>
+
+            </form>
+
+        </section>
+
+    </main>
+
+    <script src="../js/auth-session.js"></script>
+    <script src="../js/register.js"></script>
+    <script src="../js/register-tabs.js"></script>
+
+</body>
+</html>

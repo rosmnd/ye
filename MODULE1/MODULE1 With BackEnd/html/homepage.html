@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pasig City CSWDO</title>
+
+    <link rel="stylesheet" href="../css/homepage.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="govHeader" id="govHeader">
+        <div class="govHeaderContainer">
+
+            <div class="govHeaderAgency">
+                REPUBLIC OF THE PHILIPPINES | CITY GOVERNMENT OF PASIG
+            </div>
+
+            <div class="govHeaderDateTime" id="dateTimeDisplay">
+                <span class="dateDisplay" id="dateDisplay">
+                    Loading...
+                </span>
+
+                <span class="dateTimeSeparator" aria-hidden="true">|</span>
+
+                <span class="timeDisplay" id="timeDisplay">
+                    Loading...
+                </span>
+            </div>
+
+        </div>
+    </header>
+
+    <header class="header">
+        <div class="headerContainer">
+            <div class="logoGroup">
+                <img src="../assets/pasigLogo1.png" class="logo">
+                <img src="../assets/pasigLogo2.png" class="logo">
+            </div>
+
+            <nav class="navMenu">
+                <a href="#services" data-en="Services" data-tl="Mga Serbisyo">Services</a>
+                <a href="#how-it-works" data-en="How it works" data-tl="Paano ito gumagana">How it works</a>
+                <a href="../../modules.html" data-en="All Modules" data-tl="Lahat ng Module">All Modules</a>
+                <a href="register.html" data-en="Apply for Assistance" data-tl="Mag-apply ng Tulong">Apply for Assistance</a>
+                <div class="langSwitch" role="group" aria-label="Language">
+                    <button type="button" class="langBtn is-active" data-lang="en" aria-pressed="true">EN</button>
+                    <button type="button" class="langBtn" data-lang="tl" aria-pressed="false">TL</button>
+                </div>
+                
+                <!-- Account area: Sign In or authenticated user profile -->
+                <div class="accountArea" id="accountArea">
+
+                    <a
+                        href="login_draft.html"
+                        class="btnSignin"
+                        id="signInLink"
+                        data-en="Sign In"
+                        data-tl="Mag-sign in"
+                    >
+                        Sign In
+                    </a>
+
+                    <div class="profileContainer" id="profileContainer" hidden>
+
+                        <button
+                            type="button"
+                            class="profileButton"
+                            id="profileButton"
+                            aria-expanded="false"
+                            aria-controls="profileDropdown"
+                        >
+                            <span class="profileAvatar" aria-hidden="true">
+
+                                <img
+                                    src=""
+                                    alt=""
+                                    class="profileAvatarImage"
+                                    id="profileAvatarImage"
+                                    hidden
+                                >
+
+                                <span class="profileInitials" id="profileInitials">
+                                    U
+                                </span>
+
+                            </span>
+
+                            <span class="profileUsername" id="profileUsername">
+                                Username
+                            </span>
+
+                            <svg
+                                class="profileChevron"
+                                width="16"
+                                height="16"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                aria-hidden="true"
+                            >
+                                <path d="m6 9 6 6 6-6"></path>
+                            </svg>
+
+                        </button>
+
+                        <div
+                            class="profileDropdown"
+                            id="profileDropdown"
+                            hidden
+                        >
+                            <p class="profileDropdownName" id="profileDropdownName">
+                                Account
+                            </p>
+
+                            <p class="profileDropdownRole">
+                                Account role:
+                                <strong id="profileRole">CLIENT</strong>
+                            </p>
+
+                            <button
+                                type="button"
+                                class="profileLogoutButton"
+                                id="logoutButton"
+                            >
+                                Sign out
+                            </button>
+                        </div>
+
+                    </div>
+
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="heroSection">
+            <div class="heroContainer">
+                <div class="heroText">
+                    <span class="sectionLabel">
+                        SOCIAL WELFARE SERVICES · PASIG CITY
+                    </span>
+
+                    <h1 data-en="Support when you need it most" data-tl="Suporta sa oras na pinaka-kailangan mo.">
+                        Support when you need it most
+                    </h1>
+
+                    <p data-en="The City Social Welfare and Development Office connects Pasigueños to the care, assistance, and services they need." data-tl="Iniuugnay ng City Social Welfare and Development Office ang mga Pasigueño sa tulong at serbisyong kailangan nila.">
+                        The City Social Welfare and Development Office connects Pasigueños
+                        to the care, assistance, and services they need.
+                    </p>
+
+                    <div class="heroButtons">
+                        <a href="register.html" class="btnPrimary" data-en="Apply for Assistance" data-tl="Mag-apply ng Tulong">Apply for Assistance</a>
+                        <a href="#services" class="btnSecondary" data-en="Explore Services" data-tl="Tingnan ang mga Serbisyo">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Value Bar Section -->
+        <section class="valueBarSection">
+            <div class="headerContainer valueBarGrid">
+                <div class="valueBarItem">
+                    <span>
+                        <span class="valueBarIcon" aria-hidden="true">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path></svg>
+                        </span>
+                        <span data-en="Secure document submission" data-tl="Ligtas na pagsusumite ng dokumento">Secure document submission</span>
+                    </span>
+                </div>
+
+                <div class="valueBarItem">
+                    <span>
+                        <span class="valueBarIcon" aria-hidden="true">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"></rect><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><path d="m9 14 2 2 4-4"></path></svg>
+                        </span>
+                        <span data-en="Application Verification" data-tl="Beripikasyon ng aplikasyon">Application Verification</span>
+                    </span>
+                </div>
+
+                <div class="valueBarItem">
+                    <span>
+                        <span class="valueBarIcon" aria-hidden="true">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M19.414 14.414C21 12.828 22 11.5 22 9.5a5.5 5.5 0 0 0-9.591-3.676.6.6 0 0 1-.818.001A5.5 5.5 0 0 0 2 9.5c0 2.3 1.5 4 3 5.5l5.535 5.362a2 2 0 0 0 2.879.052 2.12 2.12 0 0 0-.004-3 2.124 2.124 0 1 0 3-3 2.124 2.124 0 0 0 3.004 0 2 2 0 0 0 0-2.828l-1.881-1.882a2.41 2.41 0 0 0-3.409 0l-1.71 1.71a2 2 0 0 1-2.828 0 2 2 0 0 1 0-2.828l2.823-2.762"></path></svg>
+                        </span>
+                        <span data-en="Compassionate Community Support" data-tl="Malasakit na suporta sa komunidad">Compassionate Community Support</span>
+                    </span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section class="section servicesSection" id="services">
+            <div class="container">
+                <span class="sectionLabel" data-en="WHAT WE HELP WITH" data-tl="SAAN KAMI MAKATUTULONG">WHAT WE HELP WITH</span>
+                <h2 data-en="Find the right assistance" data-tl="Hanapin ang tamang tulong">Find the right assistance</h2>
+
+                <p class="sectionIntro" data-en="Browse available social services and choose the support that fits your situation." data-tl="Tingnan ang mga serbisyong panlipunan at piliin ang tulong na akma sa iyong sitwasyon.">
+                    Browse available social services and choose the support that fits your situation.
+                </p>
+
+                <div class="serviceGrid">
+                    <a class="serviceCard" href="medical-assistance.html">
+                        <div class="serviceCardTop">
+                            <span class="serviceIcon" aria-hidden="true">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+                                    <rect x="3" y="6" width="18" height="15" rx="2.5"></rect>
+                                    <path d="M9 6V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1"></path>
+                                    <path d="M12 11.5v4M10 13.5h4"></path>
+                                </svg>
+                            </span>
+                            <span class="serviceCategory">HEALTH</span>
+                        </div>
+                        <h3 data-en="Medical Assistance" data-tl="Tulong Medikal">Medical Assistance</h3>
+                        <p data-en="Financial help for hospital bills, medicines, and medical procedures for qualified Pasigueños." data-tl="Tulong sa bayarin sa ospital, gamot, at medikal na pamamaraan para sa mga kwalipikadong Pasigueño.">
+                            Financial help for hospital bills, medicines, and medical procedures for qualified Pasigueños.
+                        </p>
+                        <span class="serviceCardCta" data-en="Apply for this service →" data-tl="Mag-apply para sa serbisyong ito →">Apply for this service →</span>
+                    </a>
+
+                    <a class="serviceCard" href="financial-assistance.html">
+                        <div class="serviceCardTop">
+                            <span class="serviceIcon" aria-hidden="true">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+                                    <path d="M3 10.5V8.5A2.5 2.5 0 0 1 5.5 6h8"></path>
+                                    <rect x="3" y="7" width="18" height="13" rx="2.5"></rect>
+                                    <path d="M21 12h-4.5a2.5 2.5 0 0 0 0 5H21"></path>
+                                    <circle cx="16.5" cy="14.5" r="0.9" fill="currentColor" stroke="none"></circle>
+                                </svg>
+                            </span>
+                            <span class="serviceCategory">FINANCIAL</span>
+                        </div>
+                        <h3 data-en="Financial Assistance" data-tl="Tulong Pinansyal">Financial Assistance</h3>
+                        <p data-en="One-time cash aid for individuals and families facing financial hardship or an emergency." data-tl="Isahang tulong-cash para sa indibidwal at pamilyang may krisis o pangangailangang pinansyal.">
+                            One-time cash aid for individuals and families facing financial hardship or an emergency.
+                        </p>
+                        <span class="serviceCardCta" data-en="Apply for this service →" data-tl="Mag-apply para sa serbisyong ito →">Apply for this service →</span>
+                    </a>
+
+                    <a class="serviceCard" href="burial-assistance.html">
+                        <div class="serviceCardTop">
+                            <span class="serviceIcon" aria-hidden="true">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+                                    <path d="M12 20.8C6.6 16.9 3.6 13.9 3.6 10.1a4.4 4.4 0 0 1 8.4-2 4.4 4.4 0 0 1 8.4 2c0 3.8-3 6.8-8.4 10.7Z"></path>
+                                </svg>
+                            </span>
+                            <span class="serviceCategory">FAMILY</span>
+                        </div>
+                        <h3 data-en="Burial Assistance" data-tl="Tulong sa Libing">Burial Assistance</h3>
+                        <p data-en="Assistance with funeral and burial expenses for the passing of an indigent family member." data-tl="Tulong sa gastusin sa lamay at libing ng isang mahirap na kaanak.">
+                            Assistance with funeral and burial expenses for the passing of an indigent family member.
+                        </p>
+                        <span class="serviceCardCta" data-en="Apply for this service →" data-tl="Mag-apply para sa serbisyong ito →">Apply for this service →</span>
+                    </a>
+
+                    <a class="serviceCard" href="balik-probinsya-assistance.html">
+                        <div class="serviceCardTop">
+                            <span class="serviceIcon" aria-hidden="true">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+                                    <rect x="4" y="3" width="16" height="14" rx="2.5"></rect>
+                                    <path d="M4 11h16"></path>
+                                    <path d="M8.5 7.5h7"></path>
+                                    <circle cx="8.5" cy="14" r="0.9" fill="currentColor" stroke="none"></circle>
+                                    <circle cx="15.5" cy="14" r="0.9" fill="currentColor" stroke="none"></circle>
+                                    <path d="M7.5 17v3M16.5 17v3"></path>
+                                </svg>
+                            </span>
+                            <span class="serviceCategory">TRAVEL</span>
+                        </div>
+                        <h3 data-en="Balik Probinsya Assistance" data-tl="Tulong Balik Probinsya">Balik Probinsya Assistance</h3>
+                        <p data-en="Support for Pasigueños returning to their home province, including travel and relocation assistance." data-tl="Suporta para sa mga Pasigueñong nais bumalik sa kanilang lalawigan, kasama ang tulong sa paglalakbay at paglipat.">
+                            Support for Pasigueños returning to their home province, including travel and relocation assistance.
+                        </p>
+                        <span class="serviceCardCta" data-en="Apply for this service →" data-tl="Mag-apply para sa serbisyong ito →">Apply for this service →</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Process Section -->
+        <section class="processSection" id="how-it-works">
+            <div class="container">
+                <span class="sectionLabel" data-en="PROCESS FLOW" data-tl="PROSESO">PROCESS FLOW</span>
+                <h2 data-en="How to request support" data-tl="Paano humingi ng tulong">How to request support</h2>
+
+                <div class="processGrid">
+                    <article class="processItem">
+                        <span class="processNumber">01</span>
+                        <h3 data-en="Choose a need" data-tl="Pumili ng pangangailangan">Choose a need</h3>
+                        <p data-en="Browse the available assistance services and select the one that fits your situation." data-tl="Tingnan ang mga serbisyong available at piliin ang akma sa iyong sitwasyon.">
+                            Browse the available assistance services and select the one that fits your situation.
+                        </p>
+                    </article>
+
+                    <article class="processItem">
+                        <span class="processNumber">02</span>
+                        <h3 data-en="Complete the form" data-tl="Kumpletuhin ang form">Complete the form</h3>
+                        <p data-en="Enter your information and provide the necessary documents for your application." data-tl="Ilagay ang iyong impormasyon at isumite ang mga kinakailangang dokumento.">
+                            Enter your information and provide the necessary documents for your application.
+                        </p>
+                    </article>
+
+                    <article class="processItem">
+                        <span class="processNumber">03</span>
+                        <h3 data-en="Submit and wait for verification" data-tl="Isumite at hintayin ang beripikasyon">Submit and wait for verification</h3>
+                        <p data-en="Submit your application and wait for the CSWDO team to review your request." data-tl="Isumite ang aplikasyon at hintayin ang pagsusuri ng CSWDO.">
+                            Submit your application and wait for the CSWDO team to review your request.
+                        </p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Application Tracking Section -->
+        <section class="section trackingSection">
+            <div class="container">
+                <span class="sectionLabel" data-en="APPLICATION TRACKING" data-tl="PAGSUBABAY SA APLIKASYON">APPLICATION TRACKING</span>
+                <h2 data-en="My requests" data-tl="Mga kahilingan ko">My requests</h2>
+                <p class="sectionIntro" data-en="Check the progress of your application." data-tl="Tingnan ang progreso ng iyong aplikasyon.">
+                    Check the progress of your application.
+                </p>
+
+                <div class="trackingCard">
+                    <div class="trackingText">
+                        <h3 data-en="Track your application" data-tl="Subabayan ang iyong aplikasyon">Track your application</h3>
+                        <p data-en="Sign in to see your submitted requests and their status." data-tl="Mag-sign in upang makita ang mga isinumite mong kahilingan at ang kalagayan nito.">
+                            Sign in to see your submitted requests and their status.
+                        </p>
+                    </div>
+
+                    <a href="login_draft.html" class="btn btnPrimary" data-en="Sign in" data-tl="Mag-sign in">Sign in</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="pageFooter">
+        <div class="container footerContent">
+            <div class="footerBrand">
+                <img src="../assets/pasigLogo1.png" class="logo">    
+                <div>
+                    <strong>Pasig City CSWDO</strong>
+                    <small data-en="SERVING THE PEOPLE OF PASIG" data-tl="PAGLILINGKOD SA MAMAMAYAN NG PASIG">SERVING THE PEOPLE OF PASIG</small>
+                </div>
+            </div>
+
+            <span class="footerHours">Mon–Thu 8:00 AM - 5:00 PM</span>
+        </div>
+    </footer>
+
+    <!-- Back to Top floating button -->
+    <button type="button" class="backToTop" id="backToTop" aria-label="Back to top">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="m5 12 7-7 7 7"></path><path d="M12 19V5"></path></svg>
+    </button>
+
+    <script src="../js/auth-session.js"></script>
+    <script src="../js/logout-modal.js"></script>
+    <script src="../js/homepage.js"></script>
+    <script src="../js/lang.js"></script>
+</body>
+</html>

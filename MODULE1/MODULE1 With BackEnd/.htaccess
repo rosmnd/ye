@@ -1,0 +1,5 @@
+Options -Indexes
+
+<FilesMatch "(?i)(\.sql$|\.md$|\.example\.php$|^\.env)">
+    Require all denied
+</FilesMatch>
