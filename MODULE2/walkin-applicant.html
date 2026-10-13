@@ -272,8 +272,11 @@
     /* Assistance cards */
     .assistGrid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(2, minmax(220px, 260px));
       gap: 0.85rem;
+      width: fit-content;
+      max-width: 100%;
+      margin: 0 auto;
     }
     .assistCard {
       border: 2px solid var(--border);
@@ -282,6 +285,19 @@
       cursor: pointer;
       transition: all 0.15s;
       text-align: center;
+      min-height: 150px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      box-sizing: border-box;
+    }
+
+    @media (max-width: 700px) {
+      .assistGrid {
+        grid-template-columns: 1fr;
+        width: 100%;
+      }
     }
     .assistCard:hover { border-color: var(--blueLight); background: var(--bluePale); }
     .assistCard.selected {
@@ -400,31 +416,6 @@
     }
     .btnGhost:hover { text-decoration: underline; }
 
-    /* Queue ticket */
-    .queueTicket {
-      text-align: center;
-      padding: 2rem 1rem;
-    }
-    .queueNumber {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: clamp(2rem, 6vw, 3rem);
-      font-weight: 700;
-      color: var(--navy);
-      letter-spacing: 0.05em;
-      background: var(--bluePale);
-      display: inline-block;
-      padding: 0.75rem 1.75rem;
-      border-radius: 12px;
-      border: 2px dashed var(--blue);
-      margin: 1rem 0;
-    }
-    .queueHint {
-      font-size: 0.875rem;
-      color: var(--muted);
-      max-width: 360px;
-      margin: 0 auto;
-    }
-
     /* Success */
     .successBox {
       text-align: center;
@@ -472,6 +463,85 @@
       height: 8px;
       border-radius: 50%;
       background: #e65100;
+    }
+
+    .docChecklist {
+      display: grid;
+      gap: 0.75rem;
+    }
+    .docItem {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.9rem 1rem;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      background: #f9fbff;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .docItem:hover { border-color: var(--blueLight); background: var(--bluePale); }
+    .docCheckWrap {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      flex: 1;
+    }
+    .docCheckWrap input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--blue);
+      margin: 0;
+    }
+    .docText {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+      font-size: 0.95rem;
+      color: var(--navy);
+      font-weight: 600;
+    }
+    .docSub {
+      font-weight: 400;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    .docStatus {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 88px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.3rem 0.7rem;
+      border: 1px solid transparent;
+    }
+    .docStatus.pending {
+      background: #fff4e6;
+      color: #c77800;
+      border-color: #ffd39a;
+    }
+    .docStatus.verified {
+      background: #e7f8ee;
+      color: #1e8e5a;
+      border-color: #bfe7ce;
+    }
+    .docConfirm {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-top: 0.5rem;
+      padding: 0.35rem 0;
+      color: var(--navy);
+      font-size: 0.96rem;
+      font-weight: 500;
+    }
+    .docConfirm input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--blue);
     }
 
     /* Review summary */
@@ -609,37 +679,22 @@
 
     <!-- Progress -->
     <div class="progressBar" id="progressBar">
-      <div class="progressStep active" data-step="1"><div class="dot">1</div><span>Queue</span></div>
-      <div class="progressStep" data-step="2"><div class="dot">2</div><span>Assistance</span></div>
-      <div class="progressStep" data-step="3"><div class="dot">3</div><span>Personal Info</span></div>
-      <div class="progressStep" data-step="4"><div class="dot">4</div><span>Family</span></div>
-      <div class="progressStep" data-step="5"><div class="dot">5</div><span>Requirements</span></div>
-      <div class="progressStep" data-step="6"><div class="dot">6</div><span>Review</span></div>
+      <div class="progressStep active" data-step="1"><div class="dot">1</div><span>Assistance</span></div>
+      <div class="progressStep" data-step="2"><div class="dot">2</div><span>Info</span></div>
+      <div class="progressStep" data-step="3"><div class="dot">3</div><span>Family</span></div>
+      <div class="progressStep" data-step="4"><div class="dot">4</div><span>Requirements</span></div>
+      <div class="progressStep" data-step="5"><div class="dot">5</div><span>Review</span></div>
     </div>
 
     <div class="card">
       <div class="cardHeader" id="cardHeader">
-        <h3 id="stepTitle">Step 1 · Get Queue Number</h3>
-        <p id="stepDesc">Your queue number is used only while waiting to be called by staff. Once called, fill out the form.</p>
+        <h3 id="stepTitle">Step 1 · Select Assistance Type</h3>
+        <p id="stepDesc">Choose the primary assistance the client is requesting.</p>
       </div>
       <div class="cardBody" id="cardBody">
 
-        <!-- ========== STEP 1: QUEUE ========== -->
+        <!-- ========== STEP 1: ASSISTANCE ========== -->
         <div class="stepPanel" id="step1">
-          <div class="queueTicket">
-            <p style="font-weight:600;color:var(--navy);">Walk-in Queue Number</p>
-            <div class="queueNumber" id="queueDisplay">— — —</div>
-            <p class="queueHint">
-              Present this number when staff calls you. After your application is created, you will receive a permanent <strong>Control Number</strong> for tracking.
-            </p>
-            <button type="button" class="btn btnPrimary" style="margin-top:1.25rem;" id="btnGenerateQueue">
-              Generate Queue Number
-            </button>
-          </div>
-        </div>
-
-        <!-- ========== STEP 2: ASSISTANCE ========== -->
-        <div class="stepPanel" id="step2" style="display:none;">
           <p style="margin-bottom:1rem;font-size:0.9rem;color:var(--muted);">Select the type of assistance the client is requesting.</p>
           <div class="assistGrid" id="assistGrid">
             <div class="assistCard" data-value="Medical Assistance">
@@ -652,42 +707,22 @@
               <h4>Financial Assistance</h4>
               <p>Support for financial difficulties</p>
             </div>
-            <div class="assistCard" data-value="Burial / Funeral Assistance">
+            <div class="assistCard" data-value="Burial Assistance">
               <div class="icon">⚱️</div>
-              <h4>Burial / Funeral</h4>
+              <h4>Burial Assistance</h4>
               <p>Death and burial related expenses</p>
-            </div>
-            <div class="assistCard" data-value="Transportation Assistance">
-              <div class="icon">🚌</div>
-              <h4>Transportation</h4>
-              <p>Travel for social or emergency needs</p>
             </div>
             <div class="assistCard" data-value="Balik Probinsya Assistance">
               <div class="icon">🏠</div>
-              <h4>Balik Probinsya</h4>
+              <h4>Balik Probinsya Assistance</h4>
               <p>Support to return to province of origin</p>
-            </div>
-            <div class="assistCard" data-value="Emergency Assistance">
-              <div class="icon">🚨</div>
-              <h4>Emergency</h4>
-              <p>Urgent or unexpected situations</p>
-            </div>
-            <div class="assistCard" data-value="Disaster Assistance">
-              <div class="icon">🌪️</div>
-              <h4>Disaster Assistance</h4>
-              <p>Flood, fire, typhoon, calamities</p>
-            </div>
-            <div class="assistCard" data-value="Referral Assistance">
-              <div class="icon">📋</div>
-              <h4>Referral</h4>
-              <p>Referral to other offices / institutions</p>
             </div>
           </div>
           <input type="hidden" id="assistanceType" />
         </div>
 
-        <!-- ========== STEP 3: PERSONAL INFO ========== -->
-        <div class="stepPanel" id="step3" style="display:none;">
+        <!-- ========== STEP 2: PERSONAL INFO ========== -->
+        <div class="stepPanel" id="step2" style="display:none;">
           <div class="formGrid">
             <div class="formGroup">
               <label>Apelyido (Last Name) <span class="req">*</span></label>
@@ -835,8 +870,8 @@
           </div>
         </div>
 
-        <!-- ========== STEP 4: FAMILY ========== -->
-        <div class="stepPanel" id="step4" style="display:none;">
+        <!-- ========== STEP 3: FAMILY ========== -->
+        <div class="stepPanel" id="step3" style="display:none;">
           <p style="margin-bottom:1rem;font-size:0.9rem;color:var(--muted);">List household members (optional but recommended).</p>
           <div style="overflow-x:auto;">
             <table class="familyTable" id="familyTable">
@@ -859,20 +894,24 @@
           <button type="button" class="btn btnGhost" id="btnAddFamily" style="margin-top:0.75rem;">+ Add Family Member</button>
         </div>
 
-        <!-- ========== STEP 5: REQUIREMENTS ========== -->
-        <div class="stepPanel" id="step5" style="display:none;">
+        <!-- ========== STEP 4: REQUIREMENTS ========== -->
+        <div class="stepPanel" id="step4" style="display:none;">
           <p style="margin-bottom:1rem;font-size:0.9rem;color:var(--muted);">
-            Upload supporting documents. Each assistance type has its own set of requirements. Staff will verify completeness later.
+            Review the documents submitted by the applicant. Tick the box beside each one once it is complete and valid.
           </p>
-          <div id="reqList"></div>
+          <div id="reqList" class="docChecklist"></div>
+          <div class="docConfirm">
+            <input type="checkbox" id="docFinalCheck" />
+            <label for="docFinalCheck">I confirm that I have reviewed all documents and they are complete and valid.</label>
+          </div>
           <div class="formGroup" style="margin-top:1.25rem;">
-            <label>Notes / Additional Remarks</label>
-            <textarea id="remarks" placeholder="Any important notes for staff..."></textarea>
+            <label>Notes / Remarks</label>
+            <textarea id="remarks" placeholder="Note any missing or unclear documents..."></textarea>
           </div>
         </div>
 
-        <!-- ========== STEP 6: REVIEW ========== -->
-        <div class="stepPanel" id="step6" style="display:none;">
+        <!-- ========== STEP 5: REVIEW ========== -->
+        <div class="stepPanel" id="step5" style="display:none;">
           <div id="reviewContent">
             <p style="margin-bottom:1rem;font-size:0.9rem;color:var(--muted);">Please review all information before submitting. Staff will create the official application record.</p>
             <div class="summaryGrid" id="summaryGrid"></div>
@@ -920,9 +959,8 @@
   <script>
     // ========== STATE ==========
     let currentStep = 1;
-    const totalSteps = 6;
+    const totalSteps = 5;
     let formData = {
-      queueNumber: '',
       assistanceType: '',
       lastName: '', firstName: '', middleName: '',
       birthDate: '', birthPlace: '', age: '',
@@ -938,13 +976,6 @@
       controlNumber: ''
     };
 
-    // ========== QUEUE COUNTER (localStorage) ==========
-    function getNextQueue() {
-      const key = 'cswdo_walkin_queue_' + new Date().toISOString().slice(0,10);
-      let n = parseInt(localStorage.getItem(key) || '0', 10) + 1;
-      localStorage.setItem(key, n);
-      return 'WI-' + String(n).padStart(3, '0');
-    }
     function getNextControl() {
       const year = new Date().getFullYear();
       const key = 'cswdo_walkin_ctrl_' + year;
@@ -973,12 +1004,11 @@
 
     // ========== STEP TITLES ==========
     const stepMeta = {
-      1: { title: 'Step 1 · Get Queue Number', desc: 'Your queue number is used only while waiting to be called by staff. Once called, fill out the form.' },
-      2: { title: 'Step 2 · Select Assistance Type', desc: 'Choose the primary assistance the client is requesting.' },
-      3: { title: 'Step 3 · Identifying Information', desc: 'Fill out the personal details based on the official Intake Sheet.' },
-      4: { title: 'Step 4 · Family Composition', desc: 'Add household members (optional).' },
-      5: { title: 'Step 5 · Upload Requirements', desc: 'Attach supporting documents. Staff will verify completeness later.' },
-      6: { title: 'Step 6 · Review & Submit', desc: 'Confirm all details. Submitting creates the official application and Control Number.' }
+      1: { title: 'Step 1 · Select Assistance Type', desc: 'Choose the primary assistance the client is requesting.' },
+      2: { title: 'Step 2 · Identifying Information', desc: 'Fill out the personal details based on the official Intake Sheet.' },
+      3: { title: 'Step 3 · Family Composition', desc: 'Add household members (optional).' },
+      4: { title: 'Step 4 · Verify Documents', desc: 'Check each document to confirm it has been reviewed and verified.' },
+      5: { title: 'Step 5 · Review & Submit', desc: 'Confirm all details. Submitting creates the official application and Control Number.' }
     };
 
     function showStep(n) {
@@ -988,19 +1018,19 @@
       document.getElementById('stepDesc').textContent = stepMeta[n].desc;
       document.getElementById('btnPrev').style.visibility = n === 1 ? 'hidden' : 'visible';
       const nextBtn = document.getElementById('btnNext');
-      if (n === 6) {
+      if (n === totalSteps) {
         nextBtn.textContent = 'Submit Application';
         nextBtn.className = 'btn btnSuccess';
       } else {
         nextBtn.textContent = 'Next →';
         nextBtn.className = 'btn btnPrimary';
       }
-      // hide buttons on success
       if (document.getElementById('successBox').style.display === 'block') {
         document.getElementById('btnRow').style.display = 'none';
       } else {
         document.getElementById('btnRow').style.display = 'flex';
       }
+      if (n === 4) syncStep5RequirementsState();
       updateProgress();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -1008,18 +1038,12 @@
     // ========== VALIDATION ==========
     function validateStep(n) {
       if (n === 1) {
-        if (!formData.queueNumber) {
-          showToast('Please generate a Queue Number first.', 'danger');
-          return false;
-        }
-      }
-      if (n === 2) {
         if (!formData.assistanceType) {
           showToast('Please select an assistance type.', 'danger');
           return false;
         }
       }
-      if (n === 3) {
+      if (n === 2) {
         const required = ['lastName', 'firstName', 'birthDate', 'birthPlace', 'sex', 'civilStatus', 'contactNumber', 'addressStreet', 'barangay', 'housing'];
         for (const id of required) {
           const el = document.getElementById(id);
@@ -1030,13 +1054,13 @@
           }
         }
       }
-      if (n === 3 && document.getElementById('onBehalf').checked) {
+      if (n === 2 && document.getElementById('onBehalf').checked) {
         for (const id of ['beneficiaryName', 'beneficiaryRelationship']) {
           const el = document.getElementById(id);
           if (!el.value.trim()) { el.focus(); showToast('Please enter the beneficiary name and relationship.', 'danger'); return false; }
         }
       }
-      if (n === 4) {
+      if (n === 3) {
         for (const tr of document.querySelectorAll('#familyBody tr')) {
           const i = tr.querySelectorAll('input, select');
           const any = Array.from(i).some(x => x.value.trim());
@@ -1046,14 +1070,27 @@
           }
         }
       }
+      if (n === 4) {
+        const requiredDocs = Array.isArray(formData.requirements) ? formData.requirements : [];
+        const allVerified = requiredDocs.length > 0 && requiredDocs.every(doc => doc.checked);
+        const finalCheck = document.getElementById('docFinalCheck');
+        if (!allVerified) {
+          showToast('Please complete all required document checks before continuing.', 'danger');
+          return false;
+        }
+        if (!finalCheck || !finalCheck.checked) {
+          showToast('Please confirm that you reviewed the documents.', 'danger');
+          return false;
+        }
+      }
       return true;
     }
 
     function collectStep(n) {
-      if (n === 2) {
+      if (n === 1) {
         // already set via click
       }
-      if (n === 3) {
+      if (n === 2) {
         formData.lastName = document.getElementById('lastName').value.trim();
         formData.firstName = document.getElementById('firstName').value.trim();
         formData.middleName = document.getElementById('middleName').value.trim();
@@ -1084,7 +1121,7 @@
         formData.requestingAgency = document.getElementById('requestingAgency').value.trim();
         formData.sectoral = document.querySelector('input[name="category"]:checked').value;
       }
-      if (n === 4) {
+      if (n === 3) {
         formData.family = [];
         document.querySelectorAll('#familyBody tr').forEach(tr => {
           const inputs = tr.querySelectorAll('input, select');
@@ -1100,17 +1137,18 @@
           });
         });
       }
-      if (n === 5) {
+      if (n === 4) {
         formData.remarks = document.getElementById('remarks').value.trim();
+        formData.documentReviewConfirmed = !!document.getElementById('docFinalCheck')?.checked;
       }
     }
 
     // ========== BUILD SUMMARY ==========
     function buildSummary() {
       const grid = document.getElementById('summaryGrid');
-      const missing = currentReqs().filter(r => r[1] && !formData.files.find(f => f.requirement === r[0])).map(r => r[0]);
+      const validatedDocs = Array.isArray(formData.requirements) ? formData.requirements.filter(doc => doc.checked).length : 0;
+      const totalDocs = Array.isArray(formData.requirements) ? formData.requirements.length : 0;
       const rows = [
-        ['Queue Number', formData.queueNumber],
         ['Assistance Type', formData.assistanceType],
         ['Full Name', [formData.lastName, formData.firstName, formData.middleName].filter(Boolean).join(', ')],
         ['Birth Date / Age', formData.birthDate + (formData.age ? ` (${formData.age} y/o)` : '')],
@@ -1123,7 +1161,7 @@
         ['Occupation / Income', (formData.occupation || '—') + (formData.monthlyIncome ? ` · ₱${Number(formData.monthlyIncome).toLocaleString()}` : '')],
         ['Category', formData.sectoral],
         ['Family Members', formData.family.length ? formData.family.length + ' listed' : 'None'],
-        ['Documents', formData.files.length + ' uploaded' + (missing.length ? ' · missing: ' + missing.join(', ') : '')],
+        ['Document Validated', totalDocs ? `${validatedDocs} / ${totalDocs}` : '0 / 0'],
         ['Remarks', formData.remarks || '—']
       ];
       grid.innerHTML = rows.map(([k, v]) => `
@@ -1170,33 +1208,104 @@
       tbody.appendChild(tr);
     }
 
-    // ========== REQUIREMENTS (mirrors assistance_requirements) ==========
-    // [document_name, is_mandatory]. Only Medical is listed in the project notes; the rest fall back to one optional slot.
+    // ========== REQUIREMENTS (verification checklist) ==========
     const REQUIREMENTS = {
-      'Medical Assistance': [['Valid ID', 1], ['Medical Certificate', 1], ['Hospital Bill', 1]]
+      'Medical Assistance': [
+        { label: 'Valid government ID', note: 'Front and back, clear and readable', checked: false },
+        { label: 'Proof of residency', note: 'Barangay certificate or utility bill', checked: false },
+        { label: 'Accomplished application form', note: 'Signed by the applicant', checked: false },
+        { label: 'Certificate of indigency', note: 'Issued within the last 3 months', checked: false },
+        { label: 'Supporting document for assistance type', note: 'Medical abstract, quotation, or other required paper', checked: false }
+      ],
+      'Financial Assistance': [
+        { label: 'Valid government ID', note: 'Front and back, clear and readable', checked: false },
+        { label: 'Proof of residency', note: 'Barangay certificate or utility bill', checked: false },
+        { label: 'Accomplished application form', note: 'Signed by the applicant', checked: false },
+        { label: 'Certificate of indigency', note: 'Issued within the last 3 months', checked: false },
+        { label: 'Supporting document for assistance type', note: 'Income proof, statement of account, or other required paper', checked: false }
+      ],
+      'Burial Assistance': [
+        { label: 'Valid government ID', note: 'Front and back, clear and readable', checked: false },
+        { label: 'Proof of residency', note: 'Barangay certificate or utility bill', checked: false },
+        { label: 'Accomplished application form', note: 'Signed by the applicant', checked: false },
+        { label: 'Death certificate', note: 'Certified copy of the deceased person’s death certificate', checked: false },
+        { label: 'Supporting document for assistance type', note: 'Funeral bill, receipt, or other required paper', checked: false }
+      ],
+      'Balik Probinsya Assistance': [
+        { label: 'Valid government ID', note: 'Front and back, clear and readable', checked: false },
+        { label: 'Proof of residency', note: 'Barangay certificate or utility bill', checked: false },
+        { label: 'Accomplished application form', note: 'Signed by the applicant', checked: false },
+        { label: 'Travel or relocation details', note: 'Destination, route, or proof of return trip', checked: false },
+        { label: 'Supporting document for assistance type', note: 'Ticket, itinerary, or other required proof', checked: false }
+      ]
     };
-    const DEFAULT_REQ = [['Supporting documents', 0]];
-    function currentReqs() { return REQUIREMENTS[formData.assistanceType] || DEFAULT_REQ; }
+    const DEFAULT_REQ = [
+      { label: 'Valid government ID', note: 'Front and back, clear and readable', checked: false },
+      { label: 'Proof of residency', note: 'Barangay certificate or utility bill', checked: false },
+      { label: 'Accomplished application form', note: 'Signed by the applicant', checked: false },
+      { label: 'Supporting document for assistance type', note: 'Any required supporting paper', checked: false }
+    ];
+
+    function currentReqs() {
+      return REQUIREMENTS[formData.assistanceType] || DEFAULT_REQ;
+    }
+
+    function syncStep5RequirementsState() {
+      const nextBtn = document.getElementById('btnNext');
+      const finalCheck = document.getElementById('docFinalCheck');
+      const requiredDocs = Array.isArray(formData.requirements) ? formData.requirements : [];
+      const allVerified = requiredDocs.length > 0 && requiredDocs.every(doc => doc.checked);
+      const finalConfirmed = !!(finalCheck && finalCheck.checked);
+      const ready = allVerified && finalConfirmed;
+
+      if (nextBtn) {
+        nextBtn.disabled = !ready;
+        nextBtn.style.opacity = ready ? '1' : '0.55';
+        nextBtn.style.cursor = ready ? 'pointer' : 'not-allowed';
+      }
+    }
+
     function renderRequirements() {
-      const list = currentReqs();
-      formData.files = formData.files.filter(f => list.some(r => r[0] === f.requirement));
+      const list = currentReqs().map(doc => ({ ...doc, checked: !!(formData.requirements || []).find(item => item.label === doc.label && item.checked) }));
+      formData.requirements = list;
+
       const box = document.getElementById('reqList');
-      box.innerHTML = list.map(([name, req]) => {
-        const f = formData.files.find(x => x.requirement === name);
-        return `<div class="fileItem" style="padding:0.75rem;">
-          <span><strong>${name}</strong> <span class="helper">${req ? 'Required' : 'Optional'}</span><br>
-          <span class="helper">${f ? '📄 ' + f.name + ' (' + (f.size / 1024).toFixed(1) + ' KB)' : 'No file chosen · PDF, JPG, PNG (max 5MB)'}</span></span>
-          <label class="btn btnSecondary" style="cursor:pointer;">Choose file<input type="file" data-req="${name}" accept=".pdf,.jpg,.jpeg,.png" hidden /></label>
-        </div>`;
-      }).join('');
-      box.querySelectorAll('input[type=file]').forEach(inp => inp.addEventListener('change', () => {
-        const f = inp.files[0];
-        if (!f) return;
-        if (f.size > 5 * 1024 * 1024) { showToast(f.name + ' exceeds 5MB limit.', 'danger'); return; }
-        formData.files = formData.files.filter(x => x.requirement !== inp.dataset.req);
-        formData.files.push({ requirement: inp.dataset.req, name: f.name, size: f.size });
-        renderRequirements();
-      }));
+      box.innerHTML = list.map((doc, index) => `
+        <label class="docItem">
+          <span class="docCheckWrap">
+            <input type="checkbox" class="doc-check" data-index="${index}" ${doc.checked ? 'checked' : ''} />
+            <span class="docText">
+              <span>${doc.label}</span>
+              <span class="docSub">${doc.note}</span>
+            </span>
+          </span>
+          <span class="docStatus ${doc.checked ? 'verified' : 'pending'}">${doc.checked ? 'Verified' : 'Pending'}</span>
+        </label>
+      `).join('');
+
+      const finalCheck = document.getElementById('docFinalCheck');
+      if (finalCheck) {
+        finalCheck.checked = false;
+      }
+
+      box.querySelectorAll('.doc-check').forEach(cb => {
+        cb.addEventListener('change', function () {
+          const idx = Number(this.dataset.index);
+          formData.requirements[idx].checked = this.checked;
+          const statusEl = this.closest('.docItem').querySelector('.docStatus');
+          statusEl.textContent = this.checked ? 'Verified' : 'Pending';
+          statusEl.classList.toggle('verified', this.checked);
+          statusEl.classList.toggle('pending', !this.checked);
+          syncStep5RequirementsState();
+        });
+      });
+
+      const finalConfirm = document.getElementById('docFinalCheck');
+      if (finalConfirm) {
+        finalConfirm.addEventListener('change', syncStep5RequirementsState);
+      }
+
+      syncStep5RequirementsState();
     }
 
     // ========== SQL (matches cswdo_db) ==========
@@ -1205,7 +1314,7 @@
     function buildSql() {
       const d = formData, c = d.controlNumber, now = new Date();
       const ymd = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
-      const L = ['-- Walk-in application ' + c + ' (queue ' + d.queueNumber + ')',
+      const L = ['-- Walk-in application ' + c,
         'SET @staff_user_id = 1; -- replace with the logged-in staff user_id',
         'START TRANSACTION;',
         // walk-ins have no account, but client_profiles.user_id is NOT NULL, so a placeholder user is created
@@ -1216,9 +1325,8 @@
         `INSERT INTO applications (control_number, client_id, assistance_type_id, requested_output_type, is_client_the_beneficiary, beneficiary_name, beneficiary_relationship, application_type, current_status, requesting_agency) VALUES (${q(c)}, @cid, (SELECT assistance_type_id FROM assistance_types WHERE service_name = ${q(d.assistanceType)} LIMIT 1), ${q(d.outputType)}, ${d.onBehalf ? 0 : 1}, ${q(d.beneficiaryName)}, ${q(d.beneficiaryRelationship)}, 'WALK_IN', 'FOR_REVIEW', ${q(d.requestingAgency)});`,
         'SET @aid = LAST_INSERT_ID();'];
       d.family.filter(f => f.name).forEach(f => L.push(`INSERT INTO family_members (client_id, full_name, age, sex, civil_status, relationship, educational_attainment, occupation, monthly_income) VALUES (@cid, ${q(f.name)}, ${num(f.age)}, ${q(f.sex)}, ${q(f.civil)}, ${q(f.relation)}, ${q(f.education)}, ${q(f.work)}, ${num(f.income)});`));
-      L.push(`INSERT INTO queues (application_id, queue_number, queue_type, queue_date, time_window, queue_status) VALUES (@aid, ${q(d.queueNumber)}, 'WALK_IN_ENTRY', '${ymd}', '${now.getHours() < 12 ? 'AM' : 'PM'}', 'WAITING');`);
       d.files.forEach(f => L.push(`INSERT INTO application_documents (application_id, requirement_id, file_path) VALUES (@aid, (SELECT r.requirement_id FROM assistance_requirements r JOIN assistance_types t ON t.assistance_type_id = r.assistance_type_id WHERE t.service_name = ${q(d.assistanceType)} AND r.document_name = ${q(f.requirement)} LIMIT 1), ${q('uploads/' + c + '/' + f.name)});`));
-      L.push(`INSERT INTO application_status_history (application_id, status_from, status_to, changed_by_user_id, remarks) VALUES (@aid, 'NEW', 'FOR_REVIEW', @staff_user_id, ${q(d.remarks || ('Walk-in application encoded, queue ' + d.queueNumber))});`, 'COMMIT;');
+      L.push(`INSERT INTO application_status_history (application_id, status_from, status_to, changed_by_user_id, remarks) VALUES (@aid, 'NEW', 'FOR_REVIEW', @staff_user_id, ${q(d.remarks || ('Walk-in application encoded'))});`, 'COMMIT;');
       return L.join('\n') + '\n';
     }
     // PWD ID + beneficiary toggles
@@ -1284,19 +1392,12 @@
       });
     });
 
-    // ========== GENERATE QUEUE ==========
-    document.getElementById('btnGenerateQueue').addEventListener('click', () => {
-      formData.queueNumber = getNextQueue();
-      document.getElementById('queueDisplay').textContent = formData.queueNumber;
-      showToast('Queue number ' + formData.queueNumber + ' generated.', 'success');
-    });
-
     // ========== NAV ==========
     document.getElementById('btnNext').addEventListener('click', () => {
       if (!validateStep(currentStep)) return;
       collectStep(currentStep);
 
-      if (currentStep === 6) {
+      if (currentStep === totalSteps) {
         // SUBMIT
         formData.controlNumber = getNextControl();
         formData.sql = buildSql();
@@ -1307,14 +1408,13 @@
         document.getElementById('stepTitle').textContent = 'Application Created';
         document.getElementById('stepDesc').textContent = 'Control Number has been generated. Status is now FOR REVIEW.';
         showToast('Application submitted successfully!', 'success');
-        // Optional: log to console for later DB
         console.log('WALK-IN APPLICATION DATA (ready for database):', formData);
         return;
       }
 
       currentStep++;
-      if (currentStep === 5) renderRequirements();
-      if (currentStep === 6) buildSummary();
+      if (currentStep === 4) renderRequirements();
+      if (currentStep === totalSteps) buildSummary();
       showStep(currentStep);
     });
 

@@ -1294,6 +1294,10 @@
         syncToggles();
       }
       function startMode(m) {
+        if (m === "walkin") {
+          window.location.href = "walkin-applicant.html";
+          return;
+        }
         resetForm();
         mode = m;
         if (m === "online" && user) return loginSuccess(user); // already signed in: restore draft, skip the account step
