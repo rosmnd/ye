@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CSWDO Staff — Interview &amp; Case Assessment</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ==========================================================================
+   CSWDO DESIGN SYSTEM TOKENS & UI GUIDE SPECIFICATIONS
+   ========================================================================== */
+/* Keeps logo and title text locked side-by-side on all screens */
+.headerBrandGroup {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: nowrap;
+  min-width: 0;
+}
+
+:root {
+  --navy:#0d2c54; 
+  --blue:#1976d2; 
+  --blueHover:#1565c0; 
+  --bluePale:#e3f0fd; 
+  --blueFaint:#f2f8ff; 
+  --white:#ffffff;
+  
+  --gray900:#1b2430; 
+  --gray700:#4a5568; 
+  --gray500:#8a94a6; 
+  --gray300:#d7dee6; 
+  --gray200:#e7ecf2; 
+  --gray100:#f5f7fa;
+  
+  --success:#1e7e42; 
+  --successBg:#e6f6ec; 
+  --successBd:#a9dfbf;
+  --warning:#c2740b; 
+  --warningBg:#fdf1e2; 
+  --warningBd:#f3cf9a;
+  --danger:#c0392b; 
+  --dangerBg:#fdecec; 
+  --dangerBd:#f3b6b0;
+  --info:#1565c0; 
+  --infoBg:#e3f0fd; 
+  --infoBd:#a8cdf5;
+  --neutral:#5a6472; 
+  --neutralBg:#eef1f4; 
+  --neutralBd:#d4dae1;
+  
+  --font:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; 
+  --fontMono:'JetBrains Mono',ui-monospace,monospace;
+  
+  --radiusSm:.25rem; 
+  --radiusMd:.5rem; 
+  --radiusLg:.875rem; 
+  --radiusPill:999px;
+  
+  --shadowSm:0 1px 2px rgba(13,44,84,.08); 
+  --shadowMd:0 4px 16px rgba(13,44,84,.12); 
+  --shadowLg:0 12px 32px rgba(13,44,84,.18);
+  --focusRing:0 0 0 3px rgba(25,118,210,.25);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  color: var(--gray900);
+  background: var(--gray100);
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --- App Header & Dynamic Branding --- */
+.appHeader {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 50;
+  background: var(--navy);
+  color: var(--white);
+  box-shadow: var(--shadowSm);
+}
+.headerInner {
+  max-width: 82rem;
+  margin-inline: auto;
+  padding: 0.6rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.headerBranding {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: var(--white);
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radiusMd);
+  flex-shrink: 0;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  min-height: 44px;
+}
+.brandSeal { height: 38px; width: auto; object-fit: contain; }
+.brandDivider { width: 1px; height: 28px; background: var(--gray300); }
+.brandTextLogo { height: 32px; width: auto; object-fit: contain; }
+.brandFallback { font-weight: 800; font-size: 0.9rem; color: var(--navy); letter-spacing: -0.02em; }
+
+.headerTitles { display: flex; flex-direction: column; line-height: 1.2; margin-left: 0.2rem; }
+.headerTitles b { font-size: 0.95rem; letter-spacing: 0.01em; color: var(--white); }
+.headerTitles span { font-size: 0.72rem; color: var(--bluePale); }
+.headerRole {
+  margin-left: auto;
+  font-size: 0.75rem;
+  background: rgba(255,255,255,.12);
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radiusPill);
+  white-space: nowrap;
+  border: 1px solid rgba(255,255,255,0.15);
+}
+
+/* --- Navigation Tab Bar --- */
+.tabBar {
+  max-width: 82rem;
+  margin-inline: auto;
+  display: flex;
+  gap: 0.25rem;
+  padding: 0 1.25rem;
+  border-bottom: 1px solid var(--gray200);
+  background: var(--white);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.tabBar::-webkit-scrollbar { display: none; }
+.tabBtn {
+  border: none;
+  background: none;
+  padding: 0.85rem 1rem;
+  font-family: var(--font);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--gray700);
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: all 0.12s ease;
+}
+.tabBtn:hover { color: var(--blue); }
+.tabBtn.tabActive { color: var(--blue); border-color: var(--blue); }
+
+/* --- Layout Main & Sections --- */
+main {
+  max-width: 82rem;
+  margin-inline: auto;
+  padding: 1.5rem 1.25rem 3rem;
+}
+.viewPanel { display: none; }
+.viewPanel.viewVisible { display: block; }
+
+h1 { font-size: 1.4rem; color: var(--navy); margin: 0.25rem 0 0.2rem; font-weight: 700; }
+.pageSub { color: var(--gray700); font-size: 0.875rem; margin: 0 0 1.25rem; }
+
+/* --- Stat Cards Grid --- */
+.statCards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+.statCard {
+  background: var(--white);
+  border: 1px solid var(--gray200);
+  border-radius: var(--radiusMd);
+  padding: 0.9rem 1rem;
+  box-shadow: var(--shadowSm);
+}
+.statCard b { display: block; font-size: 1.4rem; color: var(--navy); font-weight: 800; }
+.statCard span { font-size: 0.78rem; color: var(--gray700); font-weight: 500; }
+
+/* --- Responsive Table Container --- */
+.tableWrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 1rem;
+  background: var(--white);
+  border: 1px solid var(--gray200);
+  border-radius: var(--radiusMd);
+  box-shadow: var(--shadowSm);
+}
+.queueTable { width: 100%; border-collapse: collapse; min-width: 640px; }
+.queueTable th, .queueTable td { padding: 0.75rem 0.9rem; text-align: left; font-size: 0.85rem; border-bottom: 1px solid var(--gray200); }
+.queueTable th { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--gray700); background: var(--gray100); font-weight: 700; }
+.queueTable tr:last-child td { border-bottom: none; }
+.ctrlNo { font-family: var(--fontMono); font-weight: 600; color: var(--navy); }
+
+/* --- Badges & Status Indicators --- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.28rem 0.65rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  border: 1px solid;
+  border-radius: var(--radiusPill);
+}
+.badge::before { content: ""; width: 0.4rem; height: 0.4rem; background: currentColor; border-radius: 50%; }
+.badgeSuccess { color: var(--success); background: var(--successBg); border-color: var(--successBd); }
+.badgeWarning { color: var(--warning); background: var(--warningBg); border-color: var(--warningBd); }
+.badgeDanger { color: var(--danger); background: var(--dangerBg); border-color: var(--dangerBd); }
+.badgeInfo { color: var(--info); background: var(--infoBg); border-color: var(--infoBd); }
+.badgeNeutral { color: var(--neutral); background: var(--neutralBg); border-color: var(--neutralBd); }
+
+/* --- Buttons --- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  font-family: var(--font);
+  font-size: 0.8rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+  border-radius: var(--radiusMd);
+  cursor: pointer;
+  transition: all 0.12s ease;
+  min-height: 38px;
+  text-decoration: none;
+}
+.btnPrimary { color: var(--white); background: var(--blue); }
+.btnPrimary:hover { background: var(--blueHover); }
+.btnConfirm { color: var(--white); background: var(--success); }
+.btnConfirm:hover { background: #166534; }
+.btnDanger { color: var(--white); background: var(--danger); }
+.btnDanger:hover { background: #a5271c; }
+.btnSecondary { color: var(--navy); background: var(--white); border-color: var(--gray300); }
+.btnSecondary:hover { background: var(--gray100); }
+.btnSm { padding: 0.3rem 0.65rem; font-size: 0.72rem; min-height: 32px; }
+
+.backLink {
+  background: none;
+  border: none;
+  color: var(--blue);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+.backLink:hover { text-decoration: underline; }
+
+/* --- Assessment Form & Sidebar Grid --- */
+.assessmentGrid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 1.25rem; }
+
+.card {
+  background: var(--white);
+  border: 1px solid var(--gray200);
+  border-radius: var(--radiusMd);
+  padding: 1.1rem 1.25rem;
+  margin-bottom: 1rem;
+  box-shadow: var(--shadowSm);
+}
+.card h3 {
+  margin: 0 0 0.8rem;
+  font-size: 0.95rem;
+  color: var(--navy);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  font-weight: 700;
+}
+
+.metaRow { display: flex; justify-content: space-between; font-size: 0.83rem; padding: 0.4rem 0; border-bottom: 1px solid var(--gray100); }
+.metaRow:last-child { border-bottom: none; }
+.metaRow span:first-child { color: var(--gray700); }
+.metaRow span:last-child { font-weight: 600; }
+
+.timerBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--blueFaint);
+  border: 1px solid var(--infoBd);
+  padding: 0.75rem 1rem;
+  border-radius: var(--radiusMd);
+  margin-bottom: 1.25rem;
+}
+.timerDisplay { font-family: var(--fontMono); font-size: 1.25rem; font-weight: 700; color: var(--navy); }
+
+.formGroup { margin-bottom: 1.1rem; }
+.formGroup label { display: block; font-size: 0.82rem; font-weight: 600; color: var(--navy); margin-bottom: 0.35rem; }
+.formControl {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  font-family: var(--font);
+  font-size: 0.82rem;
+  border: 1px solid var(--gray300);
+  border-radius: var(--radiusSm);
+  background: var(--white);
+  color: var(--gray900);
+  transition: border-color 0.12s ease, box-shadow 0.12s ease;
+}
+.formControl:focus { outline: none; border-color: var(--blue); box-shadow: var(--focusRing); }
+textarea.formControl { min-height: 4.8rem; resize: vertical; line-height: 1.45; }
+
+/* --- Phrase Chips & Template Selector --- */
+.chipContainer { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.4rem; margin-bottom: 0.6rem; }
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--navy);
+  background: var(--gray100);
+  border: 1px solid var(--gray300);
+  border-radius: var(--radiusPill);
+  cursor: pointer;
+  transition: all 0.1s ease;
+}
+.chip:hover { background: var(--bluePale); border-color: var(--blue); color: var(--blue); }
+.chipAdd { font-weight: 700; color: var(--blue); }
+
+.templateBar {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: var(--gray100);
+  padding: 0.6rem 0.8rem;
+  border-radius: var(--radiusSm);
+  margin-bottom: 1rem;
+  border: 1px solid var(--gray200);
+  flex-wrap: wrap;
+}
+.templateBar span { font-size: 0.78rem; font-weight: 600; color: var(--gray700); }
+
+.miniTable { width: 100%; border-collapse: collapse; margin-top: 0.4rem; font-size: 0.78rem; }
+.miniTable th, .miniTable td { padding: 0.45rem 0.5rem; border-bottom: 1px solid var(--gray200); text-align: left; }
+.miniTable th { color: var(--gray700); background: var(--gray100); font-size: 0.68rem; text-transform: uppercase; font-weight: 700; }
+
+.decisionBar { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 1rem; }
+
+/* --- Toast Notifications --- */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
+  transform: translate(-50%, 1.5rem);
+  z-index: 99;
+  padding: 0.7rem 1.2rem;
+  background: var(--navy);
+  color: var(--white);
+  font-size: 0.82rem;
+  border-radius: var(--radiusMd);
+  box-shadow: var(--shadowLg);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.2s ease;
+  max-width: 90vw;
+  text-align: center;
+}
+.toast.toastVisible { opacity: 1; transform: translate(-50%, 0); }
+
+/* --- Modal Overlay & Report Preview --- */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(13, 44, 84, 0.45);
+  backdrop-filter: blur(2px);
+  z-index: 100;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+.modalOverlay.modalVisible { display: flex; }
+.modalContent {
+  background: var(--white);
+  border-radius: var(--radiusLg);
+  width: 100%;
+  max-width: 44rem;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 1.5rem;
+  box-shadow: var(--shadowLg);
+}
+.reportHeader { text-align: center; border-bottom: 2px solid var(--navy); padding-bottom: 0.8rem; margin-bottom: 1rem; }
+.reportHeader h2 { margin: 0; font-size: 1.1rem; color: var(--navy); text-transform: uppercase; font-weight: 800; }
+.reportHeader p { margin: 2px 0 0; font-size: 0.78rem; color: var(--gray700); }
+.reportSection { margin-bottom: 0.9rem; }
+.reportSection h4 { margin: 0 0 0.3rem; font-size: 0.82rem; color: var(--navy); text-transform: uppercase; border-bottom: 1px solid var(--gray200); padding-bottom: 2px; font-weight: 700; }
+.reportSection p { margin: 0; font-size: 0.8rem; color: var(--gray900); white-space: pre-line; line-height: 1.45; }
+
+/* ==========================================================================
+   📱 RESPONSIVE MEDIA QUERIES
+   ========================================================================== */
+@media (max-width: 960px) {
+  .assessmentGrid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 768px) {
+  .headerInner { flex-wrap: wrap; padding: 0.5rem 0.75rem; gap: 0.5rem; }
+  .headerBranding { padding: 0.25rem 0.6rem; }
+  .brandSeal { height: 28px; }
+  .brandDivider { height: 20px; }
+  .brandTextLogo { height: 24px; }
+  .headerTitles b { font-size: 0.85rem; }
+  .headerTitles span { font-size: 0.68rem; }
+  .headerRole {
+    width: 100%;
+    text-align: center;
+    margin-left: 0;
+    font-size: 0.7rem;
+    padding: 0.25rem 0.5rem;
+  }
+
+  main { padding: 1rem 0.75rem 2rem; }
+
+  /* Set inputs to 16px to disable iOS forced viewport zoom */
+  .formControl, select.formControl, textarea.formControl {
+    font-size: 16px !important;
+  }
+
+  .statCards { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
+
+  .timerBar { flex-direction: column; align-items: flex-start; gap: 0.6rem; }
+  .timerBar > div:last-child { width: 100%; display: flex; justify-content: space-between; align-items: center; }
+
+  .templateBar select { width: 100% !important; }
+
+  .formGroup[style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
+
+  .decisionBar { flex-direction: column; }
+  .decisionBar .btn { width: 100%; }
+
+  .modalContent { padding: 1rem; max-height: 94vh; }
+}
+
+@media (max-width: 480px) {
+  .statCards { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- Header with Dynamic Branding -->
+<header class="appHeader">
+  <div class="headerInner">
+    
+    <!-- Flex group prevents logo and title from breaking apart on mobile -->
+    <div class="headerBrandGroup">
+      <div class="headerBranding" id="headerBranding">
+        <img src="data:image/png;base64,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" alt="City of Pasig seal">
+      </div>
+
+      <div class="headerTitles">
+        <b>CSWDO Staff Portal</b>
+        <span>Interview &amp; Case Assessment Subgroup</span>
+      </div>
+    </div>
+
+    <span class="headerRole">Registered Social Worker · Assessment</span>
+  </div>
+</header>
+
+<!-- Navigation Tabs -->
+<nav class="tabBar">
+  <button class="tabBtn tabActive" data-view="queueView" onclick="showView('queueView',this)">Interview Queue</button>
+  <button class="tabBtn" data-view="recordsView" onclick="showView('recordsView',this)">Completed Reports &amp; Records</button>
+</nav>
+
+<main>
+
+  <!-- INTERVIEW QUEUE VIEW -->
+  <section class="viewPanel viewVisible" id="queueView">
+    <h1>Applicant Assessment Queue</h1>
+    <p class="pageSub">Verified applications ready for staff interview, socio-economic evaluation, and Social Case Study Report preparation.</p>
+
+    <div class="statCards">
+      <div class="statCard"><b id="statWaiting">–</b><span>Ready for Interview</span></div>
+      <div class="statCard"><b id="statInProgress">–</b><span>Interview in Progress</span></div>
+      <div class="statCard"><b id="statCompletedToday">–</b><span>Reports Completed Today</span></div>
+      <div class="statCard"><b id="statSocialWorkers">3</b><span>Assigned Workers</span></div>
+    </div>
+
+    <div class="tableWrapper">
+      <table class="queueTable">
+        <thead>
+          <tr>
+            <th>Control No.</th>
+            <th>Applicant Name</th>
+            <th>Assistance Requested</th>
+            <th>Sectoral Category</th>
+            <th>Queue Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="queueBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- COMPLETED REPORTS VIEW -->
+  <section class="viewPanel" id="recordsView">
+    <h1>Completed Staff Reports &amp; Records</h1>
+    <p class="pageSub">Social Case Study Reports completed and forwarded to Admin for final review/approval.</p>
+    <div class="tableWrapper">
+      <table class="queueTable">
+        <thead>
+          <tr>
+            <th>Control No.</th>
+            <th>Applicant Name</th>
+            <th>Assistance Type</th>
+            <th>Assigned Social Worker</th>
+            <th>Interview Duration</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="recordsBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ACTIVE INTERVIEW & ASSESSMENT CONDUCT VIEW -->
+  <section class="viewPanel" id="assessmentView">
+    <button class="backLink" onclick="backToQueue()">&larr; Back to queue</button>
+    
+    <div class="timerBar">
+      <div>
+        <span style="font-size:.78rem;color:var(--gray700);display:block">Active Interview Session</span>
+        <span id="interviewClientTitle" style="font-weight:700;color:var(--navy);font-size:.95rem">Client Name</span>
+      </div>
+      <div>
+        <div class="timerDisplay" id="sessionTimer">00:00</div>
+        <button class="btn btnSm btnDanger" id="btnEndTimer" onclick="toggleTimer()">Pause Interview</button>
+      </div>
+    </div>
+
+    <div class="assessmentGrid">
+      
+      <!-- LEFT: Case Study Report Form -->
+      <div>
+        <div class="card">
+          <h3>
+            Social Case Study Report Editor
+            <span style="font-size:.72rem;font-weight:normal;color:var(--gray700)">Form Ref: SCSR-2026</span>
+          </h3>
+
+          <!-- Template Pre-fill Selector -->
+          <div class="templateBar">
+            <span>Apply Template:</span>
+            <select class="formControl" style="width:auto;padding:.35rem .5rem" id="templateSelect" onchange="applyInterviewTemplate(this.value)">
+              <option value="">-- Select Assistance Template --</option>
+              <option value="Medical">Medical Financial Assistance</option>
+              <option value="Financial">General Indigent Assistance</option>
+              <option value="Burial">Burial &amp; Funeral Support</option>
+              <option value="Transportation">Emergency Transportation</option>
+            </select>
+          </div>
+
+          <!-- Section 1: Problem Presented -->
+          <div class="formGroup">
+            <label for="problemPresented">1. Problem Presented (Dating Suliranin)</label>
+            <textarea class="formControl" id="problemPresented" placeholder="Detail the immediate assistance needed by the client/beneficiary..."></textarea>
+            <div class="chipContainer" id="chipsProblem"></div>
+          </div>
+
+          <!-- Section 2: Brief Findings -->
+          <div class="formGroup">
+            <label for="briefFindings">2. Brief Findings (Maikling Natuklasan)</label>
+            <textarea class="formControl" id="briefFindings" placeholder="Document background details, living situation, household history..."></textarea>
+            <div class="chipContainer" id="chipsFindings"></div>
+          </div>
+
+          <!-- Section 3: Socio-Economic Evaluation -->
+          <div class="formGroup">
+            <label for="socioEconomic">3. Socio-Economic Evaluation</label>
+            <textarea class="formControl" id="socioEconomic" placeholder="Assess financial stability, income vs expenses ratio, informal support systems..."></textarea>
+            <div class="chipContainer" id="chipsSocio"></div>
+          </div>
+
+          <!-- Section 4: Recommendation -->
+          <div class="formGroup">
+            <label for="recommendation">4. Social Worker Evaluation &amp; Recommendation</label>
+            <textarea class="formControl" id="recommendation" placeholder="State recommended output (e.g. Social Case Study Report, Direct Financial Grant)..."></textarea>
+            <div class="chipContainer" id="chipsRecommendation"></div>
+          </div>
+
+          <div class="formGroup" style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem">
+            <div>
+              <label for="outputType">Requested Output Type</label>
+              <select class="formControl" id="outputType">
+                <option value="Social Case Study Report">Social Case Study Report</option>
+                <option value="Direct Financial Assistance">Direct Financial Assistance</option>
+                <option value="Certificate of Indigency">Certificate of Indigency</option>
+              </select>
+            </div>
+            <div>
+              <label for="recAmount">Recommended Amount (₱)</label>
+              <input type="number" class="formControl" id="recAmount" value="5000" placeholder="0.00">
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- RIGHT: Profile & Socio-Economic Summary -->
+      <div>
+        <div class="card">
+          <h3>Applicant Profile Summary</h3>
+          <div id="clientMeta"></div>
+        </div>
+
+        <div class="card">
+          <h3>Household Family Composition</h3>
+          <div class="tableWrapper" style="border:none;margin-bottom:0">
+            <table class="miniTable">
+              <thead>
+                <tr><th>Name</th><th>Rel</th><th>Age</th><th>Income</th></tr>
+              </thead>
+              <tbody id="familyTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Monthly Financial Summary</h3>
+          <div class="metaRow"><span>Gross Income</span><span id="metaIncome">₱0.00</span></div>
+          <div class="metaRow"><span>Monthly Expenses</span><span id="metaExpenses" style="color:var(--danger)">₱0.00</span></div>
+          <div class="metaRow"><span>Estimated Deficit</span><span id="metaDeficit" style="color:var(--danger);font-weight:700">₱0.00</span></div>
+        </div>
+
+        <div class="card">
+          <h3>Verification Status</h3>
+          <div class="metaRow"><span>Requirements Status</span><span><span class="badge badgeSuccess">ALL VALIDATED</span></span></div>
+          <div class="metaRow"><span>Document Verifier</span><span>Staff #1042</span></div>
+        </div>
+
+        <div class="card">
+          <h3>Actions</h3>
+          <p style="font-size:.78rem;color:var(--gray700);margin:0 0 .8rem">Finalizing will complete the interview, calculate duration, and generate the Staff Report for Admin review.</p>
+          <div class="decisionBar">
+            <button class="btn btnConfirm" onclick="previewReportModal()">Preview SCSR Report</button>
+            <button class="btn btnPrimary" onclick="submitStaffReport()">Submit to Admin</button>
+            <button class="btn btnDanger" onclick="returnForCorrection()">Return to Verification</button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<!-- REPORT PREVIEW MODAL -->
+<div class="modalOverlay" id="reportModal">
+  <div class="modalContent">
+    <div class="reportHeader">
+      <h2>City Social Welfare and Development Office</h2>
+      <p>Pasig City · Social Case Study Report</p>
+    </div>
+    
+    <div class="reportSection">
+      <h4>I. Identifying Information</h4>
+      <div id="modalClientInfo" style="font-size:.8rem;display:grid;grid-template-columns:1fr 1fr;gap:.4rem;margin-bottom:.4rem"></div>
+    </div>
+
+    <div class="reportSection">
+      <h4>II. Problem Presented</h4>
+      <p id="modalProblem"></p>
+    </div>
+
+    <div class="reportSection">
+      <h4>III. Brief Findings</h4>
+      <p id="modalFindings"></p>
+    </div>
+
+    <div class="reportSection">
+      <h4>IV. Socio-Economic Evaluation</h4>
+      <p id="modalSocio"></p>
+    </div>
+
+    <div class="reportSection">
+      <h4>V. Evaluation &amp; Recommendation</h4>
+      <p id="modalRec"></p>
+    </div>
+
+    <div style="display:flex;justify-content:flex-end;gap:.6rem;margin-top:1.2rem;border-top:1px solid var(--gray200);padding-top:.8rem;flex-wrap:wrap">
+      <button class="btn btnSecondary" onclick="closeReportModal()">Close</button>
+      <button class="btn btnPrimary" onclick="window.print()">Print Report</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ==========================================================================
+   OPTION 1: BASE64 EMBEDDED LOGO CONFIGURATION (100% STANDALONE FILE)
+   Logos are encoded in base64 data URIs so this HTML file opens cleanly
+   on any device without needing external image files.
+   ========================================================================== */
+const LOGO_CONFIG = {
+  emblemPath: "pasig emblem.png",
+  logoPath: "pasig logo.png",
+  fallbackText: "PASIG CSWDO"
+};
+
+function initBrandingLogos() {
+  const sealImg = document.getElementById('brandSealImg');
+  const logoImg = document.getElementById('brandLogoImg');
+  const divider = document.getElementById('brandDivider');
+  const fallback = document.getElementById('brandFallbackText');
+
+  let activeImages = 0;
+
+  if (LOGO_CONFIG.emblemPath && sealImg) {
+    sealImg.src = LOGO_CONFIG.emblemPath;
+    sealImg.onload = () => {
+      sealImg.style.display = 'block';
+      activeImages++;
+      updateDivider();
+    };
+    sealImg.onerror = () => {
+      sealImg.style.display = 'none';
+      checkFallback();
+    };
+  }
+
+  if (LOGO_CONFIG.logoPath && logoImg) {
+    logoImg.src = LOGO_CONFIG.logoPath;
+    logoImg.onload = () => {
+      logoImg.style.display = 'block';
+      activeImages++;
+      updateDivider();
+    };
+    logoImg.onerror = () => {
+      logoImg.style.display = 'none';
+      checkFallback();
+    };
+  }
+
+  function updateDivider() {
+    if (activeImages > 1 && divider) {
+      divider.style.display = 'block';
+    }
+  }
+
+  function checkFallback() {
+    if ((!sealImg || sealImg.style.display === 'none') && (!logoImg || logoImg.style.display === 'none')) {
+      if (fallback) {
+        fallback.textContent = LOGO_CONFIG.fallbackText || 'Lungsod ng Pasig';
+        fallback.style.display = 'inline-block';
+      }
+    }
+  }
+}
+
+/* Application State & Mock Data */
+let applications = [
+  {
+    control: "ON-2026-00125",
+    name: "Maria Santos",
+    age: 42,
+    sex: "Female",
+    civilStatus: "Married",
+    sectoral: "4Ps",
+    service: "Medical Assistance",
+    status: "FOR_INTERVIEW",
+    income: 4500,
+    expenses: 12500,
+    address: "Bgy. Pinagbuhatan, Pasig City",
+    housing: "Renter",
+    family: [
+      { name: "Juan Santos", rel: "Husband", age: 45, income: 4500 },
+      { name: "Mark Santos", rel: "Son", age: 12, income: 0 }
+    ]
+  },
+  {
+    control: "ON-2026-00126",
+    name: "Jose Reyes",
+    age: 68,
+    sex: "Male",
+    civilStatus: "Widowed",
+    sectoral: "Senior Citizen",
+    service: "Financial Assistance",
+    status: "FOR_INTERVIEW",
+    income: 1500,
+    expenses: 6000,
+    address: "Bgy. Kapasigan, Pasig City",
+    housing: "Owned",
+    family: [
+      { name: "Elena Reyes", rel: "Daughter", age: 30, income: 0 }
+    ]
+  },
+  {
+    control: "WI-2026-00451",
+    name: "Ana Dela Cruz",
+    age: 35,
+    sex: "Female",
+    civilStatus: "Single",
+    sectoral: "Solo Parent",
+    service: "Burial Assistance",
+    status: "FOR_INTERVIEW",
+    income: 8000,
+    expenses: 15000,
+    address: "Bgy. San Joaquin, Pasig City",
+    housing: "Sharer/Relative",
+    family: [
+      { name: "Bea Dela Cruz", rel: "Daughter", age: 8, income: 0 }
+    ]
+  }
+];
+
+let completedRecords = [];
+
+const phraseChips = {
+  chipsProblem: [
+    { label: "+ Hospitalization", text: "Client requests financial support to settle pending hospital bills." },
+    { label: "+ Maintenance Meds", text: "Needs assistance for monthly prescription medicine costs." },
+    { label: "+ Burial Expenses", text: "Seeking financial aid to cover immediate funeral service fees." }
+  ],
+  chipsFindings: [
+    { label: "+ Sole Breadwinner", text: "Client is the sole earning member supporting a family of 4." },
+    { label: "+ Informal Worker", text: "Earnings are irregular due to informal/contractual work status." },
+    { label: "+ Indigent Living", text: "Resides in a congested urban community with basic amenities." }
+  ],
+  chipsSocio: [
+    { label: "+ Deficit Expenses", text: "Monthly expenses significantly exceed total household income." },
+    { label: "+ No Savings", text: "Family has no remaining savings or liquid assets." },
+    { label: "+ High Medical Burden", text: "Continuous medical expenses deplete basic food budget." }
+  ],
+  chipsRecommendation: [
+    { label: "+ Recommend DFA", text: "It is recommended to grant Direct Financial Assistance." },
+    { label: "+ Issue Case Study", text: "Issue a formal Social Case Study Report for external agency endorsement." },
+    { label: "+ Max Grant", text: "Recommended for maximum assistance allocation under CSWDO guidelines." }
+  ]
+};
+
+const interviewTemplates = {
+  Medical: {
+    problem: "Client is seeking financial assistance to cover acute hospital billing and chemotherapy treatment costs.",
+    findings: "The beneficiary is currently admitted at Pasig City General Hospital. Household income is insufficient due to recent job loss.",
+    socio: "Household monthly income of ₱4,500 cannot sustain medical bills exceeding ₱50,000. Deficit is currently ₱8,000/month.",
+    recommendation: "Recommended for Direct Financial Assistance under Medical Support guidelines."
+  },
+  Financial: {
+    problem: "Client requires immediate indigent financial support to buy food supplies and essential utilities.",
+    findings: "Client is an elderly solo living individual with no regular source of income.",
+    socio: "Relies on social pension and community support. High vulnerability level.",
+    recommendation: "Recommended for immediate Indigent Cash Assistance."
+  },
+  Burial: {
+    problem: "Client requests burial assistance for the late family member.",
+    findings: "The deceased passed away due to cardiac arrest. Funeral service contract requires partial payment.",
+    socio: "Family has zero existing cash reserves to cover burial expenses.",
+    recommendation: "Recommended for Burial Guarantee / Financial Grant."
+  },
+  Transportation: {
+    problem: "Client requests fare/transportation support to return to provincial hometown.",
+    findings: "Stranded in Metro Manila due to lack of local employment.",
+    socio: "No existing residence or employment in Pasig City.",
+    recommendation: "Recommended for Transportation Assistance Program."
+  }
+};
+
+let currentControl = null;
+let timerInterval = null;
+let timerSeconds = 0;
+let isTimerRunning = false;
+
+function renderQueue() {
+  const body = document.getElementById('queueBody');
+  body.innerHTML = '';
+  
+  applications.forEach(a => {
+    const tr = document.createElement('tr');
+    const badgeClass = a.status === 'INTERVIEW_IN_PROGRESS' ? 'badgeWarning' : 'badgeInfo';
+    tr.innerHTML = `
+      <td class="ctrlNo">${a.control}</td>
+      <td><b>${a.name}</b></td>
+      <td>${a.service}</td>
+      <td><span class="badge badgeNeutral">${a.sectoral}</span></td>
+      <td><span class="badge ${badgeClass}">${a.status.replace(/_/g,' ')}</span></td>
+      <td><button class="btn btnPrimary btnSm" onclick="startInterview('${a.control}')">${a.status==='INTERVIEW_IN_PROGRESS'?'Resume':'Start Interview'}</button></td>
+    `;
+    body.appendChild(tr);
+  });
+
+  document.getElementById('statWaiting').textContent = applications.filter(a => a.status === 'FOR_INTERVIEW').length;
+  document.getElementById('statInProgress').textContent = applications.filter(a => a.status === 'INTERVIEW_IN_PROGRESS').length;
+  document.getElementById('statCompletedToday').textContent = completedRecords.length;
+
+  renderRecords();
+}
+
+function renderRecords() {
+  const rBody = document.getElementById('recordsBody');
+  rBody.innerHTML = '';
+  completedRecords.forEach(r => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td class="ctrlNo">${r.control}</td>
+      <td>${r.name}</td>
+      <td>${r.service}</td>
+      <td>Social Worker #208</td>
+      <td>${r.duration}</td>
+      <td><button class="btn btnSecondary btnSm" onclick="viewCompletedReport('${r.control}')">View SCSR Report</button></td>
+    `;
+    rBody.appendChild(tr);
+  });
+}
+
+function showView(id, btn) {
+  document.querySelectorAll('.viewPanel').forEach(v => v.classList.remove('viewVisible'));
+  document.getElementById(id).classList.add('viewVisible');
+  document.querySelectorAll('.tabBtn').forEach(b => b.classList.remove('tabActive'));
+  if (btn) btn.classList.add('tabActive');
+}
+
+function startInterview(control) {
+  currentControl = control;
+  const a = applications.find(x => x.control === control);
+  a.status = 'INTERVIEW_IN_PROGRESS';
+
+  document.getElementById('interviewClientTitle').textContent = `${a.name} (${a.control})`;
+  
+  document.getElementById('clientMeta').innerHTML = `
+    <div class="metaRow"><span>Control No.</span><span class="ctrlNo">${a.control}</span></div>
+    <div class="metaRow"><span>Full Name</span><span>${a.name}</span></div>
+    <div class="metaRow"><span>Age / Sex</span><span>${a.age} y/o, ${a.sex}</span></div>
+    <div class="metaRow"><span>Civil Status</span><span>${a.civilStatus}</span></div>
+    <div class="metaRow"><span>Sectoral Category</span><span>${a.sectoral}</span></div>
+    <div class="metaRow"><span>Address</span><span>${a.address}</span></div>
+    <div class="metaRow"><span>Housing Status</span><span>${a.housing}</span></div>
+  `;
+
+  const fBody = document.getElementById('familyTableBody');
+  fBody.innerHTML = '';
+  a.family.forEach(f => {
+    fBody.innerHTML += `<tr><td>${f.name}</td><td>${f.rel}</td><td>${f.age}</td><td>₱${f.income.toLocaleString()}</td></tr>`;
+  });
+
+  const deficit = a.expenses - a.income;
+  document.getElementById('metaIncome').textContent = `₱${a.income.toLocaleString()}`;
+  document.getElementById('metaExpenses').textContent = `₱${a.expenses.toLocaleString()}`;
+  document.getElementById('metaDeficit').textContent = `₱${deficit.toLocaleString()}`;
+
+  setupChips('chipsProblem', 'problemPresented', phraseChips.chipsProblem);
+  setupChips('chipsFindings', 'briefFindings', phraseChips.chipsFindings);
+  setupChips('chipsSocio', 'socioEconomic', phraseChips.chipsSocio);
+  setupChips('chipsRecommendation', 'recommendation', phraseChips.chipsRecommendation);
+
+  if (a.service.includes('Medical')) document.getElementById('templateSelect').value = 'Medical';
+  else if (a.service.includes('Burial')) document.getElementById('templateSelect').value = 'Burial';
+  else if (a.service.includes('Transportation')) document.getElementById('templateSelect').value = 'Transportation';
+  else document.getElementById('templateSelect').value = 'Financial';
+  
+  applyInterviewTemplate(document.getElementById('templateSelect').value);
+
+  resetTimer();
+  startTimer();
+
+  renderQueue();
+  showView('assessmentView', null);
+}
+
+function setupChips(containerId, targetInputId, chipsArray) {
+  const container = document.getElementById(containerId);
+  container.innerHTML = '';
+  chipsArray.forEach(c => {
+    const chipEl = document.createElement('span');
+    chipEl.className = 'chip';
+    chipEl.innerHTML = `<span class="chipAdd">+</span> ${c.label}`;
+    chipEl.onclick = () => {
+      const field = document.getElementById(targetInputId);
+      field.value = field.value ? `${field.value} ${c.text}` : c.text;
+    };
+    container.appendChild(chipEl);
+  });
+}
+
+function applyInterviewTemplate(type) {
+  if (!type || !interviewTemplates[type]) return;
+  const t = interviewTemplates[type];
+  document.getElementById('problemPresented').value = t.problem;
+  document.getElementById('briefFindings').value = t.findings;
+  document.getElementById('socioEconomic').value = t.socio;
+  document.getElementById('recommendation').value = t.recommendation;
+}
+
+function startTimer() {
+  if (isTimerRunning) return;
+  isTimerRunning = true;
+  timerInterval = setInterval(() => {
+    timerSeconds++;
+    updateTimerDisplay();
+  }, 1000);
+  document.getElementById('btnEndTimer').textContent = 'Pause Interview';
+}
+
+function toggleTimer() {
+  if (isTimerRunning) {
+    clearInterval(timerInterval);
+    isTimerRunning = false;
+    document.getElementById('btnEndTimer').textContent = 'Resume Session';
+  } else {
+    startTimer();
+  }
+}
+
+function resetTimer() {
+  clearInterval(timerInterval);
+  isTimerRunning = false;
+  timerSeconds = 0;
+  updateTimerDisplay();
+}
+
+function updateTimerDisplay() {
+  const m = String(Math.floor(timerSeconds / 60)).padStart(2, '0');
+  const s = String(timerSeconds % 60).padStart(2, '0');
+  document.getElementById('sessionTimer').textContent = `${m}:${s}`;
+}
+
+function previewReportModal() {
+  const a = applications.find(x => x.control === currentControl);
+  
+  document.getElementById('modalClientInfo').innerHTML = `
+    <div><b>Control No:</b> ${a.control}</div>
+    <div><b>Applicant Name:</b> ${a.name}</div>
+    <div><b>Age/Sex:</b> ${a.age} / ${a.sex}</div>
+    <div><b>Assistance Type:</b> ${a.service}</div>
+  `;
+
+  document.getElementById('modalProblem').textContent = document.getElementById('problemPresented').value;
+  document.getElementById('modalFindings').textContent = document.getElementById('briefFindings').value;
+  document.getElementById('modalSocio').textContent = document.getElementById('socioEconomic').value;
+  document.getElementById('modalRec').textContent = `${document.getElementById('recommendation').value}\n\nRecommended Output: ${document.getElementById('outputType').value} (Grant Amount: ₱${Number(document.getElementById('recAmount').value).toLocaleString()})`;
+
+  document.getElementById('reportModal').classList.add('modalVisible');
+}
+
+function closeReportModal() {
+  document.getElementById('reportModal').classList.remove('modalVisible');
+}
+
+function submitStaffReport() {
+  const a = applications.find(x => x.control === currentControl);
+  clearInterval(timerInterval);
+  
+  const formattedTime = document.getElementById('sessionTimer').textContent;
+
+  completedRecords.push({
+    control: a.control,
+    name: a.name,
+    service: a.service,
+    duration: `${formattedTime} mins`,
+    report: {
+      problem: document.getElementById('problemPresented').value,
+      findings: document.getElementById('briefFindings').value,
+      socio: document.getElementById('socioEconomic').value,
+      rec: document.getElementById('recommendation').value
+    }
+  });
+
+  applications = applications.filter(x => x.control !== currentControl);
+  showToast(`${a.control}: Social Case Study Report Completed — Sent to Admin for Review`);
+  
+  renderQueue();
+  backToQueue();
+}
+
+function returnForCorrection() {
+  const a = applications.find(x => x.control === currentControl);
+  applications = applications.filter(x => x.control !== currentControl);
+  showToast(`${a.control}: Flagged & Returned to Requirements Verification Subgroup`);
+  renderQueue();
+  backToQueue();
+}
+
+function viewCompletedReport(control) {
+  const r = completedRecords.find(x => x.control === control);
+  if(!r) return;
+  currentControl = control;
+
+  document.getElementById('modalClientInfo').innerHTML = `
+    <div><b>Control No:</b> ${r.control}</div>
+    <div><b>Applicant Name:</b> ${r.name}</div>
+    <div><b>Assistance Type:</b> ${r.service}</div>
+    <div><b>Session Duration:</b> ${r.duration}</div>
+  `;
+
+  document.getElementById('modalProblem').textContent = r.report.problem;
+  document.getElementById('modalFindings').textContent = r.report.findings;
+  document.getElementById('modalSocio').textContent = r.report.socio;
+  document.getElementById('modalRec').textContent = r.report.rec;
+
+  document.getElementById('reportModal').classList.add('modalVisible');
+}
+
+function backToQueue() {
+  clearInterval(timerInterval);
+  showView('queueView', document.querySelector('.tabBtn'));
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('toastVisible');
+  setTimeout(() => t.classList.remove('toastVisible'), 2800);
+}
+
+// Initialize logos and queue on DOM ready
+document.addEventListener('DOMContentLoaded', () => {
+  initBrandingLogos();
+  renderQueue();
+});
+</script>
+</body>
+</html>
